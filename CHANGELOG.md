@@ -7,6 +7,29 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Fixed
 
+- A machine-readable **state-driver contract** declares how to reach the state
+  each case is about (#46). `state-drivers.json` answers for all 94 cases that
+  declare a non-default `ui_state` or an `interaction` / `state-exploration`
+  method: 36 `interaction` (declarative steps plus a post-condition), 39
+  `at-load`, 19 `declared-steps`. Steps are selector-plus-action, not code, so a
+  runner that is not Playwright can execute the same file; the contract and its
+  digest are recorded in `corpus-manifest.json`.
+
+  `check/verify-state-drivers.mjs` runs every `interaction` driver against its
+  real fixture and requires its post-condition to be **false before the steps
+  and true after**, so a driver that proves nothing fails the build. It runs in
+  CI. That check caught 18 of the first 34 drivers asserting something already
+  true at load, and 3 that did not work at all.
+
+  Two boundaries are enforced by test: a post-condition never asserts the
+  criterion the case is about — demanding `aria-invalid="true"` on a page whose
+  defect is the missing attribute would test for the fix — and the fixtures were
+  not touched to make any driver shorter.
+
+  `check/scenario-interactions.mjs` is read by the generator, so every fixture
+  the hand-written suite drives must be declared here. The two bodies of
+  knowledge cannot drift.
+
 - Adjudication expires a reviewed judgement when **the assertion it is about**
   changes, rather than when its family does (#52). Records pin
   `assertion_sha256` — a digest over `case_id`, `min_criteria` and

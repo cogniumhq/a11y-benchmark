@@ -640,6 +640,46 @@ It then runs `check/scenario-interactions.mjs`, which executes the five A/AA
 interaction contracts: visual versus DOM sequence, pointer-down cancellation,
 focus and input context changes, and actionable error suggestions.
 
+### Reaching the state a case is about
+
+A fixture declares *what* state it depicts — `ui_state`, `journey`, and `steps`
+for multi-page walks. [`state-drivers.json`](state-drivers.json) declares *how
+to reach* it, so a harness need not guess, and so "state never reached" stops
+being reported as "state reached, defect missed". Every case that claims a
+non-default state or an `interaction` method answers one of four ways:
+
+| | cases | meaning |
+|---|---:|---|
+| `at-load` | 39 | the page renders exactly one state; nothing to drive |
+| `declared-steps` | 19 | a multi-page walk already enumerated in the case's own `steps` |
+| `interaction` | 35 | reached by declarative steps, proven by a post-condition |
+| `not-drivable` | 1 | nothing can reach it, with the reason recorded |
+
+Steps are selector-plus-action, not code, so a runner that is not Playwright
+can execute the same file:
+
+```json
+{
+  "case_id": "wiring-element_listener",
+  "reached": "interaction",
+  "steps": [{ "action": "click", "selector": "#target" }],
+  "post_condition": { "kind": "text-matches", "selector": "#state", "pattern": "Activated" }
+}
+```
+
+The post-condition is the part that matters. `check/verify-state-drivers.mjs`
+runs every `interaction` driver against its real fixture and requires the
+condition to be **false before the steps and true after** — a condition already
+satisfied at load would prove the steps did nothing, which is how a declared
+driver rots into decoration. CI runs it, so a driver that stops working fails
+the build rather than quietly reporting coverage that does not exist.
+
+Two deliberate boundaries. A post-condition never asserts the criterion the
+case is about: demanding `aria-invalid="true"` on a page whose defect is the
+missing attribute would test for the fix and make the broken page undrivable.
+And no fixture was changed to make a driver shorter — a corpus that edits its
+pages to be easier to drive has made its own cases easier to detect.
+
 Those are **facts about the pages, not judgements about any scanner** — which is
 what makes them usable as a reference. For example:
 

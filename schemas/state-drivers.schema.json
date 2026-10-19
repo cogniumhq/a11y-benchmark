@@ -1,0 +1,461 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/cogniumhq/a11y-benchmark/schemas/state-drivers.schema.json",
+  "title": "State-driver contract",
+  "description": "How to reach the state a case is about. A fixture declares what state it depicts -- ui_state, journey, steps -- but nothing declared how to get there, so a harness could load a page, photograph the default state and report a miss on a defect it never rendered. Every case that declares a non-default state or an interaction method answers here: the state is already there at load, the walk is already declared, these declarative steps reach it, or it cannot be driven and why. Steps are selector-plus-action so any runner can execute them; they are deliberately not code for one library.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "format",
+    "format_version",
+    "generated",
+    "policy",
+    "drivers"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "format": {
+      "const": "cognium-a11y-state-drivers"
+    },
+    "format_version": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$"
+    },
+    "generated": {
+      "type": "string",
+      "format": "date"
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "evidence",
+        "fixtures"
+      ],
+      "properties": {
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fixtures": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "drivers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/driver"
+      }
+    }
+  },
+  "$defs": {
+    "driver": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "path",
+        "declared_state",
+        "reached"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "declared_state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reached": {
+          "enum": [
+            "at-load",
+            "declared-steps",
+            "interaction",
+            "not-drivable"
+          ],
+          "description": "at-load: the page renders its declared state on load, so there is nothing to drive and the absence of steps is not a gap. declared-steps: a multi-page walk already enumerated in the case's own `steps`. interaction: reached by the `steps` here, confirmed by `post_condition`. not-drivable: no runner can reach it, and `reason` says why."
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 20,
+          "description": "Why this state is as it is. Required for at-load and not-drivable: both are claims that no steps are needed, and an unexplained absence of steps is indistinguishable from an oversight."
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/step"
+          }
+        },
+        "post_condition": {
+          "$ref": "#/$defs/condition"
+        }
+      },
+      "allOf": [
+        {
+          "description": "Driving a state means saying how, and how you know you got there.",
+          "if": {
+            "properties": {
+              "reached": {
+                "const": "interaction"
+              }
+            },
+            "required": [
+              "reached"
+            ]
+          },
+          "then": {
+            "required": [
+              "steps",
+              "post_condition"
+            ],
+            "properties": {
+              "steps": {},
+              "post_condition": {}
+            }
+          }
+        },
+        {
+          "description": "Claiming no steps are needed requires saying why.",
+          "if": {
+            "properties": {
+              "reached": {
+                "enum": [
+                  "at-load",
+                  "not-drivable"
+                ]
+              }
+            },
+            "required": [
+              "reached"
+            ]
+          },
+          "then": {
+            "required": [
+              "reason"
+            ],
+            "properties": {
+              "reason": {}
+            }
+          }
+        },
+        {
+          "description": "A state nothing can reach has no steps to declare.",
+          "if": {
+            "properties": {
+              "reached": {
+                "const": "not-drivable"
+              }
+            },
+            "required": [
+              "reached"
+            ]
+          },
+          "then": {
+            "not": {
+              "required": [
+                "steps"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "enum": [
+            "click",
+            "focus",
+            "press",
+            "fill",
+            "select",
+            "hover",
+            "dispatch",
+            "wait"
+          ],
+          "description": "dispatch fires a raw DOM event, for defects that live below the level of a synthesised click -- a handler bound to pointerdown, or a devicemotion listener. press sends a key to the focused element unless a selector narrows it. select picks an option in a <select>, which fill cannot address."
+        },
+        "selector": {
+          "type": "string",
+          "minLength": 1
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "string"
+        },
+        "event": {
+          "type": "string",
+          "minLength": 1
+        },
+        "init": {
+          "type": "object",
+          "description": "Event initialiser for `dispatch`, passed to the event constructor."
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 60000,
+          "description": "Milliseconds. Generous enough to wait out a real time limit -- aaa/no_timing expires on a 30-second clock, and shortening that clock to suit a runner would change the fixture."
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "enum": [
+                  "click",
+                  "focus",
+                  "fill",
+                  "select",
+                  "hover",
+                  "dispatch"
+                ]
+              }
+            },
+            "required": [
+              "action"
+            ]
+          },
+          "then": {
+            "required": [
+              "selector"
+            ],
+            "properties": {
+              "selector": {}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "const": "press"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          },
+          "then": {
+            "required": [
+              "key"
+            ],
+            "properties": {
+              "key": {}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "enum": [
+                  "fill",
+                  "select"
+                ]
+              }
+            },
+            "required": [
+              "action"
+            ]
+          },
+          "then": {
+            "required": [
+              "value"
+            ],
+            "properties": {
+              "value": {}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "const": "dispatch"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          },
+          "then": {
+            "required": [
+              "event"
+            ],
+            "properties": {
+              "event": {}
+            }
+          }
+        }
+      ]
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "description": "An observable that is true once the state is reached and false before. A runner reports `state_reached` from this instead of assuming, so 'state never reached' and 'state reached, defect missed' stop collapsing into the same miss.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "present",
+            "absent",
+            "text-matches",
+            "focus-within",
+            "attribute-equals",
+            "count-at-least"
+          ]
+        },
+        "selector": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pattern": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attribute": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "text-matches"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "selector",
+              "pattern"
+            ],
+            "properties": {
+              "selector": {},
+              "pattern": {}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "attribute-equals"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "selector",
+              "attribute",
+              "value"
+            ],
+            "properties": {
+              "selector": {},
+              "attribute": {},
+              "value": {}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "present",
+                  "absent",
+                  "focus-within"
+                ]
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "selector"
+            ],
+            "properties": {
+              "selector": {}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "count-at-least"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "selector",
+              "count"
+            ],
+            "properties": {
+              "selector": {},
+              "count": {}
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,1095 @@
+{
+  "$schema": "./schemas/state-drivers.schema.json",
+  "format": "cognium-a11y-state-drivers",
+  "format_version": "1.0.0",
+  "generated": "2026-10-19",
+  "policy": {
+    "scope": "Every case declaring a non-default ui_state or an interaction / state-exploration method answers here. A case in the default state with no interaction method needs no declaration, and its absence is not a gap.",
+    "evidence": "An `interaction` driver carries a post-condition that is false before its steps run and true after. A runner reports state_reached from that observable rather than assuming, so \"state never reached\" and \"state reached, defect missed\" stay distinct.",
+    "fixtures": "No fixture was changed to make a driver shorter or a defect easier to detect. Selectors address the pages as they already are."
+  },
+  "drivers": [
+    {
+      "case_id": "aaa-concurrent_input",
+      "path": "aaa/concurrent_input.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "#inc"
+        },
+        {
+          "action": "press",
+          "key": "Enter",
+          "selector": "#inc"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#n",
+        "pattern": "2"
+      }
+    },
+    {
+      "case_id": "aaa-error_prevention_all",
+      "path": "aaa/error_prevention_all.html",
+      "declared_state": "submitted",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "fill",
+          "selector": "#to",
+          "value": "ACME Ltd"
+        },
+        {
+          "action": "fill",
+          "selector": "#amt",
+          "value": "2500"
+        },
+        {
+          "action": "click",
+          "selector": "#send"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#state",
+        "pattern": "\\S"
+      }
+    },
+    {
+      "case_id": "aaa-focus_appearance",
+      "path": "aaa/focus_appearance.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "main button"
+        }
+      ],
+      "post_condition": {
+        "kind": "focus-within",
+        "selector": "main button"
+      }
+    },
+    {
+      "case_id": "aaa-focus_not_obscured_enhanced",
+      "path": "aaa/focus_not_obscured_enhanced.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "main button:last-of-type"
+        }
+      ],
+      "post_condition": {
+        "kind": "focus-within",
+        "selector": "main button:last-of-type"
+      }
+    },
+    {
+      "case_id": "aaa-no_timing",
+      "path": "aaa/no_timing.html",
+      "declared_state": "timed-out",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "wait",
+          "timeout_ms": 31000,
+          "note": "the page offers no control to expire it early"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#clock",
+        "pattern": "expired"
+      }
+    },
+    {
+      "case_id": "aaa-re_authenticating",
+      "path": "aaa/re_authenticating.html",
+      "declared_state": "timed-out",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "fill",
+          "selector": "#a",
+          "value": "Window seat"
+        },
+        {
+          "action": "click",
+          "selector": "#expire"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#state",
+        "pattern": "Session expired"
+      }
+    },
+    {
+      "case_id": "aaa-safe_concurrent_input",
+      "path": "aaa/safe_concurrent_input.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "#inc"
+        },
+        {
+          "action": "press",
+          "key": "Enter",
+          "selector": "#inc"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#n",
+        "pattern": "2"
+      }
+    },
+    {
+      "case_id": "aaa-safe_error_prevention_all",
+      "path": "aaa/safe_error_prevention_all.html",
+      "declared_state": "submitted",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "fill",
+          "selector": "#to",
+          "value": "ACME Ltd"
+        },
+        {
+          "action": "fill",
+          "selector": "#amt",
+          "value": "2500"
+        },
+        {
+          "action": "click",
+          "selector": "#send"
+        }
+      ],
+      "post_condition": {
+        "kind": "present",
+        "selector": "#review:not([hidden])"
+      }
+    },
+    {
+      "case_id": "aaa-safe_focus_appearance",
+      "path": "aaa/safe_focus_appearance.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "main button"
+        }
+      ],
+      "post_condition": {
+        "kind": "focus-within",
+        "selector": "main button"
+      }
+    },
+    {
+      "case_id": "aaa-safe_focus_not_obscured_enhanced",
+      "path": "aaa/safe_focus_not_obscured_enhanced.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "main button:last-of-type"
+        }
+      ],
+      "post_condition": {
+        "kind": "focus-within",
+        "selector": "main button:last-of-type"
+      }
+    },
+    {
+      "case_id": "aaa-safe_no_timing",
+      "path": "aaa/safe_no_timing.html",
+      "declared_state": "timed-out",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "aaa-safe_re_authenticating",
+      "path": "aaa/safe_re_authenticating.html",
+      "declared_state": "timed-out",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "fill",
+          "selector": "#a",
+          "value": "Window seat"
+        },
+        {
+          "action": "click",
+          "selector": "#expire"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#state",
+        "pattern": "Session expired"
+      }
+    },
+    {
+      "case_id": "color-chart_series_color_only",
+      "path": "color-independent/chart_series_color_only.html",
+      "declared_state": "invalid",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "color-disabled_state",
+      "path": "color-independent/disabled_state.html",
+      "declared_state": "invalid",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "color-error_color_only",
+      "path": "color-independent/error_color_only.html",
+      "declared_state": "invalid",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "color-link_color_only",
+      "path": "color-independent/link_color_only.html",
+      "declared_state": "invalid",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "color-placeholder_contrast",
+      "path": "color-independent/placeholder_contrast.html",
+      "declared_state": "invalid",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "color-required_color_only",
+      "path": "color-independent/required_color_only.html",
+      "declared_state": "invalid",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "color-selection_color_only",
+      "path": "color-independent/selection_color_only.html",
+      "declared_state": "invalid",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "main div button:nth-of-type(2)"
+        }
+      ],
+      "post_condition": {
+        "kind": "present",
+        "selector": "main div button:nth-of-type(2).sel"
+      }
+    },
+    {
+      "case_id": "color-status_color_only",
+      "path": "color-independent/status_color_only.html",
+      "declared_state": "invalid",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "journey-booking-broken",
+      "path": "journeys/booking/broken/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (5 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-booking-correct",
+      "path": "journeys/booking/correct/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (6 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-checkout-broken",
+      "path": "journeys/checkout/broken/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (4 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-checkout-correct",
+      "path": "journeys/checkout/correct/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (5 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-consent-broken",
+      "path": "journeys/consent/broken/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (3 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-consent-correct",
+      "path": "journeys/consent/correct/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (3 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-consistent-help-broken",
+      "path": "journeys/consistent-help/broken/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (5 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-consistent-help-correct",
+      "path": "journeys/consistent-help/correct/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (5 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-destructive-broken",
+      "path": "journeys/destructive/broken/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (3 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-destructive-correct",
+      "path": "journeys/destructive/correct/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (4 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-navigate-broken",
+      "path": "journeys/navigate/broken/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (4 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-navigate-correct",
+      "path": "journeys/navigate/correct/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (5 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-session-broken",
+      "path": "journeys/session/broken/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (3 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-session-correct",
+      "path": "journeys/session/correct/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (4 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-signin-broken",
+      "path": "journeys/signin/broken/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (3 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-signin-correct",
+      "path": "journeys/signin/correct/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (4 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-signup-broken",
+      "path": "journeys/signup/broken/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (4 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "journey-signup-correct",
+      "path": "journeys/signup/correct/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (5 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "pipeline-declared_flow-control",
+      "path": "pipeline/flow/control/index.html",
+      "declared_state": "default",
+      "reached": "declared-steps",
+      "reason": "The walk is already enumerated in this case's own steps (2 pages); each page loads in its own right, so there is no single-page state to drive."
+    },
+    {
+      "case_id": "pipeline-no_declared_flow",
+      "path": "pipeline/flow/no-declaration.html",
+      "declared_state": "default",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "scenario-change_on_focus",
+      "path": "scenarios/change_on_focus.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "#focus-destination"
+        }
+      ],
+      "post_condition": {
+        "kind": "present",
+        "selector": "#focus-results:not([hidden])"
+      }
+    },
+    {
+      "case_id": "scenario-change_on_input",
+      "path": "scenarios/change_on_input.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "select",
+          "selector": "#input-destination",
+          "value": "Rome"
+        }
+      ],
+      "post_condition": {
+        "kind": "present",
+        "selector": "#input-step-two:not([hidden])"
+      }
+    },
+    {
+      "case_id": "scenario-disabled_state",
+      "path": "scenarios/disabled_state.html",
+      "declared_state": "disabled",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "scenario-dragging_required",
+      "path": "scenarios/dragging_required.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "#legs li:first-child .handle"
+        },
+        {
+          "action": "press",
+          "key": "ArrowDown",
+          "selector": "#legs li:first-child .handle"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#order-status",
+        "pattern": "Order:"
+      }
+    },
+    {
+      "case_id": "scenario-error_suggestion",
+      "path": "scenarios/error_suggestion.html",
+      "declared_state": "invalid",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "scenario-forced_colors",
+      "path": "scenarios/forced_colors.html",
+      "declared_state": "default",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "scenario-keyboard_trap",
+      "path": "scenarios/keyboard_trap.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#trap-trigger"
+        },
+        {
+          "action": "focus",
+          "selector": "#trap-field"
+        }
+      ],
+      "post_condition": {
+        "kind": "focus-within",
+        "selector": "#trap-panel"
+      }
+    },
+    {
+      "case_id": "scenario-meaningful_sequence",
+      "path": "scenarios/meaningful_sequence.html",
+      "declared_state": "default",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "scenario-motion_actuation",
+      "path": "scenarios/motion_actuation.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "dispatch",
+          "selector": "window",
+          "event": "devicemotion",
+          "init": {
+            "acceleration": {
+              "x": 20,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "note": "the listener ignores a devicemotion with no acceleration"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#seat-status",
+        "pattern": "undone"
+      }
+    },
+    {
+      "case_id": "scenario-overlay_focus_trap",
+      "path": "scenarios/overlay_focus_trap.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#fare-open"
+        }
+      ],
+      "post_condition": {
+        "kind": "present",
+        "selector": "#po:not([hidden])"
+      }
+    },
+    {
+      "case_id": "scenario-pointer_cancellation",
+      "path": "scenarios/pointer_cancellation.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "dispatch",
+          "selector": "button",
+          "event": "pointerdown",
+          "init": {
+            "bubbles": true
+          }
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#pointer-status",
+        "pattern": "cancelled"
+      }
+    },
+    {
+      "case_id": "scenario-safe_change_on_focus",
+      "path": "scenarios/safe_change_on_focus.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "#focus-destination-safe"
+        }
+      ],
+      "post_condition": {
+        "kind": "focus-within",
+        "selector": "#focus-destination-safe"
+      }
+    },
+    {
+      "case_id": "scenario-safe_change_on_input",
+      "path": "scenarios/safe_change_on_input.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "select",
+          "selector": "#input-destination-safe",
+          "value": "Rome"
+        },
+        {
+          "action": "click",
+          "selector": "button"
+        }
+      ],
+      "post_condition": {
+        "kind": "present",
+        "selector": "#input-step-two-safe:not([hidden])"
+      }
+    },
+    {
+      "case_id": "scenario-safe_disabled_state",
+      "path": "scenarios/safe_disabled_state.html",
+      "declared_state": "disabled",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "scenario-safe_dragging_required",
+      "path": "scenarios/safe_dragging_required.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#legs li:first-child .down"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#order-status",
+        "pattern": "Order:"
+      }
+    },
+    {
+      "case_id": "scenario-safe_error_suggestion",
+      "path": "scenarios/safe_error_suggestion.html",
+      "declared_state": "invalid",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "scenario-safe_forced_colors",
+      "path": "scenarios/safe_forced_colors.html",
+      "declared_state": "default",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "scenario-safe_keyboard_trap",
+      "path": "scenarios/safe_keyboard_trap.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#trap-trigger-safe"
+        },
+        {
+          "action": "focus",
+          "selector": "#trap-field-safe"
+        }
+      ],
+      "post_condition": {
+        "kind": "focus-within",
+        "selector": "#trap-dialog-safe"
+      }
+    },
+    {
+      "case_id": "scenario-safe_meaningful_sequence",
+      "path": "scenarios/safe_meaningful_sequence.html",
+      "declared_state": "default",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "scenario-safe_motion_actuation",
+      "path": "scenarios/safe_motion_actuation.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#undo"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#seat-status",
+        "pattern": "undone"
+      }
+    },
+    {
+      "case_id": "scenario-safe_overlay_focus_trap",
+      "path": "scenarios/safe_overlay_focus_trap.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#fare-open"
+        }
+      ],
+      "post_condition": {
+        "kind": "present",
+        "selector": "#po:not([hidden])"
+      }
+    },
+    {
+      "case_id": "scenario-safe_pointer_cancellation",
+      "path": "scenarios/safe_pointer_cancellation.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "button"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#pointer-status-safe",
+        "pattern": "cancelled"
+      }
+    },
+    {
+      "case_id": "scenario-safe_swipe_required",
+      "path": "scenarios/safe_swipe_required.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#fare-next"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#fare",
+        "pattern": "2 of 3"
+      }
+    },
+    {
+      "case_id": "scenario-swipe_required",
+      "path": "scenarios/swipe_required.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "#fares"
+        },
+        {
+          "action": "press",
+          "key": "ArrowRight",
+          "selector": "#fares"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#fare",
+        "pattern": "2 of 3"
+      }
+    },
+    {
+      "case_id": "state-busy",
+      "path": "ui-states/busy.html",
+      "declared_state": "busy",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-corrected",
+      "path": "ui-states/corrected.html",
+      "declared_state": "corrected",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-empty",
+      "path": "ui-states/empty.html",
+      "declared_state": "empty",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-error",
+      "path": "ui-states/error.html",
+      "declared_state": "error",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-invalid",
+      "path": "ui-states/invalid.html",
+      "declared_state": "invalid",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-loading",
+      "path": "ui-states/loading.html",
+      "declared_state": "loading",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-offline",
+      "path": "ui-states/offline.html",
+      "declared_state": "offline",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-permission-denied",
+      "path": "ui-states/permission-denied.html",
+      "declared_state": "permission-denied",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-safe_busy",
+      "path": "ui-states/safe_busy.html",
+      "declared_state": "busy",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-safe_corrected",
+      "path": "ui-states/safe_corrected.html",
+      "declared_state": "corrected",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-safe_empty",
+      "path": "ui-states/safe_empty.html",
+      "declared_state": "empty",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-safe_error",
+      "path": "ui-states/safe_error.html",
+      "declared_state": "error",
+      "reached": "at-load",
+      "reason": "The page binds nothing to an event: its script runs once at load and cannot move it to another state. It renders exactly the state it declares, and an engine that loaded it saw that state."
+    },
+    {
+      "case_id": "state-safe_invalid",
+      "path": "ui-states/safe_invalid.html",
+      "declared_state": "invalid",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-safe_loading",
+      "path": "ui-states/safe_loading.html",
+      "declared_state": "loading",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-safe_offline",
+      "path": "ui-states/safe_offline.html",
+      "declared_state": "offline",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-safe_permission-denied",
+      "path": "ui-states/safe_permission-denied.html",
+      "declared_state": "permission-denied",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-safe_submitted",
+      "path": "ui-states/safe_submitted.html",
+      "declared_state": "submitted",
+      "reached": "at-load",
+      "reason": "The page binds nothing to an event: its script runs once at load and cannot move it to another state. It renders exactly the state it declares, and an engine that loaded it saw that state."
+    },
+    {
+      "case_id": "state-safe_timed-out",
+      "path": "ui-states/safe_timed-out.html",
+      "declared_state": "timed-out",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-submitted",
+      "path": "ui-states/submitted.html",
+      "declared_state": "submitted",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "state-timed-out",
+      "path": "ui-states/timed-out.html",
+      "declared_state": "timed-out",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "surface-email_contrast_darkmode",
+      "path": "surfaces/email_contrast_darkmode.html",
+      "declared_state": "default",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "surface-safe_email_contrast_darkmode",
+      "path": "surfaces/safe_email_contrast_darkmode.html",
+      "declared_state": "default",
+      "reached": "at-load",
+      "reason": "The page contains no script, so it renders exactly one state: the one it declares. There is nothing to drive, and an engine that loaded it saw the state the case is about."
+    },
+    {
+      "case_id": "wiring-delegated_ancestor",
+      "path": "wiring/delegated_ancestor.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#target"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#state",
+        "pattern": "Activated"
+      }
+    },
+    {
+      "case_id": "wiring-element_listener",
+      "path": "wiring/element_listener.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#target"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#state",
+        "pattern": "Activated"
+      }
+    },
+    {
+      "case_id": "wiring-inline_attribute",
+      "path": "wiring/inline_attribute.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#target"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#state",
+        "pattern": "Activated"
+      }
+    },
+    {
+      "case_id": "wiring-pointer_only",
+      "path": "wiring/pointer_only.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#target"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#state",
+        "pattern": "Activated"
+      }
+    },
+    {
+      "case_id": "wiring-safe_delegated_ancestor",
+      "path": "wiring/safe_delegated_ancestor.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#target"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#state",
+        "pattern": "Activated"
+      }
+    },
+    {
+      "case_id": "wiring-safe_element_listener",
+      "path": "wiring/safe_element_listener.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#target"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#state",
+        "pattern": "Activated"
+      }
+    },
+    {
+      "case_id": "wiring-safe_inline_attribute",
+      "path": "wiring/safe_inline_attribute.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#target"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#state",
+        "pattern": "Activated"
+      }
+    },
+    {
+      "case_id": "wiring-safe_pointer_only",
+      "path": "wiring/safe_pointer_only.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#target"
+        }
+      ],
+      "post_condition": {
+        "kind": "text-matches",
+        "selector": "#state",
+        "pattern": "Activated"
+      }
+    }
+  ]
+}
