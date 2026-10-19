@@ -47,7 +47,7 @@
       "id": "scenarios",
       "file": "scenarios.json",
       "case_count": 42,
-      "content_sha256": "sha256:95e2b2201d60676b953d16c4e8c74f1781514e98005895172b18b85685c2c17b"
+      "content_sha256": "sha256:3374590c4fc54ebaaffca778b95693a1bee2898b0ac21a82d30edfb45c3114f5"
     },
     {
       "id": "media",
@@ -65,7 +65,7 @@
       "id": "color-independent",
       "file": "color-independent.json",
       "case_count": 16,
-      "content_sha256": "sha256:583d711bc6c5da655a03e9d718b7bbca36da1abb9180b956ddbd9432d6127b67"
+      "content_sha256": "sha256:d8af74b84f3d8e4986d199895150f89aa8733acb9cb71b3be2963bcc248856a5"
     },
     {
       "id": "ui-states",
