@@ -24,6 +24,26 @@ machine-readable manifest and schema versions are recorded with every release.
   44), one of the two criteria its pair declares. They are now 44 by 44 (#56).
 - The 13 `aaa` adjudication decisions are re-pinned to the new family digest
   with a note; their judgements are unchanged.
+- Six broken pages declared a 1.4.1 failure that the page did not show as
+  rendered under WCAG 2.2 (#55). Each now conveys its information by hue alone,
+  and each corrected page keeps the same colours and adds exactly the missing
+  non-colour cue:
+  - `color-link_color_only`: the in-text link was 3.35:1 against its
+    surrounding text, which F73 and the WCAG 2.2 edition of G183 accept. It is
+    now 2.21:1, with no underline or other cue in any state, and 7.88:1 against
+    the background so it does not also fail 1.4.3 or 1.4.6.
+  - `color-status_color_only`: flight status is now told only by a red or green
+    dot of near-equal lightness (1.10:1), keyed by a colour-only legend.
+  - `color-selection_color_only`: the options are now real toggle buttons whose
+    selected fill differs from the unselected one only in hue (1.22:1).
+  - `color-disabled_state` and `scenario-disabled_state`: one grey button with
+    nothing to compare it with was a 1.4.3 defect. Taken seats now differ from
+    free ones only in hue (1.05:1). In the colour family they are disabled, so
+    the pair isolates 1.4.1; in the scenario they stay enabled, which is its
+    4.1.2 half.
+  - `color-error_color_only`: nothing marked the field in error. It is now
+    `aria-invalid="true"` with only a red border beside a grey one of
+    near-equal lightness (1.13:1) and no text (F81, and 3.3.1).
 - `media-video_no_captions` did not contain its declared 1.2.2 defect.
   `flight-info.mp4` was a video-only stream, and 1.2.2 asks for captions for
   the audio in synchronized media, so the case was inapplicable rather than
