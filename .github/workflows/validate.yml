@@ -10,7 +10,21 @@ permissions:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    # Self-hosted on grace, because GitHub-hosted runners stall: on
+    # 2026-10-19 every queued job in the org sat unstarted through a
+    # "Degraded availability for GitHub Actions" incident, which blocked
+    # seven corpus-fix PRs with nothing wrong with them.
+    #
+    # The fork guard is not optional. This repository is PUBLIC, and a
+    # workflow from a fork would otherwise run arbitrary code on a machine
+    # that also hosts the model endpoint, the GPU and fifty runners for other
+    # repositories. A fork PR is therefore sent to a GitHub-hosted runner,
+    # which can only harm itself. Same-repository pushes and branches, which
+    # only a collaborator can create, run on grace.
+    runs-on: >-
+      ${{ (github.event_name == 'pull_request' &&
+           github.event.pull_request.head.repo.full_name != github.repository)
+          && 'ubuntu-latest' || fromJSON('["self-hosted","grace"]') }}
     steps:
       - uses: actions/checkout@v7
         with:
