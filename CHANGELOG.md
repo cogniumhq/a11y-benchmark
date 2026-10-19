@@ -7,6 +7,14 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Fixed
 
+- `aaa-safe_visual_presentation` (1.4.8) carried the broken page's prose word for
+  word, so its visible text claimed to be justified at a line spacing under 1.5
+  while its cascade renders ragged at 1.6 with 50ch lines (#56). On a criterion
+  whose evidence is the rendering, a control that contradicts itself in text is a
+  trap for any surface that reads prose as well as computed style. The text now
+  describes this page. No label changed, so the corpus identity digest is
+  unmoved and published results stay comparable.
+
 - Three scenario pages did not contain their declared defect (#54):
   - `scenario-overlay_focus_trap` (2.4.3): the "popover" was an unpositioned
     block visible at load that its button did not change. It is now a
