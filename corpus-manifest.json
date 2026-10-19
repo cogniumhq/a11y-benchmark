@@ -9,7 +9,7 @@
   "generated": "2026-10-19",
   "counts": {
     "families": 15,
-    "cases": 280
+    "cases": 282
   },
   "digest_policy": "SHA-256 of parsed family JSON with the top-level generated field removed, serialized with JSON.stringify.",
   "families": [
@@ -46,8 +46,8 @@
     {
       "id": "scenarios",
       "file": "scenarios.json",
-      "case_count": 42,
-      "content_sha256": "sha256:235a4433fb3f166a86922c22820e8e048e71a6289895fe46d6c377a75d3472f9"
+      "case_count": 44,
+      "content_sha256": "sha256:a53969b3689756ef77eb2b473be2b6fceb8cb872c9941288d0618478047939ee"
     },
     {
       "id": "media",

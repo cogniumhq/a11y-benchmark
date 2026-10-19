@@ -1,7 +1,7 @@
 {
   "description": "One constant defect — a div acting as a button with no tabindex, role or key handler — with the click handler attached four different ways. Holding the defect constant means a scanner that reports one wiring and not another has a coverage gap in how it detects interactivity, not a rule error.",
   "boundary": "Every case here is genuinely interactive. A div with no handler anywhere has no functionality, so 2.1.1 does not apply to it and reporting it would be a false positive; no such case is shipped. Each control repeats its defect’s wiring so the pair isolates the element rather than the attachment.",
-  "generated": "2026-10-16",
+  "generated": "2026-10-19",
   "counts": {
     "wirings": 4,
     "cases": 8
