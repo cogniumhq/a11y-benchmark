@@ -47,7 +47,7 @@
       "id": "scenarios",
       "file": "scenarios.json",
       "case_count": 42,
-      "content_sha256": "sha256:3374590c4fc54ebaaffca778b95693a1bee2898b0ac21a82d30edfb45c3114f5"
+      "content_sha256": "sha256:235a4433fb3f166a86922c22820e8e048e71a6289895fe46d6c377a75d3472f9"
     },
     {
       "id": "media",
@@ -89,7 +89,7 @@
       "id": "aaa",
       "file": "aaa.json",
       "case_count": 26,
-      "content_sha256": "sha256:4fd46f596d2db36a4f445cd86b9353d05fcf008d2ee9c7da378f75d8cede659a"
+      "content_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c"
     },
     {
       "id": "native",

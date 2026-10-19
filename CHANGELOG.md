@@ -7,6 +7,23 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Fixed
 
+- `aaa-safe_focus_not_obscured_enhanced` failed 2.4.11 and 2.4.12 itself: it
+  reserved footer space only for buttons inside `main`, so the Back link after
+  `main` scrolled entirely under the fixed footer when focused. The control
+  now reserves the footer's height below the whole body and keeps every
+  focused link and button clear of it (#56).
+- `aaa-visual_presentation` (1.4.8): `fixture.css` caps `body` and `p` at
+  70ch, so the broken page's "120ch" lines never exceeded 80 characters. The
+  broken page now lifts both caps (about 165 characters per line at 1280px).
+  The claim that author-set colours stop the user selecting their own is
+  removed with the colour rules: browsers let users override them (G156) and
+  no failure technique covers it. The corrected page is narrowed from 70ch to
+  50ch, because 70ch measured 87-92 characters per line, itself over 1.4.8's 80
+  (#56).
+- `scenario-safe_touch_targets` used 24 px targets, which fail 2.5.5 (44 by
+  44), one of the two criteria its pair declares. They are now 44 by 44 (#56).
+- The 13 `aaa` adjudication decisions are re-pinned to the new family digest
+  with a note; their judgements are unchanged.
 - `flash-animation_from_interaction` passed its declared 2.3.3 failure: the
   shared gate refused to start under reduced motion and `fixture.css` zeroes
   every animation there, so the page honoured the preference twice over. The
