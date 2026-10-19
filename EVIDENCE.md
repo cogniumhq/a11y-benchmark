@@ -103,6 +103,29 @@ count.
 The previous report showed `represented` only, which read as though 25 of 25
 journeys were covered.
 
+### Why this layer expires corpus-wide and adjudication does not
+
+The two layers answer different questions, so they expire at different
+granularities on purpose.
+
+A ledger record claims that **a run covered a dimension of the corpus** —
+these surfaces, these journeys, these user needs. That claim is about the
+corpus as a whole, so changing the corpus as a whole invalidates it. A bundle
+that measured 234 cases has not measured the 270-case corpus, whichever 36
+cases were added. Corpus-wide is the right scope here, blunt as it looks.
+
+An adjudication record claims something much narrower: that **one assertion on
+one case** is correct. Nothing about a sibling fixture, or about a `method`
+list, bears on it. Scoping that corpus-wide took out all 72 records over two
+additions; scoping it family-wide still took out 13 decisions over a metadata
+edit (#51) and 23 undeclared-finding reviews over fixture rewrites elsewhere in
+the family. It is now keyed on a digest of the case's identity and ground
+truth — see [ADJUDICATION.md](ADJUDICATION.md#expiry-is-scoped-to-the-assertion).
+
+The rule to take from both: **pin the digest of what the record actually
+claims.** A broader key expires work nobody questioned; a narrower one leaves a
+stale claim standing.
+
 ## Recording evidence
 
 Add a record to `evidence/ledger.json`, conforming to

@@ -19,6 +19,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { loadCorpus } from './check/scoring.mjs';
+import { assertionDigests } from './assertion-identity.mjs';
 
 const ROOT = path.resolve(fileURLToPath(new URL('.', import.meta.url)));
 
@@ -68,34 +69,48 @@ export function silentAssertions(corpus, results) {
 }
 
 /**
- * Split decisions into those that still describe their family and those that
- * do not.
+ * Split reviewed records into those whose assertion is unchanged and those
+ * whose is not.
  *
- * Scoped per family on purpose. The evidence ledger keys expiry on the whole
- * corpus digest, and adding two families expired all 72 of its records at once;
- * a decision about one fixture should not be invalidated by an unrelated
- * addition elsewhere.
+ * Keyed on the assertion, not the family and not the corpus. Both coarser keys
+ * were tried and both expired reviews nobody had asked a question about -- the
+ * reasoning, and the measurements, are in `assertion-identity.mjs`.
+ *
+ * A record whose case has disappeared is stale too, and says so distinctly: a
+ * changed assertion wants re-review, a vanished one wants deleting.
  */
-export function partitionDecisions(adjudication, manifest) {
-  const digests = new Map(manifest.families.map((family) => [family.id, family.content_sha256]));
+function partitionByAssertion(rows, digests) {
   const current = new Map();
   const stale = [];
 
-  for (const decision of adjudication.decisions ?? []) {
-    const live = digests.get(decision.family);
-    if (live && live === decision.family_sha256) {
-      current.set(`${decision.case_id}|${decision.criterion}`, decision);
+  for (const row of rows) {
+    const live = digests.get(row.case_id);
+    if (live && live === row.assertion_sha256) {
+      current.set(`${row.case_id}|${row.criterion}`, row);
     } else {
       stale.push({
-        ...decision,
+        ...row,
         stale_reason: live
-          ? `family ${decision.family} changed since review`
-          : `family ${decision.family} no longer exists`,
+          ? `ground truth for ${row.case_id} changed since review`
+          : `case ${row.case_id} no longer exists`,
       });
     }
   }
 
   return { current, stale };
+}
+
+export function partitionDecisions(adjudication, corpus) {
+  return partitionByAssertion(adjudication.decisions ?? [], assertionDigests(corpus));
+}
+
+/**
+ * The same rule for undeclared findings. These carried a digest that nothing
+ * ever checked, so a review of a pair survived any later rewrite of that pair
+ * -- which is the failure the pin exists to prevent.
+ */
+export function partitionUndeclared(adjudication, corpus) {
+  return partitionByAssertion(adjudication.undeclared_findings ?? [], assertionDigests(corpus));
 }
 
 /**
@@ -181,7 +196,7 @@ export function undeclaredFindings(corpus, results, { noiseThreshold = 0.5 } = {
 
 export function reconcile({ corpus, manifest, adjudication, results }) {
   const silent = silentAssertions(corpus, results);
-  const { current, stale } = partitionDecisions(adjudication, manifest);
+  const { current, stale } = partitionDecisions(adjudication, corpus);
 
   const adjudicated = [];
   const awaiting = [];
@@ -200,14 +215,21 @@ export function reconcile({ corpus, manifest, adjudication, results }) {
   );
 
   const undeclared = undeclaredFindings(corpus, results);
-  const reviewedUndeclared = new Map(
-    (adjudication.undeclared_findings ?? []).map((row) => [`${row.case_id}|${row.criterion}`, row]),
-  );
+  // A review of a pair is only live while the pair still asserts what it did
+  // when reviewed. Previously every record counted as reviewed regardless, so
+  // rewriting a fixture silently kept its old adjudication.
+  const {
+    current: reviewedUndeclared,
+    stale: undeclaredStale,
+  } = partitionUndeclared(adjudication, corpus);
   const undeclaredAwaiting = undeclared.filter(
     (row) => !reviewedUndeclared.has(`${row.case_id}|${row.criterion}`),
   );
 
-  return { silent, adjudicated, awaiting, stale, superseded, undeclared, undeclaredAwaiting };
+  return {
+    silent, adjudicated, awaiting, stale, superseded,
+    undeclared, undeclaredAwaiting, undeclaredStale,
+  };
 }
 
 function render(report, results) {
@@ -256,8 +278,16 @@ function render(report, results) {
   }
 
   if (report.stale.length > 0) {
-    lines.push(`decisions whose family changed since review   ${report.stale.length}`);
+    lines.push(`decisions whose assertion changed since review   ${report.stale.length}`);
     for (const row of report.stale.slice(0, 10)) {
+      lines.push(`  ${row.case_id} ${row.criterion} — ${row.stale_reason}`);
+    }
+    lines.push('');
+  }
+
+  if ((report.undeclaredStale ?? []).length > 0) {
+    lines.push(`undeclared-finding reviews whose assertion changed   ${report.undeclaredStale.length}`);
+    for (const row of report.undeclaredStale.slice(0, 10)) {
       lines.push(`  ${row.case_id} ${row.criterion} — ${row.stale_reason}`);
     }
     lines.push('');

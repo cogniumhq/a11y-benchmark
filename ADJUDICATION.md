@@ -56,17 +56,56 @@ instead of the standard, which inverts the point of having a corpus.
 Each decision records `engines_consulted`, so a `wrong` reached on two engines
 is visibly weaker evidence than one reached on eight.
 
-## Expiry is scoped to the family
+## Expiry is scoped to the assertion
 
-A decision pins the `content_sha256` of the family its case belongs to, not the
-whole-corpus digest.
+A record pins `assertion_sha256`: a digest over the case's identity and its
+ground truth — `case_id`, `min_criteria`, `must_not_report` — and nothing else.
+It expires when that changes, and not otherwise.
 
-That is a deliberate correction. The evidence ledger keys expiry on the corpus
-content digest, and adding the `aaa` and `native` families expired all 72 of its
-records at once — including records about fixtures that had not changed at all.
-Correct by the letter of the rule, far too blunt in practice. A decision about
-one fixture should not be invalidated by an unrelated addition elsewhere, so
-adjudication expires per family instead.
+Two coarser keys were tried first, and each was blunt in the same way.
+
+**Corpus-wide.** The evidence ledger keys expiry on the whole-corpus content
+digest. Adding the `aaa` and `native` families expired all 72 of its records at
+once, including records about fixtures that had not changed at all.
+
+**Family-wide.** Adjudication moved to the family digest to fix that, which
+helped and was still too coarse: a `method` metadata edit on the `aaa` family
+expired 13 decisions whose fixtures and ground truth were untouched (#51).
+Measured again when this was fixed — of 26 undeclared-finding records the family
+rule called stale, **23 had an unchanged assertion**. One in nine of all reviewed
+records was queued for re-review over edits that changed nothing anyone had
+judged.
+
+Both times the records were re-pinned with a recorded reason, which is correct
+and is review effort spent on a question nobody asked.
+
+The assertion digest draws the line where the judgement is. A decision answers
+one question — is `min_criteria[criterion]` on this case correct — so `method`,
+`notes`, `user_needs`, `state_dependency`, `journey`, and every sibling case in
+the family can move without touching it, while any change to what the corpus
+asserts about this case invalidates it immediately.
+
+`must_not_report` is in the digest even though decisions are keyed on a
+`min_criteria` entry. Moving a criterion from one to the other inverts what the
+case claims while leaving both fields individually present, and that has to
+expire a review.
+
+`family` is still recorded. It groups the report; it no longer gates expiry.
+
+### Undeclared findings expire by the same rule, and now actually do
+
+`undeclared_findings` carried a family digest that nothing ever read:
+`reconcile` mapped every record straight to "reviewed" regardless of its pin. A
+review of a pair therefore survived any later rewrite of that pair — the exact
+failure the pin exists to prevent. The pin is now enforced, and stale
+undeclared reviews are reported alongside stale decisions.
+
+Enforcing it surfaced three: the reviews of `scenario-dragging_required` for
+2.1.1, 2.4.7 and 3.2.1, made when the case declared both 2.5.1 and 2.5.7. #54
+gave its handles real pointer listeners, so 2.5.1 no longer applies and the
+case declares 2.5.7 alone. Those three are pinned at the ground truth their
+reviewer actually saw, so they read as stale and await re-review rather than
+being silently revalidated against a pair they were never judged against.
 
 ## Running it
 

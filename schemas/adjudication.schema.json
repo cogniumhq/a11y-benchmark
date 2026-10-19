@@ -5,61 +5,153 @@
   "description": "Reviewed decisions about assertions that no engine reports. An assertion going undetected is not evidence that it is wrong, and it is not evidence that it is right. This file records which, who decided, and on what public source, so the question is answered once rather than re-litigated on every run.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "format", "format_version", "generated", "policy", "decisions"],
+  "required": [
+    "$schema",
+    "format",
+    "format_version",
+    "generated",
+    "policy",
+    "decisions"
+  ],
   "properties": {
-    "$schema": { "type": "string", "minLength": 1 },
-    "format": { "const": "cognium-a11y-adjudication" },
-    "format_version": { "type": "string", "pattern": "^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$" },
-    "generated": { "type": "string", "format": "date" },
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "format": {
+      "const": "cognium-a11y-adjudication"
+    },
+    "format_version": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*\\.[0-9]+\\.[0-9]+$"
+    },
+    "generated": {
+      "type": "string",
+      "format": "date"
+    },
     "policy": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["expiry", "sourcing", "scope"],
+      "required": [
+        "expiry",
+        "sourcing",
+        "scope"
+      ],
       "properties": {
-        "expiry": { "type": "string", "minLength": 1 },
-        "sourcing": { "type": "string", "minLength": 1 },
-        "scope": { "type": "string", "minLength": 1 }
+        "expiry": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourcing": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "decisions": {
       "type": "array",
-      "items": { "$ref": "#/$defs/decision" }
+      "items": {
+        "$ref": "#/$defs/decision"
+      }
     },
     "undeclared_findings": {
       "type": "array",
       "description": "Reviewed decisions about criteria engines report on a broken page but not on its control, which the case does not declare. A different question from an undetected assertion: there the corpus may be wrong about what a tool should find, here the pair may be measuring more than one thing.",
-      "items": { "$ref": "#/$defs/undeclared" }
+      "items": {
+        "$ref": "#/$defs/undeclared"
+      }
     }
   },
   "$defs": {
     "undeclared": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["case_id", "criterion", "outcome", "rationale", "reviewer", "family", "family_sha256", "reviewed_on", "engines_agreeing"],
+      "required": [
+        "case_id",
+        "criterion",
+        "outcome",
+        "rationale",
+        "reviewer",
+        "family",
+        "assertion_sha256",
+        "reviewed_on",
+        "engines_agreeing"
+      ],
       "properties": {
-        "case_id": { "type": "string", "minLength": 1 },
-        "criterion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "case_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "criterion": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
         "outcome": {
-          "enum": ["same-defect-other-criterion", "separate-defect-confound", "intentional-multiple-defects", "weak-evidence"],
+          "enum": [
+            "same-defect-other-criterion",
+            "separate-defect-confound",
+            "intentional-multiple-defects",
+            "weak-evidence"
+          ],
           "description": "same-defect-other-criterion: one defect that satisfies more than one criterion; the ground truth is incomplete, not the fixture. separate-defect-confound: an unrelated defect that makes the pair measure the wrong thing; the fixture must change. intentional-multiple-defects: the case is about a producer emitting many defects. weak-evidence: too few engines agree to act on."
         },
-        "rationale": { "type": "string", "minLength": 40 },
-        "reviewer": { "type": "string", "minLength": 1 },
-        "family": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
-        "family_sha256": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
-        "reviewed_on": { "type": "string", "format": "date" },
+        "rationale": {
+          "type": "string",
+          "minLength": 40
+        },
+        "reviewer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "The family this case belongs to. Used for grouping in reports; it does not affect whether a decision is still live."
+        },
+        "assertion_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "The digest of this case's identity and ground truth -- case_id, min_criteria and must_not_report -- at the time of review. Scoped to the assertion rather than the family or the corpus so that metadata, notes, user needs and sibling fixtures can move without expiring a reviewed judgement, while any change to what the corpus asserts about this case expires it immediately."
+        },
+        "reviewed_on": {
+          "type": "string",
+          "format": "date"
+        },
         "engines_agreeing": {
           "type": "integer",
           "minimum": 1,
           "description": "How many engines reported this criterion on the broken page and not on its control. One engine is its own mapping choice; several is a property of the fixture."
         },
-        "remedy": { "type": "string", "minLength": 1 }
+        "remedy": {
+          "type": "string",
+          "minLength": 1
+        }
       },
       "allOf": [
         {
           "description": "Calling a pair confounded requires saying what to change.",
-          "if": { "properties": { "outcome": { "const": "separate-defect-confound" } }, "required": ["outcome"] },
-          "then": { "properties": { "remedy": {} }, "required": ["remedy"] }
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "separate-defect-confound"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "remedy": {}
+            },
+            "required": [
+              "remedy"
+            ]
+          }
         }
       ]
     },
@@ -74,12 +166,18 @@
         "rationale",
         "reviewer",
         "family",
-        "family_sha256",
+        "assertion_sha256",
         "reviewed_on"
       ],
       "properties": {
-        "case_id": { "type": "string", "minLength": 1 },
-        "criterion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "case_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "criterion": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
         "outcome": {
           "enum": [
             "correct-unimplemented",
@@ -94,27 +192,62 @@
           "pattern": "^https://",
           "description": "Public source supporting the decision. An assertion is never changed to match current tool behaviour alone."
         },
-        "rationale": { "type": "string", "minLength": 40 },
-        "reviewer": { "type": "string", "minLength": 1 },
-        "family": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
-        "family_sha256": {
+        "rationale": {
+          "type": "string",
+          "minLength": 40
+        },
+        "reviewer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "The family this case belongs to. Used for grouping in reports; it does not affect whether a decision is still live."
+        },
+        "assertion_sha256": {
           "type": "string",
           "pattern": "^sha256:[a-f0-9]{64}$",
-          "description": "The content digest of the family this case belongs to, at the time of review. Scoped to the family rather than the whole corpus so an unrelated addition does not expire every decision."
+          "description": "The digest of this case's identity and ground truth -- case_id, min_criteria and must_not_report -- at the time of review. Scoped to the assertion rather than the family or the corpus so that metadata, notes, user needs and sibling fixtures can move without expiring a reviewed judgement, while any change to what the corpus asserts about this case expires it immediately."
         },
-        "reviewed_on": { "type": "string", "format": "date" },
+        "reviewed_on": {
+          "type": "string",
+          "format": "date"
+        },
         "engines_consulted": {
           "type": "array",
-          "items": { "type": "string", "minLength": 1 },
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
           "description": "Engines whose silence prompted the review. More engines make a `wrong` finding safer; two do not establish one."
         },
-        "notes": { "type": "string", "minLength": 1 }
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
       },
       "allOf": [
         {
           "description": "Declaring an assertion wrong requires saying what should change.",
-          "if": { "properties": { "outcome": { "const": "wrong" } }, "required": ["outcome"] },
-          "then": { "properties": { "notes": {} }, "required": ["notes"] }
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "wrong"
+              }
+            },
+            "required": [
+              "outcome"
+            ]
+          },
+          "then": {
+            "properties": {
+              "notes": {}
+            },
+            "required": [
+              "notes"
+            ]
+          }
         }
       ]
     }
