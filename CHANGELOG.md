@@ -40,6 +40,94 @@ machine-readable manifest and schema versions are recorded with every release.
   path-based and multipoint gestures; its Understanding document places
   dragging under 2.5.7. **Migration:** a 2.5.1 report on this page was
   previously a detection and is now unasserted (#54).
+- `aaa-safe_focus_not_obscured_enhanced` failed 2.4.11 and 2.4.12 itself: it
+  reserved footer space only for buttons inside `main`, so the Back link after
+  `main` scrolled entirely under the fixed footer when focused. The control
+  now reserves the footer's height below the whole body and keeps every
+  focused link and button clear of it (#56).
+- `aaa-visual_presentation` (1.4.8): `fixture.css` caps `body` and `p` at
+  70ch, so the broken page's "120ch" lines never exceeded 80 characters. The
+  broken page now lifts both caps (about 165 characters per line at 1280px).
+  The claim that author-set colours stop the user selecting their own is
+  removed with the colour rules: browsers let users override them (G156) and
+  no failure technique covers it. The corrected page is narrowed from 70ch to
+  50ch, because 70ch measured 87-92 characters per line, itself over 1.4.8's 80
+  (#56).
+- `scenario-safe_touch_targets` used 24 px targets, which fail 2.5.5 (44 by
+  44), one of the two criteria its pair declares. They are now 44 by 44 (#56).
+- The 13 `aaa` adjudication decisions are re-pinned to the new family digest
+  with a note; their judgements are unchanged.
+- `flash-animation_from_interaction` passed its declared 2.3.3 failure: the
+  shared gate refused to start under reduced motion and `fixture.css` zeroes
+  every animation there, so the page honoured the preference twice over. The
+  broken page now honours neither (a no-preference gate, and an `!important`
+  rule so the scaffolding's blanket stop does not supply the guard the page
+  lacks). It never flashes, is a single 0.6s slide behind the same button, and
+  now carries a motion warning. Every flashing page keeps every safety gate;
+  the corrected page is unchanged (#56).
+
+### Changed (ground truth)
+
+- `flash-three_flashes_exactly` is relabelled from a 2.3.2 fail to a boundary
+  pass and is now a `safe` case asserting `must_not_report: ["2.3.1",
+  "2.3.2"]`. 2.3.2 fails content that flashes *more* than three times in any
+  one second; exactly three passes both criteria. The page now plays one burst
+  of six opposing transitions inside 5/6 s and stops, so no window of any
+  alignment holds more than three flashes. **Migration:** a 2.3.2 report on
+  this page was previously a detection and is now a false positive (#56).
+- `surface-email_contrast_darkmode` did not fail 1.4.3 as rendered: it set
+  only a text colour (#333 on the body's #fff, 12.6:1) and relied on a mail
+  client's dark background that no browser rendering produces. The email now
+  declares light and dark support and ships a `prefers-color-scheme: dark`
+  rule that darkens the message background while the inline text stays #333,
+  1.48:1 in the dark scheme. The corrected email sets foreground and
+  background together in both schemes (15.3:1 dark). Both cases now declare
+  `state_dependency: "media-query"` (#55).
+
+### Added
+
+- `scenario-icon_button_contrast` and its corrected control (1.4.11). An
+  icon-only search button whose icon, the only visual sign of the control, is
+  1.67:1 against the page; the control draws it at 7:1. It keeps Non-text
+  Contrast from losing its only defect case when `forced_colors` is
+  relabelled (#55).
+
+### Changed (ground truth)
+
+- `scenario-forced_colors` is relabelled from a 1.4.1/1.4.11 fail to a pass
+  and is now a `safe` case asserting `must_not_report: ["1.4.1", "1.4.11"]`.
+  As authored the selected item is a 7.5:1 fill (a lightness difference) on
+  items that are not UI components, and WCAG 2.2 has no criterion, failure
+  technique or ACT rule for content that does not survive a user's
+  forced-colours theme. The page is unchanged and kept as a forced-colours
+  robustness scenario.
+- `surface-email_contrast_darkmode` no longer asserts 1.4.1: nothing on the
+  page carries information by colour.
+- **Migration:** reports of 1.4.1 or 1.4.11 on `scenario-forced_colors` were
+  previously detections and are now false positives; a 1.4.1 report on
+  `surface-email_contrast_darkmode` is now unasserted. The two `surfaces`
+  adjudication decisions are re-pinned to the new family digest with a note;
+  their judgements are unchanged (#55).
+- Six broken pages declared a 1.4.1 failure that the page did not show as
+  rendered under WCAG 2.2 (#55). Each now conveys its information by hue alone,
+  and each corrected page keeps the same colours and adds exactly the missing
+  non-colour cue:
+  - `color-link_color_only`: the in-text link was 3.35:1 against its
+    surrounding text, which F73 and the WCAG 2.2 edition of G183 accept. It is
+    now 2.21:1, with no underline or other cue in any state, and 7.88:1 against
+    the background so it does not also fail 1.4.3 or 1.4.6.
+  - `color-status_color_only`: flight status is now told only by a red or green
+    dot of near-equal lightness (1.10:1), keyed by a colour-only legend.
+  - `color-selection_color_only`: the options are now real toggle buttons whose
+    selected fill differs from the unselected one only in hue (1.22:1).
+  - `color-disabled_state` and `scenario-disabled_state`: one grey button with
+    nothing to compare it with was a 1.4.3 defect. Taken seats now differ from
+    free ones only in hue (1.05:1). In the colour family they are disabled, so
+    the pair isolates 1.4.1; in the scenario they stay enabled, which is its
+    4.1.2 half.
+  - `color-error_color_only`: nothing marked the field in error. It is now
+    `aria-invalid="true"` with only a red border beside a grey one of
+    near-equal lightness (1.13:1) and no text (F81, and 3.3.1).
 - `media-video_no_captions` did not contain its declared 1.2.2 defect.
   `flight-info.mp4` was a video-only stream, and 1.2.2 asks for captions for
   the audio in synchronized media, so the case was inapplicable rather than
@@ -57,6 +145,20 @@ machine-readable manifest and schema versions are recorded with every release.
   that reported 1.2.2 on this page was previously credited with a detection and
   is now a false positive; results scored against the old manifest are not
   comparable for this case (#54).
+
+### Added
+
+- A `wiring` family: one constant defect — a div acting as a button, not
+  keyboard operable — with the click handler attached four ways (inline
+  attribute, `addEventListener`, delegated to an ancestor, pointer-events
+  only), each with a matched control. Every case is genuinely interactive and
+  verified by driving it in a browser: pointer activates it, keyboard does not,
+  and each control is reachable and operable.
+- The family exists because every pre-existing keyboard fixture wires its
+  defect with an inline `onclick`, the one form a scanner can read from markup.
+  Measured against one product, the inline case was reported and the same
+  defect attached by listener or delegation was reported by nothing — so the
+  corpus was easier than the web.
 
 ### Added
 

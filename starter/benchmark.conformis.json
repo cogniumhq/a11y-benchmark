@@ -1,0 +1,25 @@
+{
+  "adapter": "./adapter.conformis.mjs",
+  "run_id_prefix": "2026-10-18-conformis-1.6.0",
+  "corpus": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "revision": "469486a4811c5055de9d2524ede1ca520c2774c8"
+  },
+  "tool": {
+    "name": "Cognium Conformis",
+    "version": "git:c315d202; a11y/html@1.6.0 + tech/html-aria@1.6.0",
+    "engine_family": "Conformis a11y/html and tech/html-aria",
+    "tool_surface": "site scan with subject-declared entry pages",
+    "independence": "independent-engine"
+  },
+  "environment": {
+    "os": "linux/x64",
+    "runtime": "Node.js 20.20.2",
+    "browser": "Chromium",
+    "browser_version": "149.0.7827.55",
+    "viewport": { "width": 1280, "height": 900 },
+    "preferences": { "reduced_motion": false, "color_scheme": "light" }
+  },
+  "repeat": 1,
+  "raw_evidence_published": false
+}
