@@ -5,7 +5,8 @@ import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
 
-import { partitionDecisions, reconcile, silentAssertions, undeclaredFindings } from '../adjudicate.mjs';
+import { partitionDecisions, partitionUndeclared, reconcile, silentAssertions, undeclaredFindings } from '../adjudicate.mjs';
+import { assertionDigest } from '../assertion-identity.mjs';
 import { loadCorpus } from './scoring.mjs';
 
 const ROOT = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
@@ -85,51 +86,171 @@ test('no committed decision declares an assertion wrong without saying what to c
 test('the policy states that silence does not settle a question', () => {
   assert.match(adjudication.policy.scope, /not thereby wrong/i);
   assert.match(adjudication.policy.sourcing, /never changed to match current tool behaviour/i);
-  assert.match(adjudication.policy.expiry, /family/i);
+  assert.match(adjudication.policy.expiry, /assertion/i);
 });
 
-// --- expiry is per family, not per corpus -----------------------------------
+// --- expiry is per assertion, not per family and not per corpus -------------
+//
+// Two coarser keys were tried before this one and both expired reviews nobody
+// had questioned: the corpus digest took out all 72 evidence records when two
+// families were added, and the family digest took out 13 decisions over a
+// metadata edit (#51). These tests pin the granularity so a third attempt at
+// "just use the digest we already have" fails loudly.
 
-test('a decision survives an unrelated family changing', () => {
-  // The lesson from the evidence ledger, where adding two families expired all
-  // 72 records at once. A decision about one fixture must not be invalidated
-  // by an addition elsewhere.
-  const moved = structuredClone(manifest);
-  const other = moved.families.find((family) => family.id !== adjudication.decisions[0].family);
-  other.content_sha256 = `sha256:${'f'.repeat(64)}`;
+/** A corpus with one case's ground truth altered, leaving everything else. */
+function withChangedAssertion(caseId, mutate) {
+  const moved = { ...corpus, cases: new Map(corpus.cases) };
+  const fixture = structuredClone(moved.cases.get(caseId));
+  mutate(fixture);
+  moved.cases.set(caseId, fixture);
+  return moved;
+}
+
+test('a decision survives metadata changing on its own case', () => {
+  const subject = adjudication.decisions[0];
+  const moved = withChangedAssertion(subject.case_id, (fixture) => {
+    fixture.method = ['interaction', 'state-exploration', 'a-method-it-did-not-have'];
+    fixture.notes = 'rewritten note';
+    fixture.user_needs = ['memory-support'];
+    fixture.state_dependency = 'driven';
+    fixture.journey = 'some-other-journey';
+  });
 
   const { current, stale } = partitionDecisions(adjudication, moved);
-  assert.equal(stale.filter((row) => row.family !== other.id).length, 0);
-  assert.ok(current.size > 0, 'decisions in untouched families stay current');
+  assert.deepEqual(stale, [], 'metadata is not part of what the corpus asserts');
+  assert.equal(current.size, adjudication.decisions.length);
 });
 
-test('a decision expires when its own family changes', () => {
-  const target = adjudication.decisions[0].family;
-  const moved = structuredClone(manifest);
-  moved.families.find((family) => family.id === target).content_sha256 = `sha256:${'f'.repeat(64)}`;
+test('a decision survives a sibling case in the same family changing', () => {
+  const subject = adjudication.decisions[0];
+  const sibling = [...corpus.cases.values()].find(
+    (row) => row.family === subject.family && row.id !== subject.case_id,
+  );
+  assert.ok(sibling, 'need a sibling to make this test meaningful');
+
+  const moved = withChangedAssertion(sibling.id, (fixture) => {
+    fixture.min_criteria = { '9.9.9': 1 };
+  });
 
   const { current, stale } = partitionDecisions(adjudication, moved);
-  assert.ok(stale.length > 0);
-  for (const row of stale) {
-    assert.equal(row.family, target);
-    assert.match(row.stale_reason, /changed since review/);
-  }
-  assert.equal([...current.values()].some((row) => row.family === target), false);
+  assert.equal(
+    stale.some((row) => row.case_id === subject.case_id), false,
+    'a decision is about one case, not about its neighbours',
+  );
+  assert.ok(current.has(`${subject.case_id}|${subject.criterion}`));
 });
 
-test('a decision for a family that no longer exists is reported, not silently dropped', () => {
-  const moved = structuredClone(manifest);
-  const target = adjudication.decisions[0].family;
-  moved.families = moved.families.filter((family) => family.id !== target);
+test('a decision expires when its own min_criteria changes', () => {
+  const subject = adjudication.decisions[0];
+  const moved = withChangedAssertion(subject.case_id, (fixture) => {
+    fixture.min_criteria = { ...fixture.min_criteria, '1.1.1': 1 };
+  });
+
+  const { current, stale } = partitionDecisions(adjudication, moved);
+  assert.ok(stale.some((row) => row.case_id === subject.case_id));
+  assert.match(
+    stale.find((row) => row.case_id === subject.case_id).stale_reason,
+    /ground truth for .* changed since review/,
+  );
+  assert.equal(current.has(`${subject.case_id}|${subject.criterion}`), false);
+});
+
+test('a decision expires when must_not_report changes', () => {
+  // Moving a criterion between min_criteria and must_not_report inverts what
+  // the case claims while leaving both fields present, so must_not_report has
+  // to be inside the digest.
+  const subject = adjudication.decisions[0];
+  const moved = withChangedAssertion(subject.case_id, (fixture) => {
+    fixture.must_not_report = [...(fixture.must_not_report ?? []), '1.4.1'];
+  });
+
+  const { stale } = partitionDecisions(adjudication, moved);
+  assert.ok(stale.some((row) => row.case_id === subject.case_id));
+});
+
+test('reordering min_criteria is not a change', () => {
+  const subject = adjudication.decisions[0];
+  const fixture = corpus.cases.get(subject.case_id);
+  const keys = Object.keys(fixture.min_criteria ?? {});
+  if (keys.length < 2) return; // nothing to reorder
+
+  const moved = withChangedAssertion(subject.case_id, (next) => {
+    next.min_criteria = Object.fromEntries(
+      keys.slice().reverse().map((key) => [key, fixture.min_criteria[key]]),
+    );
+  });
+
+  const { stale } = partitionDecisions(adjudication, moved);
+  assert.equal(stale.some((row) => row.case_id === subject.case_id), false);
+});
+
+test('a decision for a case that no longer exists is reported, not silently dropped', () => {
+  const subject = adjudication.decisions[0];
+  const moved = { ...corpus, cases: new Map(corpus.cases) };
+  moved.cases.delete(subject.case_id);
 
   const { stale } = partitionDecisions(adjudication, moved);
   assert.ok(stale.some((row) => row.stale_reason.includes('no longer exists')));
 });
 
-test('committed decisions are current against the committed manifest', () => {
-  const { current, stale } = partitionDecisions(adjudication, manifest);
-  assert.deepEqual(stale, [], 'a committed decision must match the family it was reviewed against');
+test('committed decisions are current against the committed corpus', () => {
+  const { current, stale } = partitionDecisions(adjudication, corpus);
+  assert.deepEqual(stale, [], 'a committed decision must match the assertion it was reviewed against');
   assert.equal(current.size, adjudication.decisions.length);
+});
+
+// --- undeclared findings expire by the same rule -----------------------------
+
+test('undeclared findings pin an assertion digest, and it is enforced', () => {
+  // These records carried a family digest that nothing ever read, so a review
+  // of a pair survived any later rewrite of that pair.
+  for (const row of adjudication.undeclared_findings ?? []) {
+    assert.match(row.assertion_sha256, /^sha256:[a-f0-9]{64}$/);
+    assert.equal('family_sha256' in row, false);
+  }
+
+  const subject = (adjudication.undeclared_findings ?? [])[0];
+  const moved = withChangedAssertion(subject.case_id, (fixture) => {
+    fixture.min_criteria = { ...fixture.min_criteria, '9.9.9': 1 };
+  });
+
+  const { current, stale } = partitionUndeclared(adjudication, moved);
+  assert.ok(stale.some((row) => row.case_id === subject.case_id));
+  assert.equal(current.has(`${subject.case_id}|${subject.criterion}`), false);
+});
+
+test('a stale undeclared review is not counted as reviewed', () => {
+  // The bug this closes: `reconcile` mapped every record straight to reviewed,
+  // so a rewritten fixture kept an adjudication made about its old form.
+  const stale = (reconcile({ corpus, manifest, adjudication, results: [] }).undeclaredStale ?? []);
+  for (const row of stale) {
+    assert.match(row.stale_reason, /changed since review|no longer exists/);
+  }
+});
+
+test('the three dragging reviews stay expired after migration', () => {
+  // scenario-dragging_required lost 2.5.1 from its ground truth when #54 gave
+  // its handles real listeners, so reviews made against the old pair must not
+  // be revalidated by the move to assertion digests. They are pinned at the
+  // ground truth the reviewer actually saw.
+  const { stale } = partitionUndeclared(adjudication, corpus);
+  const ids = new Set(stale.map((row) => row.case_id));
+  assert.deepEqual([...ids], ['scenario-dragging_required']);
+  assert.equal(stale.length, 3);
+});
+
+test('every live record pins the digest its case computes today', () => {
+  const rows = [...(adjudication.decisions ?? []), ...(adjudication.undeclared_findings ?? [])];
+  for (const row of rows) {
+    const fixture = corpus.cases.get(row.case_id);
+    assert.ok(fixture, `${row.case_id} is not in the corpus`);
+    const live = assertionDigest(fixture);
+    // Either it matches today (live) or it is one of the records deliberately
+    // pinned at older ground truth so that it reads as stale.
+    if (row.assertion_sha256 !== live) {
+      assert.equal(row.case_id, 'scenario-dragging_required');
+    }
+  }
 });
 
 // --- silence detection ------------------------------------------------------

@@ -2,9 +2,9 @@
   "$schema": "./schemas/adjudication.schema.json",
   "format": "cognium-a11y-adjudication",
   "format_version": "1.0.0",
-  "generated": "2026-10-14",
+  "generated": "2026-10-19",
   "policy": {
-    "expiry": "A decision is scoped to the content digest of the family its case belongs to, not the whole corpus. Adding an unrelated family must not expire every decision -- the evidence ledger learned that the hard way when the aaa and native families expired all 72 of its records at once.",
+    "expiry": "A reviewed judgement expires when the assertion it is about changes, and not otherwise. Each record pins a digest over its case id, min_criteria and must_not_report. Metadata, notes, user needs, and every other case in the same family move freely without expiring it. Corpus-wide and family-wide keys were both tried and both expired reviews nobody had questioned.",
     "sourcing": "Every decision cites a public source. An assertion is never changed to match current tool behaviour alone; that would make the corpus track the tools instead of the standard.",
     "scope": "An assertion no engine reports is not thereby wrong, and not thereby right. Two engines agreeing on silence is enough to flag a question, never enough to settle it as wrong."
   },
@@ -17,7 +17,7 @@
       "rationale": "The assertion follows the Understanding document for this AAA criterion. Neither engine consulted evaluated a single AAA criterion anywhere on the corpus, so the silence reflects engine scope rather than a defect in the fixture.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "aaa",
-      "family_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c",
+      "assertion_sha256": "sha256:49eb3113c0f729781f8e34e557b942e3c1818cf1f8bf1c2bd2f6b309f1bf5cde",
       "reviewed_on": "2026-10-14",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -33,7 +33,7 @@
       "rationale": "The assertion follows the Understanding document for this AAA criterion. Neither engine consulted evaluated a single AAA criterion anywhere on the corpus, so the silence reflects engine scope rather than a defect in the fixture.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "aaa",
-      "family_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c",
+      "assertion_sha256": "sha256:5fe52f24b5ed153992ebf3c00d682399a0693f912b9be2ac59461852e6c72c97",
       "reviewed_on": "2026-10-14",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -49,7 +49,7 @@
       "rationale": "The assertion follows the Understanding document for this AAA criterion. Neither engine consulted evaluated a single AAA criterion anywhere on the corpus, so the silence reflects engine scope rather than a defect in the fixture.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "aaa",
-      "family_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c",
+      "assertion_sha256": "sha256:03938328c969e025c93b6efdd259a3b88af46859c666421f3848dcc0de419711",
       "reviewed_on": "2026-10-14",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -65,7 +65,7 @@
       "rationale": "The assertion follows the Understanding document for this AAA criterion. Neither engine consulted evaluated a single AAA criterion anywhere on the corpus, so the silence reflects engine scope rather than a defect in the fixture.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "aaa",
-      "family_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c",
+      "assertion_sha256": "sha256:bb61ef2577b8c342e6898d1ffd5eeac9f9bb0e31fab93a7a1393043faa6d1684",
       "reviewed_on": "2026-10-14",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -81,7 +81,7 @@
       "rationale": "The assertion follows the Understanding document for this AAA criterion. Neither engine consulted evaluated a single AAA criterion anywhere on the corpus, so the silence reflects engine scope rather than a defect in the fixture.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "aaa",
-      "family_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c",
+      "assertion_sha256": "sha256:7d3c362aa1ed38f030ed78db11a7af880e3f79c0c9377559716a835f57050e6e",
       "reviewed_on": "2026-10-14",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -97,7 +97,7 @@
       "rationale": "The assertion follows the Understanding document for this AAA criterion. Neither engine consulted evaluated a single AAA criterion anywhere on the corpus, so the silence reflects engine scope rather than a defect in the fixture.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "aaa",
-      "family_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c",
+      "assertion_sha256": "sha256:0486904396929230eedae505ecfa179be73f28fa6ea16780a86fc5e7a1c9a4ca",
       "reviewed_on": "2026-10-14",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -113,7 +113,7 @@
       "rationale": "The assertion follows the Understanding document for this AAA criterion. Neither engine consulted evaluated a single AAA criterion anywhere on the corpus, so the silence reflects engine scope rather than a defect in the fixture.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "aaa",
-      "family_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c",
+      "assertion_sha256": "sha256:a1d112bc171e970b67fd727aa4b0dea750fb2505fae1e0fb7ba047759c5b38dc",
       "reviewed_on": "2026-10-14",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -129,7 +129,7 @@
       "rationale": "The assertion follows the Understanding document for this AAA criterion. Neither engine consulted evaluated a single AAA criterion anywhere on the corpus, so the silence reflects engine scope rather than a defect in the fixture.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "aaa",
-      "family_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c",
+      "assertion_sha256": "sha256:153a2c25130ce9cacf7eec54fa575ce7e6e88497a58b3344dade541dfc42f30c",
       "reviewed_on": "2026-10-14",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -145,7 +145,7 @@
       "rationale": "The assertion follows the Understanding document for this AAA criterion. Neither engine consulted evaluated a single AAA criterion anywhere on the corpus, so the silence reflects engine scope rather than a defect in the fixture.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "aaa",
-      "family_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c",
+      "assertion_sha256": "sha256:6943c8e1cd6e7647f421e6053c97e1430da045ac37012ccca70d4cc8a8ff80b0",
       "reviewed_on": "2026-10-14",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -161,7 +161,7 @@
       "rationale": "The assertion follows the Understanding document for this AAA criterion. Neither engine consulted evaluated a single AAA criterion anywhere on the corpus, so the silence reflects engine scope rather than a defect in the fixture.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "aaa",
-      "family_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c",
+      "assertion_sha256": "sha256:579b526072191a39898ec5ac20403753c4e358207cfc385c7ef513e61b405ae9",
       "reviewed_on": "2026-10-14",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -177,7 +177,7 @@
       "rationale": "The assertion follows the Understanding document for this AAA criterion. Neither engine consulted evaluated a single AAA criterion anywhere on the corpus, so the silence reflects engine scope rather than a defect in the fixture.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "aaa",
-      "family_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c",
+      "assertion_sha256": "sha256:6f944d713be5124eb40065270d353db7cd5f74ba8754001a0575a52a7a7f916b",
       "reviewed_on": "2026-10-14",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -193,7 +193,7 @@
       "rationale": "The assertion follows the Understanding document for this AAA criterion. Neither engine consulted evaluated a single AAA criterion anywhere on the corpus, so the silence reflects engine scope rather than a defect in the fixture.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "aaa",
-      "family_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c",
+      "assertion_sha256": "sha256:53c91339f7eab84df450f2e21562bc32fc0bf4776b9838825ec7abcece72b8dd",
       "reviewed_on": "2026-10-14",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -209,7 +209,7 @@
       "rationale": "The assertion follows the Understanding document for this AAA criterion. Neither engine consulted evaluated a single AAA criterion anywhere on the corpus, so the silence reflects engine scope rather than a defect in the fixture.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "aaa",
-      "family_sha256": "sha256:bb59900d22adcfad1774831b2063629e9afc1ee6a40041c9d10ff8395348046c",
+      "assertion_sha256": "sha256:5af1bde80e2672c2bd6f9ec84db36676bf20417477940efbed1654ffbb0d0667",
       "reviewed_on": "2026-10-14",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -225,7 +225,7 @@
       "rationale": "Same closed shadow root. The image and its missing alternative are not visible to an in-page script, so the silence measures capture reach rather than rule logic.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "delivery",
-      "family_sha256": "sha256:de7ec5de77ab65b92f45d7f82e978c8fcb42f09ef7f3bb1aaeb04eaf4f0334eb",
+      "assertion_sha256": "sha256:2bbfb46a760c0192d92c5408b3d4441c4d191d46d0015d014a3fef29a01a6b31",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -244,7 +244,7 @@
       "rationale": "The defect lives inside a closed shadow root, which is unreachable from an in-page script by construction. That is what this delivery variant exists to measure. A runner with DevTools-level access could reach it; every engine here injects a page script and cannot.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "delivery",
-      "family_sha256": "sha256:de7ec5de77ab65b92f45d7f82e978c8fcb42f09ef7f3bb1aaeb04eaf4f0334eb",
+      "assertion_sha256": "sha256:2bbfb46a760c0192d92c5408b3d4441c4d191d46d0015d014a3fef29a01a6b31",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -263,7 +263,7 @@
       "rationale": "A sticky bar covers the focused control. The defect exists only while a control has focus, so it needs a focus walk and a geometry comparison. A single page load never enters that state.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "core",
-      "family_sha256": "sha256:754a48b398c520fa446740f37791d1305252a6ead498b368af1afee3e439f476",
+      "assertion_sha256": "sha256:4f0224af4ece5a16c747f62709fa848796d0400d9dc39cdc7f1a86e6c49a34cd",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -282,7 +282,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:f796e583288e6bc6ef3fabb32dc5b427da7e78e75ac9c56c3cfbb970430aec7e",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -298,7 +298,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:f796e583288e6bc6ef3fabb32dc5b427da7e78e75ac9c56c3cfbb970430aec7e",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -314,7 +314,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:58864aa8d789302e8701933748c6066ab3dd290f59eff10cfa8baad3732a0338",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -330,7 +330,7 @@
       "rationale": "A breadcrumb trail with no navigation landmark and no current-page indication. The markup is fully present in the delivered page and the check is mechanical; no engine consulted ships a rule for breadcrumb structure.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:b1e3b64d64497ec184be778c580272e9a6f3cfaba56937e81aa631b151b698dd",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -350,7 +350,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:b1e3b64d64497ec184be778c580272e9a6f3cfaba56937e81aa631b151b698dd",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -366,7 +366,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:729a597abaea938c2104ae15fdf86879536553e86887fa9a71005929c5659065",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -382,7 +382,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:729a597abaea938c2104ae15fdf86879536553e86887fa9a71005929c5659065",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -398,7 +398,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:692793f0a68cb724c86cbcd2ccc75fbd970ed19d8c72f74021e8a1d899e5de1a",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -414,7 +414,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:692793f0a68cb724c86cbcd2ccc75fbd970ed19d8c72f74021e8a1d899e5de1a",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -430,7 +430,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:692793f0a68cb724c86cbcd2ccc75fbd970ed19d8c72f74021e8a1d899e5de1a",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -446,7 +446,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:3ac6077ecb82e25ff0b58790c58977a399a3e237c41e5bedb0c007dba179687b",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -462,7 +462,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:3ac6077ecb82e25ff0b58790c58977a399a3e237c41e5bedb0c007dba179687b",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -478,7 +478,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:1804fc39489e1bbd037e56c2339964317133cb78cfca0b42a5cd162872066e58",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -494,7 +494,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:1804fc39489e1bbd037e56c2339964317133cb78cfca0b42a5cd162872066e58",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -510,7 +510,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:1804fc39489e1bbd037e56c2339964317133cb78cfca0b42a5cd162872066e58",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -526,7 +526,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:60503918f8c91cef89d1193dd7f5db1411d2c174d0fab0a4efe3558c8c47ad44",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -542,7 +542,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:60503918f8c91cef89d1193dd7f5db1411d2c174d0fab0a4efe3558c8c47ad44",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -558,7 +558,7 @@
       "rationale": "A video element with no track element and no transcript. The absence of a caption track is mechanically detectable from the delivered markup, as the fixture note itself states, and no engine consulted reported it. Caption quality stays a human judgement and is not asserted here.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:515bcd458e7d585dd45ded34e8720e7769183fd2e50a3ddefbfbd11ce4799684",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -578,7 +578,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:515bcd458e7d585dd45ded34e8720e7769183fd2e50a3ddefbfbd11ce4799684",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -594,7 +594,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:0553fecd0acf1a2db38a41b5398dc70ee31f62822dfd4e515bf0da24776a6a6a",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -610,7 +610,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:0553fecd0acf1a2db38a41b5398dc70ee31f62822dfd4e515bf0da24776a6a6a",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -626,7 +626,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:d0b8a257b2b6e650737575a52ac21ebe8382a86bde6ea0b474ec819a001a93eb",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -642,7 +642,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:d0b8a257b2b6e650737575a52ac21ebe8382a86bde6ea0b474ec819a001a93eb",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -658,7 +658,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:6daf641a39307f16c0edf58154846d785586751a360dfd71bfbda6532d2ab0ce",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -674,7 +674,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:6daf641a39307f16c0edf58154846d785586751a360dfd71bfbda6532d2ab0ce",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -690,7 +690,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:3d13b2e648ae5189d1d68b90189e6d22a4b373d29f3223c5a7dab82a0acd19a6",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -706,7 +706,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:3d13b2e648ae5189d1d68b90189e6d22a4b373d29f3223c5a7dab82a0acd19a6",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -722,7 +722,7 @@
       "rationale": "Tabular data laid out in divs. Deciding that a div grid is semantically a table, and therefore that header association is missing, requires reading the content. An engine can audit a table that exists; it cannot infer one that should exist.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:6d613c0ac41e312aad35f7e47b1a125594a05ccce1bba307aeb1e156409b8fb9",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -742,7 +742,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:b354ca1f3ce640b54b95068117ecd7e769925671645fe382b2e6b7b653e04969",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -758,7 +758,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:b354ca1f3ce640b54b95068117ecd7e769925671645fe382b2e6b7b653e04969",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -774,7 +774,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:b354ca1f3ce640b54b95068117ecd7e769925671645fe382b2e6b7b653e04969",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -790,7 +790,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:d1d0b4d162fe70cca692f27b2bed00c4b364153cca3f27681dc40e87aaf7da01",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -806,7 +806,7 @@
       "rationale": "APG widget defects live in keyboard behaviour and in state these engines never drove. axe documents that it does not test hidden regions and that activating them requires a test harness, so a static pass cannot reach the defect.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:d1d0b4d162fe70cca692f27b2bed00c4b364153cca3f27681dc40e87aaf7da01",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -822,7 +822,7 @@
       "rationale": "Generic link text with no disambiguating context. Detecting a fixed set of generic phrases is mechanical and no engine consulted does it; judging whether the surrounding context resolves the purpose is not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "core",
-      "family_sha256": "sha256:754a48b398c520fa446740f37791d1305252a6ead498b368af1afee3e439f476",
+      "assertion_sha256": "sha256:fccd950770bbc02bc16d349c4d8b2fca1db3654cb02f3529a919eeb677f91c7f",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -841,7 +841,7 @@
       "rationale": "The inputs collect a name and an email and carry no autocomplete token, which is what the criterion requires. Engines check that an autocomplete value is valid, not that one is present, because deciding an input collects information about the user needs an understanding of the form.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "core",
-      "family_sha256": "sha256:754a48b398c520fa446740f37791d1305252a6ead498b368af1afee3e439f476",
+      "assertion_sha256": "sha256:b0cf186eaedc5fceda5af1a82a374c82953d6f3f81e03f408f3b889df24eeee0",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -860,7 +860,7 @@
       "rationale": "Whether a heading or label describes its topic is a judgement about the content and its audience. No parse decides it, and an engine that tried would be guessing.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "core",
-      "family_sha256": "sha256:754a48b398c520fa446740f37791d1305252a6ead498b368af1afee3e439f476",
+      "assertion_sha256": "sha256:3734574fb2f6364f7a5553d5777a0e05d8964a3012320c7e067a14cf9e4902ff",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -879,7 +879,7 @@
       "rationale": "The contrast failure appears only under a dark colour scheme. Every engine ran under the default light scheme, so the failing rendering was never produced.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "surfaces",
-      "family_sha256": "sha256:7b9f5d83ed0494fbf20d49ff6ac32d3faf4e1e8092741b4ff37ba1c9c1232119",
+      "assertion_sha256": "sha256:02ba43e90584d20a8831ee342105536ab010e0ba795820fb03bb5c7d206ac85f",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -899,7 +899,7 @@
       "rationale": "This case is labelled a proxy: the real artifact is an EPUB package document, and the fixture renders an OPF fragment as text. No HTML engine parses an OPF shown inside a pre element, and none should be expected to.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "surfaces",
-      "family_sha256": "sha256:7b9f5d83ed0494fbf20d49ff6ac32d3faf4e1e8092741b4ff37ba1c9c1232119",
+      "assertion_sha256": "sha256:3f79454f121f376e46aa0da070b4a6f3859b28a797328da7c17330c9c25be68a",
       "reviewed_on": "2026-10-13",
       "engines_consulted": [
         "axe-core 4.14.0",
@@ -920,7 +920,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "color-independent",
-      "family_sha256": "sha256:583d711bc6c5da655a03e9d718b7bbca36da1abb9180b956ddbd9432d6127b67",
+      "assertion_sha256": "sha256:a030aa4fcfb334baaf58aeacd1eddb92c8c0550555362990522224cb3f257591",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 1
     },
@@ -931,7 +931,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "color-independent",
-      "family_sha256": "sha256:583d711bc6c5da655a03e9d718b7bbca36da1abb9180b956ddbd9432d6127b67",
+      "assertion_sha256": "sha256:a030aa4fcfb334baaf58aeacd1eddb92c8c0550555362990522224cb3f257591",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 1
     },
@@ -942,7 +942,7 @@
       "rationale": "A control shown as disabled by greying it is one visual treatment. The grey both removes the non-colour cue the declared 1.4.1 is about and falls below the 1.4.3 contrast threshold. Six engines agree, and no second defect was introduced.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "color-independent",
-      "family_sha256": "sha256:583d711bc6c5da655a03e9d718b7bbca36da1abb9180b956ddbd9432d6127b67",
+      "assertion_sha256": "sha256:e1ec3ab8c552a756993fe40383772db692c7bf9038be01176d39fa74e15550a6",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 6
     },
@@ -953,7 +953,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "color-independent",
-      "family_sha256": "sha256:583d711bc6c5da655a03e9d718b7bbca36da1abb9180b956ddbd9432d6127b67",
+      "assertion_sha256": "sha256:e1ec3ab8c552a756993fe40383772db692c7bf9038be01176d39fa74e15550a6",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 2
     },
@@ -964,7 +964,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "color-independent",
-      "family_sha256": "sha256:583d711bc6c5da655a03e9d718b7bbca36da1abb9180b956ddbd9432d6127b67",
+      "assertion_sha256": "sha256:ee5eabbe3332d5c7033f08f452f1508b89c41fdaed05428c57f95825f152dd42",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 2
     },
@@ -975,7 +975,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "color-independent",
-      "family_sha256": "sha256:583d711bc6c5da655a03e9d718b7bbca36da1abb9180b956ddbd9432d6127b67",
+      "assertion_sha256": "sha256:210aec5f48c21fbecf57d9a1248f672ecc6e113e4c798cea43ae70f126fee4dd",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 2
     },
@@ -986,7 +986,7 @@
       "rationale": "The field relies on a placeholder instead of a label, which is both the low-contrast text the case declares and a missing programmatic relationship. The same markup satisfies both.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "color-independent",
-      "family_sha256": "sha256:583d711bc6c5da655a03e9d718b7bbca36da1abb9180b956ddbd9432d6127b67",
+      "assertion_sha256": "sha256:54833d9ac33ade4eb10befb19748147d4fa6c8734fa6be8b4e25561bfd64eadc",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 2
     },
@@ -997,7 +997,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "color-independent",
-      "family_sha256": "sha256:583d711bc6c5da655a03e9d718b7bbca36da1abb9180b956ddbd9432d6127b67",
+      "assertion_sha256": "sha256:54833d9ac33ade4eb10befb19748147d4fa6c8734fa6be8b4e25561bfd64eadc",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 1
     },
@@ -1008,7 +1008,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "color-independent",
-      "family_sha256": "sha256:583d711bc6c5da655a03e9d718b7bbca36da1abb9180b956ddbd9432d6127b67",
+      "assertion_sha256": "sha256:54833d9ac33ade4eb10befb19748147d4fa6c8734fa6be8b4e25561bfd64eadc",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 1
     },
@@ -1019,7 +1019,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "color-independent",
-      "family_sha256": "sha256:583d711bc6c5da655a03e9d718b7bbca36da1abb9180b956ddbd9432d6127b67",
+      "assertion_sha256": "sha256:16798fdeabf05a9b1d9a522224a541983ff55daf02e70e2a3c0d04e592bac82b",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 1
     },
@@ -1030,7 +1030,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "color-independent",
-      "family_sha256": "sha256:583d711bc6c5da655a03e9d718b7bbca36da1abb9180b956ddbd9432d6127b67",
+      "assertion_sha256": "sha256:cd7ad3dca3e687b56ba1786201344f0351c38660a67f347b57db202be7295032",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 2
     },
@@ -1041,7 +1041,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:f796e583288e6bc6ef3fabb32dc5b427da7e78e75ac9c56c3cfbb970430aec7e",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 1
     },
@@ -1052,7 +1052,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:1804fc39489e1bbd037e56c2339964317133cb78cfca0b42a5cd162872066e58",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 2
     },
@@ -1063,7 +1063,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:1804fc39489e1bbd037e56c2339964317133cb78cfca0b42a5cd162872066e58",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 2
     },
@@ -1074,7 +1074,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:d0b8a257b2b6e650737575a52ac21ebe8382a86bde6ea0b474ec819a001a93eb",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 1
     },
@@ -1085,7 +1085,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:6daf641a39307f16c0edf58154846d785586751a360dfd71bfbda6532d2ab0ce",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 1
     },
@@ -1096,7 +1096,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:6daf641a39307f16c0edf58154846d785586751a360dfd71bfbda6532d2ab0ce",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 1
     },
@@ -1107,7 +1107,7 @@
       "rationale": "A tab widget built without roles loses both its programmatic name and role (4.1.2, declared) and the relationship between tab and panel (1.3.1). Five engines agree. The ground truth is incomplete rather than the fixture confounded.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "patterns",
-      "family_sha256": "sha256:20a25cebcda60dffc32115abb280b1c98eb5f0c3c4afcfc0a8500ef202c17ff8",
+      "assertion_sha256": "sha256:b354ca1f3ce640b54b95068117ecd7e769925671645fe382b2e6b7b653e04969",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 5
     },
@@ -1118,7 +1118,7 @@
       "rationale": "Same single treatment as color-disabled_state: the grey that makes colour the sole indicator is also the grey that fails contrast. One defect, two criteria. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "scenarios",
-      "family_sha256": "sha256:cd8d11c484d76db4eb2116772b9a4ed6f3cdd786530ebe1b9e0a9efe53698c64",
+      "assertion_sha256": "sha256:6262182552c93867aa3b597a27cb64d880264e06f6d2c9e71b8e0a7b6a5f5bd5",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 6
     },
@@ -1129,7 +1129,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "scenarios",
-      "family_sha256": "sha256:cd8d11c484d76db4eb2116772b9a4ed6f3cdd786530ebe1b9e0a9efe53698c64",
+      "assertion_sha256": "sha256:6262182552c93867aa3b597a27cb64d880264e06f6d2c9e71b8e0a7b6a5f5bd5",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 2
     },
@@ -1140,7 +1140,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "scenarios",
-      "family_sha256": "sha256:cd8d11c484d76db4eb2116772b9a4ed6f3cdd786530ebe1b9e0a9efe53698c64",
+      "assertion_sha256": "sha256:7fb62b4eac67f1d50de822fbacd47e4872e53918f55d15d32db4543fd5279f3d",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 1
     },
@@ -1151,7 +1151,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "scenarios",
-      "family_sha256": "sha256:cd8d11c484d76db4eb2116772b9a4ed6f3cdd786530ebe1b9e0a9efe53698c64",
+      "assertion_sha256": "sha256:7fb62b4eac67f1d50de822fbacd47e4872e53918f55d15d32db4543fd5279f3d",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 1
     },
@@ -1162,7 +1162,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "scenarios",
-      "family_sha256": "sha256:cd8d11c484d76db4eb2116772b9a4ed6f3cdd786530ebe1b9e0a9efe53698c64",
+      "assertion_sha256": "sha256:7fb62b4eac67f1d50de822fbacd47e4872e53918f55d15d32db4543fd5279f3d",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 1
     },
@@ -1173,7 +1173,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "scenarios",
-      "family_sha256": "sha256:cd8d11c484d76db4eb2116772b9a4ed6f3cdd786530ebe1b9e0a9efe53698c64",
+      "assertion_sha256": "sha256:48921e366e90e1a765b73c7ee3aa014b487036b87a2f05b02095d3ded777c78b",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 1
     },
@@ -1184,7 +1184,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "scenarios",
-      "family_sha256": "sha256:cd8d11c484d76db4eb2116772b9a4ed6f3cdd786530ebe1b9e0a9efe53698c64",
+      "assertion_sha256": "sha256:48921e366e90e1a765b73c7ee3aa014b487036b87a2f05b02095d3ded777c78b",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 2
     },
@@ -1195,7 +1195,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "ui-states",
-      "family_sha256": "sha256:b44c2f8afa454faefb9cd6a780771e7f4e352085c1001768b015fd429e29d91d",
+      "assertion_sha256": "sha256:9bf61ddbb774291b57c144092c0c099e4fff020142affaa86d4e3f3955e43cf1",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 2
     },
@@ -1206,7 +1206,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "ui-states",
-      "family_sha256": "sha256:b44c2f8afa454faefb9cd6a780771e7f4e352085c1001768b015fd429e29d91d",
+      "assertion_sha256": "sha256:f6e3b84856324e5fc801b20c67dd0d4b973191348a27bc1a11d2cef381cf6c4c",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 2
     },
@@ -1217,7 +1217,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "ui-states",
-      "family_sha256": "sha256:b44c2f8afa454faefb9cd6a780771e7f4e352085c1001768b015fd429e29d91d",
+      "assertion_sha256": "sha256:f6e3b84856324e5fc801b20c67dd0d4b973191348a27bc1a11d2cef381cf6c4c",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 2
     },
@@ -1228,7 +1228,7 @@
       "rationale": "The offline banner greys the unavailable controls. One treatment satisfying more than one criterion. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "ui-states",
-      "family_sha256": "sha256:b44c2f8afa454faefb9cd6a780771e7f4e352085c1001768b015fd429e29d91d",
+      "assertion_sha256": "sha256:f9c5bbd808e5eefb7582f1f4b4f8ca4f36696c900f41922e7f1a9fafcd7a34d2",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 4
     },
@@ -1239,7 +1239,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "ui-states",
-      "family_sha256": "sha256:b44c2f8afa454faefb9cd6a780771e7f4e352085c1001768b015fd429e29d91d",
+      "assertion_sha256": "sha256:f9c5bbd808e5eefb7582f1f4b4f8ca4f36696c900f41922e7f1a9fafcd7a34d2",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 1
     },
@@ -1250,7 +1250,7 @@
       "rationale": "The timed-out state greys the expired content. That grey is the same property the declared criteria describe, not an additional fault introduced into the broken page. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "ui-states",
-      "family_sha256": "sha256:b44c2f8afa454faefb9cd6a780771e7f4e352085c1001768b015fd429e29d91d",
+      "assertion_sha256": "sha256:7dcf9c0bf811fa9ed28952d1de736ee7354387683e3c5e042bd71d8cc1de0073",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 6
     },
@@ -1261,7 +1261,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "ui-states",
-      "family_sha256": "sha256:b44c2f8afa454faefb9cd6a780771e7f4e352085c1001768b015fd429e29d91d",
+      "assertion_sha256": "sha256:7dcf9c0bf811fa9ed28952d1de736ee7354387683e3c5e042bd71d8cc1de0073",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 2
     },
@@ -1272,7 +1272,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "ui-states",
-      "family_sha256": "sha256:b44c2f8afa454faefb9cd6a780771e7f4e352085c1001768b015fd429e29d91d",
+      "assertion_sha256": "sha256:7dcf9c0bf811fa9ed28952d1de736ee7354387683e3c5e042bd71d8cc1de0073",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 2
     },
@@ -1283,7 +1283,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks. Re-pinned after a metadata-only change to the family: the method list and state_dependency moved, the fixtures and their ground truth did not.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "ui-states",
-      "family_sha256": "sha256:b44c2f8afa454faefb9cd6a780771e7f4e352085c1001768b015fd429e29d91d",
+      "assertion_sha256": "sha256:7dcf9c0bf811fa9ed28952d1de736ee7354387683e3c5e042bd71d8cc1de0073",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 2
     },
@@ -1294,7 +1294,7 @@
       "rationale": "A single engine reported this and five did not. One engine mapping a rule to an extra criterion is that engine making a mapping choice, not a demonstrated property of the fixture. Re-review if more engines agree.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "core",
-      "family_sha256": "sha256:754a48b398c520fa446740f37791d1305252a6ead498b368af1afee3e439f476",
+      "assertion_sha256": "sha256:fdf8f58bab74a3de935ee564bc552fbb07d6f38fbbca171a2ddb4992a99f1ba6",
       "reviewed_on": "2026-10-13",
       "engines_agreeing": 1
     },
@@ -1305,7 +1305,7 @@
       "rationale": "This case is about an authoring tool emitting markup with many faults at once, so additional criteria are the subject of the fixture rather than a confound in it. Re-pinned after an unrelated fixture in the same family was repaired; this case did not change.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "surfaces",
-      "family_sha256": "sha256:bc589557e4d094cfcf94a66acf9d82bde46d4bc537bbeec0e390a0b7d24e28a3",
+      "assertion_sha256": "sha256:f986174a8ae2b0f695f4c5850157a2980de22561d0ace641d11c08b431c658d5",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 1
     },
@@ -1316,7 +1316,7 @@
       "rationale": "This case is about an authoring tool emitting markup with many faults at once, so additional criteria are the subject of the fixture rather than a confound in it. Re-pinned after an unrelated fixture in the same family was repaired; this case did not change.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "surfaces",
-      "family_sha256": "sha256:bc589557e4d094cfcf94a66acf9d82bde46d4bc537bbeec0e390a0b7d24e28a3",
+      "assertion_sha256": "sha256:f986174a8ae2b0f695f4c5850157a2980de22561d0ace641d11c08b431c658d5",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 1
     },
@@ -1327,7 +1327,7 @@
       "rationale": "This case is about an authoring tool emitting markup with many faults at once, so additional criteria are the subject of the fixture rather than a confound in it. Re-pinned after an unrelated fixture in the same family was repaired; this case did not change.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "surfaces",
-      "family_sha256": "sha256:bc589557e4d094cfcf94a66acf9d82bde46d4bc537bbeec0e390a0b7d24e28a3",
+      "assertion_sha256": "sha256:f986174a8ae2b0f695f4c5850157a2980de22561d0ace641d11c08b431c658d5",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 1
     },
@@ -1338,7 +1338,7 @@
       "rationale": "This case is about an authoring tool emitting markup with many faults at once, so additional criteria are the subject of the fixture rather than a confound in it. Re-pinned after an unrelated fixture in the same family was repaired; this case did not change.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "surfaces",
-      "family_sha256": "sha256:bc589557e4d094cfcf94a66acf9d82bde46d4bc537bbeec0e390a0b7d24e28a3",
+      "assertion_sha256": "sha256:f986174a8ae2b0f695f4c5850157a2980de22561d0ace641d11c08b431c658d5",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 1
     },
@@ -1349,7 +1349,7 @@
       "rationale": "This case is about an authoring tool emitting markup with many faults at once, so additional criteria are the subject of the fixture rather than a confound in it. Re-pinned after an unrelated fixture in the same family was repaired; this case did not change.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "surfaces",
-      "family_sha256": "sha256:bc589557e4d094cfcf94a66acf9d82bde46d4bc537bbeec0e390a0b7d24e28a3",
+      "assertion_sha256": "sha256:f986174a8ae2b0f695f4c5850157a2980de22561d0ace641d11c08b431c658d5",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 1
     },
@@ -1360,7 +1360,7 @@
       "rationale": "This case is about an authoring tool emitting markup with many faults at once, so additional criteria are the subject of the fixture rather than a confound in it. Re-pinned after an unrelated fixture in the same family was repaired; this case did not change.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "surfaces",
-      "family_sha256": "sha256:bc589557e4d094cfcf94a66acf9d82bde46d4bc537bbeec0e390a0b7d24e28a3",
+      "assertion_sha256": "sha256:f986174a8ae2b0f695f4c5850157a2980de22561d0ace641d11c08b431c658d5",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 2
     },
@@ -1371,7 +1371,7 @@
       "rationale": "The declared defect and this criterion are satisfied by the same markup or the same visual treatment, so the pair still isolates one change. The ground truth understates what that change breaks. Re-pinned after an unrelated fixture in the same family was repaired; this case did not change.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "surfaces",
-      "family_sha256": "sha256:bc589557e4d094cfcf94a66acf9d82bde46d4bc537bbeec0e390a0b7d24e28a3",
+      "assertion_sha256": "sha256:8827e2dac7d753ea36e499ad8a90c641e35d87d927791bad84cdba565c8e2485",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 2
     },
@@ -1382,7 +1382,7 @@
       "rationale": "The broken page carried an image with no alternative that its control had, unrelated to the EPUB package metadata the pair declares. Every engine detected it and nothing on the control, so the pair measured the wrong thing.",
       "reviewer": "maintainer review, a11y-benchmark",
       "family": "surfaces",
-      "family_sha256": "sha256:bc589557e4d094cfcf94a66acf9d82bde46d4bc537bbeec0e390a0b7d24e28a3",
+      "assertion_sha256": "sha256:3f79454f121f376e46aa0da070b4a6f3859b28a797328da7c17330c9c25be68a",
       "reviewed_on": "2026-10-14",
       "engines_agreeing": 6,
       "remedy": "Give the broken page the same alternative text as its control so the pair differs only in package metadata and heading structure. Applied in #49; this baseline predates the fix. Verified applied: the broken page now carries the same alternative as its control, and axe reports nothing on either."

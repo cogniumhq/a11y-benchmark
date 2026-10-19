@@ -7,6 +7,28 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Fixed
 
+- Adjudication expires a reviewed judgement when **the assertion it is about**
+  changes, rather than when its family does (#52). Records pin
+  `assertion_sha256` — a digest over `case_id`, `min_criteria` and
+  `must_not_report` — in place of `family_sha256`, so `method`, `notes`,
+  `user_needs`, `state_dependency` and every sibling case in the family move
+  without expiring a review, while any change to what the corpus asserts about
+  that case expires it at once. Corpus-wide expiry took out all 72 evidence
+  records over two family additions; family-wide took out 13 decisions over a
+  metadata edit (#51) and, measured here, 23 of the 26 undeclared-finding
+  records it called stale had an unchanged assertion.
+
+  `undeclared_findings` carried a family digest that `reconcile` never read, so
+  a review of a pair survived any later rewrite of that pair. The pin is now
+  enforced and stale undeclared reviews are reported. That surfaced three: the
+  `scenario-dragging_required` reviews for 2.1.1, 2.4.7 and 3.2.1 were made when
+  the case declared 2.5.1 as well as 2.5.7, and #54 removed 2.5.1. They are
+  pinned at the ground truth their reviewer saw, so they read as stale and await
+  re-review instead of being silently revalidated.
+
+  All 97 existing records migrate with their judgements untouched; 94 are live
+  and 3 are the dragging reviews above.
+
 - `aaa-safe_visual_presentation` (1.4.8) carried the broken page's prose word for
   word, so its visible text claimed to be justified at a line spacing under 1.5
   while its cascade renders ragged at 1.6 with 50ch lines (#56). On a criterion
