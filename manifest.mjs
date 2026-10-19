@@ -40,6 +40,8 @@ const families = FAMILIES.map(([id, file]) => {
   };
 });
 
+const stateDrivers = JSON.parse(fs.readFileSync(path.join(ROOT, 'state-drivers.json'), 'utf8'));
+
 const manifest = {
   $schema: './schemas/corpus-manifest.schema.json',
   format: 'cognium-a11y-corpus-manifest',
@@ -55,6 +57,15 @@ const manifest = {
   },
   digest_policy: 'SHA-256 of parsed family JSON with the top-level generated field removed, serialized with JSON.stringify.',
   families,
+  // How to reach the state each case is about. Digested the same way as a
+  // family so a consumer can tell whether the drivers it holds are the ones
+  // this corpus revision declares (#46).
+  contracts: [{
+    id: 'state-drivers',
+    file: 'state-drivers.json',
+    entry_count: stateDrivers.drivers.length,
+    content_sha256: canonicalContentDigest(stateDrivers),
+  }],
 };
 
 fs.writeFileSync(path.join(ROOT, 'corpus-manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);

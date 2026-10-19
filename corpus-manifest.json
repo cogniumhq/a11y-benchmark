@@ -103,5 +103,13 @@
       "case_count": 8,
       "content_sha256": "sha256:3790a07dbb0e07c59375c7898f54eb4efc992a2744074ceea9ce53683a04e756"
     }
+  ],
+  "contracts": [
+    {
+      "id": "state-drivers",
+      "file": "state-drivers.json",
+      "entry_count": 94,
+      "content_sha256": "sha256:ab050c06e6b3062968d81536edff3b3fc5048e19f1fc68073834fb23495d84a2"
+    }
   ]
 }

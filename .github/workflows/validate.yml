@@ -41,6 +41,11 @@ jobs:
       - name: Check repository and fixture contracts
         run: node --test check/*.test.mjs
 
+      - name: Drive every declared state and confirm it was reached
+        run: |
+          npx --prefix check playwright install --with-deps chromium
+          node check/verify-state-drivers.mjs
+
       - name: Validate and score the published result examples
         run: |
           node check/validate-result.mjs schemas/examples/benchmark-result.repeat-1.json
@@ -67,7 +72,7 @@ jobs:
 
       - name: Regenerate fixture manifests and pages
         run: |
-          for generator in build.mjs delivery.mjs patterns.mjs taxonomy.mjs journeys.mjs scenarios.mjs media.mjs flash.mjs color-independent.mjs ui-states.mjs surfaces.mjs guided.mjs aaa.mjs surface-contracts.mjs native.mjs wiring.mjs manifest.mjs needs-index.mjs coverage.mjs space-coverage.mjs; do
+          for generator in build.mjs delivery.mjs patterns.mjs taxonomy.mjs journeys.mjs scenarios.mjs media.mjs flash.mjs color-independent.mjs ui-states.mjs surfaces.mjs guided.mjs aaa.mjs surface-contracts.mjs native.mjs wiring.mjs state-drivers.mjs manifest.mjs needs-index.mjs coverage.mjs space-coverage.mjs; do
             node "$generator"
           done
       - name: Check generated files are committed
