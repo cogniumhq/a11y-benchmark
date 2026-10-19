@@ -24,6 +24,24 @@ machine-readable manifest and schema versions are recorded with every release.
   44), one of the two criteria its pair declares. They are now 44 by 44 (#56).
 - The 13 `aaa` adjudication decisions are re-pinned to the new family digest
   with a note; their judgements are unchanged.
+- `flash-animation_from_interaction` passed its declared 2.3.3 failure: the
+  shared gate refused to start under reduced motion and `fixture.css` zeroes
+  every animation there, so the page honoured the preference twice over. The
+  broken page now honours neither (a no-preference gate, and an `!important`
+  rule so the scaffolding's blanket stop does not supply the guard the page
+  lacks). It never flashes, is a single 0.6s slide behind the same button, and
+  now carries a motion warning. Every flashing page keeps every safety gate;
+  the corrected page is unchanged (#56).
+
+### Changed (ground truth)
+
+- `flash-three_flashes_exactly` is relabelled from a 2.3.2 fail to a boundary
+  pass and is now a `safe` case asserting `must_not_report: ["2.3.1",
+  "2.3.2"]`. 2.3.2 fails content that flashes *more* than three times in any
+  one second; exactly three passes both criteria. The page now plays one burst
+  of six opposing transitions inside 5/6 s and stops, so no window of any
+  alignment holds more than three flashes. **Migration:** a 2.3.2 report on
+  this page was previously a detection and is now a false positive (#56).
 - `surface-email_contrast_darkmode` did not fail 1.4.3 as rendered: it set
   only a text colour (#333 on the body's #fff, 12.6:1) and relied on a mail
   client's dark background that no browser rendering produces. The email now
