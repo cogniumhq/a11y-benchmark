@@ -259,13 +259,18 @@ main p {
   max-width: none;
 }`,
     }),
+    // The control used to carry the broken page's prose word for word, so its
+    // visible text asserted a defect its own cascade does not have. On a
+    // criterion whose evidence is the rendering, a control that says it is
+    // justified at 1.1 while rendering ragged at 1.6 is a trap for any surface
+    // that reads text as well as styles. The prose now describes this page.
     corrected: page('Release notes', `<main>
 <h1>Release notes</h1>
-<p>Every paragraph here is set in a block wider than eighty characters, justified to both
-margins, with line spacing under 1.5 and almost no space between paragraphs.</p>
-<p>Justification opens rivers of white space that run down the block, and tight leading makes
-it easy to lose your place when returning to the start of the next line. Both effects are
-worse for readers who track lines slowly.</p>
+<p>Every paragraph here is set in a block narrower than eighty characters, aligned to the
+start edge only, with line spacing of 1.6 and paragraph spacing 1.5 times that.</p>
+<p>Ragged-edge setting keeps word spacing even, so no rivers of white space open down the
+block, and the looser leading makes it easier to find the start of the next line. Both
+help readers who track lines slowly.</p>
 </main>` + back, {
       // 50ch, not 70ch: with a proportional font 70ch measured 87-92 characters per
       // line, so the control itself ran past 1.4.8's 80; 50ch measures 69-71 (#56).
