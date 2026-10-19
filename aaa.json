@@ -103,7 +103,7 @@
       "must_not_report": [],
       "expected_outcome": "fail",
       "lane": "automated-static",
-      "notes": "Text is fully justified, lines run well past 80 characters, line spacing is below 1.5 within paragraphs, paragraph spacing is below 1.5 times line spacing, and the page forces its own foreground and background colours."
+      "notes": "Text is fully justified, lines run well past 80 characters at a desktop width, line spacing is below 1.5 within paragraphs, and paragraph spacing is below 1.5 times line spacing."
     },
     {
       "surface": "web",

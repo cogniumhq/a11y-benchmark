@@ -158,10 +158,23 @@ const S = [
 <div class="g">Baggage allowance is one cabin bag plus one personal item per traveller.</div>`,
   },
   {
-    id: 'forced_colors', journey: 'theming', sc: ['1.4.1', '1.4.11'],
+    // Relabelled from a 1.4.1/1.4.11 fail to a pass under WCAG 2.2 (#55). As the
+    // author's colours render, the selected item is a 7.5:1 fill against the page
+    // -- a lightness difference, which 1.4.1 accepts -- and the list items are not
+    // UI components, so 1.4.11's component clause does not reach them. Under a
+    // forced-colours palette the fill is replaced and the selection disappears,
+    // but no WCAG 2.2 success criterion, failure technique or ACT rule fails
+    // content for not surviving a user's forced-colours theme. The page is kept
+    // unchanged as a forced-colours robustness scenario; its ground truth now says
+    // what WCAG 2.2 says about it. (The header used to mention a background image
+    // that was never on the page.)
+    id: 'forced_colors', journey: 'theming', sc: ['1.4.1', '1.4.11'], outcome: 'pass',
     needsAt: ['forced-colors'], needs: ['contrast-adaptation', 'visual-clarity'],
-    brokenNote: 'State shown with a background image and a hard-coded colour, both discarded '
-      + 'in forced-colors mode — so the selected item becomes indistinguishable.',
+    brokenNote: 'The selected class is shown by a background fill and white text, which a '
+      + 'forced-colours palette replaces, so the selection disappears in that mode. As '
+      + 'authored it is a 7.5:1 fill, a lightness difference, on items that are not UI '
+      + 'components. Expected outcome under WCAG 2.2: pass for 1.4.1 and 1.4.11 — WCAG 2.2 '
+      + 'has no criterion for surviving a forced-colours theme. Kept as a robustness scenario.',
     broken: `<style>.sel{background:#30556e;color:#fff}
 @media (forced-colors: active){.sel{background:#30556e}}</style>
 <ul><li class="sel">Economy</li><li>Business</li></ul>`,
@@ -170,6 +183,23 @@ const S = [
 @media (forced-colors: active){.sel2{border-color:Highlight;forced-color-adjust:none;color:HighlightText;background:Highlight}}</style>
 <ul><li class="sel2"><span aria-hidden="true">✓ </span>Economy <span class="sr">(selected)</span></li>
 <li>Business</li></ul>`,
+  },
+  {
+    // Added with #55. Relabelling forced_colors left Non-text Contrast with no
+    // defect case at all, so it gets one that fails 1.4.11 as authored: an
+    // icon-only button whose pale icon is the only visual sign that the control
+    // exists. Understanding 1.4.11 covers exactly this -- the visual information
+    // required to identify a component, here 1.67:1 against the page.
+    id: 'icon_button_contrast', journey: 'navigate', sc: ['1.4.11'],
+    needsAt: ['magnifier'], needs: ['visual-clarity', 'contrast-adaptation'],
+    brokenNote: 'A search button shown only as a magnifier icon drawn in #c8c8c8 on white '
+      + '(1.67:1), with no border or fill. The icon is the only visual sign the control is '
+      + 'there, and it is under the 3:1 that 1.4.11 requires.',
+    broken: `<style>.icon{background:none;border:0;color:#c8c8c8}</style>
+<p><label for="q">Destination</label> <input id="q"> <button type="button" class="icon" aria-label="Search"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="12.5" y1="12.5" x2="18" y2="18" stroke="currentColor" stroke-width="2.5"/></svg></button></p>`,
+    correctNote: 'The same icon drawn in #595959, 7:1 against white.',
+    correct: `<style>.icon{background:none;border:0;color:#595959}</style>
+<p><label for="q">Destination</label> <input id="q"> <button type="button" class="icon" aria-label="Search"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="12.5" y1="12.5" x2="18" y2="18" stroke="currentColor" stroke-width="2.5"/></svg></button></p>`,
   },
   {
     id: 'orientation_lock', journey: 'orientation', sc: ['1.3.4', '1.4.10'],
@@ -228,8 +258,11 @@ body::after{content:"Please rotate your device"}}</style>
     // Measured: the engine was correctly passing it.
     broken: `<style>.ic{display:inline-block;width:16px;height:16px;min-width:0;min-height:0;padding:0;margin:0;background:#30556e}</style>
 <a href="#a" class="ic" aria-label="Seat map"></a><a href="#b" class="ic" aria-label="Baggage"></a>`,
-    correctNote: 'At least 24x24 with spacing between targets.',
-    correct: `<style>.ic2{display:inline-block;width:24px;height:24px;margin:4px;background:#30556e}</style>
+    // 44x44, not 24x24 (#56). The pair declares 2.5.5 (AAA, 44 by 44) as well as
+    // 2.5.8 (AA, 24 by 24), and its control has to satisfy both.
+    correctNote: 'At least 44x44 with spacing between targets, which clears 2.5.5 (44 by 44) '
+      + 'as well as 2.5.8 (24 by 24).',
+    correct: `<style>.ic2{display:inline-block;width:44px;height:44px;margin:4px;background:#30556e}</style>
 <a href="#a" class="ic2" aria-label="Seat map"></a><a href="#b" class="ic2" aria-label="Baggage"></a>`,
   },
   {
@@ -294,15 +327,25 @@ body::after{content:"Please rotate your device"}}</style>
 <p id="travel-date-error-safe" role="alert">Use DD/MM/YYYY, for example 31/12/2026.</p>`,
   },
   {
+    // #55: this used to be one grey, enabled button with nothing to compare it with
+    // -- a 1.4.3 contrast defect, which tools report under 1.4.3, not a 1.4.1 one.
+    // Now the taken seats differ from the free ones only in fill hue (1.05:1, same
+    // border, same text): 1.4.1. And they are NOT disabled -- still focusable and
+    // operable -- so the unavailable state the page shows is not exposed: 4.1.2.
+    // The defect is rendered at load; nothing needs driving.
     id: 'disabled_state', journey: 'form-lifecycle', uiState: 'disabled', sc: ['4.1.2', '1.4.1'],
     needsAt: ['keyboard', 'sr-nvda'],
-    brokenNote: 'A control that looks unavailable but is not marked disabled, so it is still '
-      + 'focusable and activatable and its state is conveyed by colour alone.',
-    broken: `<style>.off{background:#eee;color:#aaa}</style>
-<button type="button" class="off" onclick="void 0">Select seat</button>`,
-    correctNote: 'Genuinely disabled, with the reason available in text.',
-    correct: `<button type="button" disabled aria-describedby="dz">Select seat</button>
-<p id="dz">Seat selection opens 24 hours before departure.</p>`,
+    brokenNote: 'Taken seats look different from free ones only by fill hue — peach instead of '
+      + 'blue at 1.05:1 — and are not marked disabled, so they are still focusable and operable. '
+      + 'The state is conveyed by colour alone and is not exposed.',
+    broken: `<style>.seat{background:#cfe0f7;color:#1a1a1a;border:1px solid #767676}.seat.taken{background:#f7d2bd}</style>
+<p>Blue seats are free; peach seats are taken.</p>
+<p><button type="button" class="seat">14A</button><button type="button" class="seat taken">14B</button><button type="button" class="seat">14C</button></p>`,
+    correctNote: 'The taken seat is genuinely disabled, crossed out and labelled "taken", so the '
+      + 'state is exposed and does not depend on hue.',
+    correct: `<style>.seat{background:#cfe0f7;color:#1a1a1a;border:1px solid #767676}.seat.taken{background:#f7d2bd;text-decoration:line-through}</style>
+<p>Free seats show their number; taken seats are crossed out and marked "taken".</p>
+<p><button type="button" class="seat">14A</button><button type="button" class="seat taken" disabled>14B taken</button><button type="button" class="seat">14C</button></p>`,
   },
   {
     id: 'motion_actuation', journey: 'input-only', sc: ['2.5.4'],
@@ -327,9 +370,12 @@ for (const s of S) {
       + `  input/AT most affected: ${s.needsAt.join(', ')}\n  ${note}\n-->\n`;
     const html = header + page(`${s.id} — ${kind}`, `<p>${note}</p><hr>${body}`);
     fs.writeFileSync(path.join(DIR, file), html);
+    // A page that satisfies its criteria is a control, whatever its file name: it
+    // asserts only what must NOT be reported.
+    const passes = kind === 'correct' || s.outcome === 'pass';
     cases.push({
       id: `scenario-${kind === 'broken' ? s.id : 'safe_' + s.id}`,
-      mode: kind === 'broken' ? 'tp' : 'safe',
+      mode: passes ? 'safe' : 'tp',
       path: `scenarios/${file}`,
       surface: s.surface || 'web',
       journey: s.journey,
@@ -338,9 +384,9 @@ for (const s of S) {
       ...stateDependency(html),
       input_at: s.needsAt,
       user_needs: s.needs || [],
-      min_criteria: kind === 'broken' ? Object.fromEntries(s.sc.map((x) => [x, 1])) : {},
-      must_not_report: kind === 'correct' ? s.sc : [],
-      expected_outcome: kind === 'broken' ? 'fail' : 'pass',
+      min_criteria: passes ? {} : Object.fromEntries(s.sc.map((x) => [x, 1])),
+      must_not_report: passes ? s.sc : [],
+      expected_outcome: passes ? 'pass' : 'fail',
       notes: note,
     });
   }
