@@ -1,0 +1,47 @@
+{
+  "format": "cognium-a11y-comparison-pins",
+  "format_version": "1.0.0",
+  "lane": "latest-browser-served",
+  "reproduces": {
+    "repository": "cogniumhq/a11y-benchmark-results",
+    "bundle": "results/2026-10-13-v0.1.0-latest-browser-served",
+    "note": "The 2026-10-13 bundle was produced by a comparison harness outside this repository. This directory restates that harness's adapters, mappings and package lock so the run can be repeated from committed inputs."
+  },
+  "corpus": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "version": "v0.1.0",
+    "revision": "469486a4811c5055de9d2524ede1ca520c2774c8",
+    "manifest_sha256": "sha256:a4e01bcd1281bfb1c1951657a815ad2da053e5e233c1d937dd7ed7227c03c9f0"
+  },
+  "viewport": { "width": 1280, "height": 900 },
+  "repeats": 1,
+  "tools": {
+    "axe": { "packages": { "axe-core": "4.14.0", "playwright": "1.61.1" }, "configuration": "axe.run with runOnly tags wcag2a, wcag2aa, wcag21a, wcag21aa, wcag22a, wcag22aa; violations are findings, incomplete is review" },
+    "pa11y-htmlcs": { "packages": { "pa11y": "10.0.0", "puppeteer": "25.13.0" }, "configuration": "runners [htmlcs], standard WCAG2AA, errors are findings, warnings are review" },
+    "ibm": {
+      "packages": { "accessibility-checker": "4.0.34", "accessibility-checker-engine": "4.0.27", "ibm-rule-archive-list": "npm:accessibility-checker-engine@4.0.29", "playwright": "1.61.1" },
+      "configuration": "ruleArchive versioned, policies [WCAG_2_2], VIOLATION/FAIL are findings, VIOLATION/POTENTIAL and VIOLATION/MANUAL are review",
+      "rule_archive": { "id": "13July2026", "name": "13 July 2026 Deployment (IBM 7.3)", "engine_version": "4.0.27", "path": "/archives/2026.07.13" },
+      "note": "accessibility-checker resolves its rules at run time: it reads archives.json from the `@next` dist-tag of accessibility-checker-engine (4.0.29 on 2026-10-13 and on 2026-11-02) and, for ruleArchive `versioned` and checker 4.0.34, loads engine 4.0.27 (archive 13July2026). The 2026-10-13 run fetched both from a CDN. Here both come from the package lock and are served on 127.0.0.1."
+    },
+    "lighthouse": { "packages": { "lighthouse": "13.5.0", "chrome-launcher": "1.2.2", "axe-core": "4.14.0" }, "configuration": "onlyCategories [accessibility]; binary audits with score 0 are findings; criteria from the axe rule of the same id" },
+    "alfa": { "packages": { "@siteimprove/alfa-act": "0.119.0", "@siteimprove/alfa-rules": "0.119.0", "@siteimprove/alfa-puppeteer": "0.84.2", "puppeteer": "25.13.0" }, "configuration": "every rule in @siteimprove/alfa-rules against one Puppeteer page snapshot; failed outcomes are findings, cantTell is review" },
+    "qualweb": { "packages": { "@qualweb/core": "0.9.5", "@qualweb/act-rules": "0.8.6", "@qualweb/wcag-techniques": "0.4.9", "@qualweb/best-practices": "0.7.13" }, "configuration": "ACT rules, WCAG techniques and best practices modules; assertions with failed > 0 are findings, warnings are review" },
+    "nu-html-checker": { "service": "ghcr.io/validator/validator@sha256:8f21030474e68e06905cfa801b37376e99c0e37867c653c5b6cd7e2dcaf3f503", "version": "26.10.12", "revision": "0a70d65", "configuration": "rendered DOM posted to a local service; errors are findings; specialized markup lane, never criterion recall" },
+    "cognium": {
+      "repository": "cogniumhq/conformis",
+      "access": "private: the runtime is not redistributed; this directory holds the subject declaration, the command and the sanitizing importer",
+      "as_run_revision": "28f9e14db3a095f3d5983a947f233c99772a2b25",
+      "packs": { "a11y/html": "1.2.1", "tech/html-aria": "1.2.1" },
+      "drivers": { "browser": "0.9.13", "static-html": "0.2.3" },
+      "subject": "cognium/latest-browser-served-subject.yaml",
+      "origin": "http://127.0.0.1:4173",
+      "command": "npm run a11y:site -- --subject <subject.yaml> --live --out <report dir>",
+      "note": "A pack version is not unique on its own: workspace pack sources changed between commits that carried a11y/html 1.2.1. The commit is the pin."
+    }
+  },
+  "published_environment": {
+    "direct_tools": "darwin/arm64, Node.js v25.9.0, Chromium 149.0.7827.55 (Playwright 1.61.1 browser build 1228)",
+    "cognium": "linux/arm64, Chromium 149.0.7827.0, browser driver 0.9.13 in mcr.microsoft.com/playwright:v1.61.1-noble@sha256:5b8f294aff9041b7191c34a4bab3ac270157a28774d4b0660e9743297b697e48"
+  }
+}

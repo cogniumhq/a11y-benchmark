@@ -80,6 +80,15 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Added
 
+- `comparison/`: a pinned runner for the multi-tool browser-served lane, so the
+  2026-10-13 `latest-browser-served` result can be repeated from committed
+  inputs. `package-lock.json` pins every tool and its dependency tree;
+  `pins.json` names the corpus revision and manifest digest the runner
+  requires; the IBM rule engine, which the checker otherwise downloads at run
+  time, is a locked package served on 127.0.0.1; the Cognium Conformis subject
+  declaration and importer are committed beside it. `diff.mjs` lists every
+  case whose outcome differs between two snapshots. No fixture or ground truth
+  changes.
 - `scenario-swipe_required` and its corrected control (2.5.1). A fare card
   changed by a horizontal swipe, whose direction decides the result: a real
   path-based gesture. The arrow keys also work, so 2.1.1 holds; only the
