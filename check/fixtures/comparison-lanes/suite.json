@@ -1,0 +1,10 @@
+{
+  "name": "latest-browser-served",
+  "description": "Test fixture: four cases of the browser-served lane.",
+  "case_ids": [
+    "keyboard-div_button",
+    "keyboard-safe_native_button",
+    "journey-booking-broken",
+    "journey-booking-correct"
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "generated": "2026-11-04",
+  "suite": {
+    "name": "latest-browser-served",
+    "description": "Test fixture: four cases of the browser-served lane.",
+    "has_scenario_traceability": false
+  },
+  "corpus": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "version": "v0.1.0",
+    "revision": "<fixture-commit>",
+    "manifest_sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "coverage": {
+    "corpus_cases": 270,
+    "corpus_families": 14,
+    "selected_cases": 4,
+    "not_selected_cases": 266,
+    "human_protocols": 3
+  },
+  "environment": {
+    "node": "v22.0.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "browser": "Chromium 149.0.7827.55",
+    "browser_source": "Playwright 1.61.1 bundled build"
+  },
+  "runner": {
+    "repository": "cogniumhq/a11y-benchmark",
+    "path": "comparison",
+    "revision": "0000000000000000000000000000000000000000",
+    "local_changes": false,
+    "pins_sha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "package_lock_sha256": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+    "unpinned": []
+  },
+  "privacy": {
+    "target": "ephemeral localhost server only",
+    "hosted_services": false,
+    "repository_content_uploaded": false,
+    "install_scripts_disabled_by_npmrc": true,
+    "ibm_scan_metrics_suppressed": true,
+    "ibm_rules_served_locally": true,
+    "cognium_export_contains_raw_evidence": false
+  },
+  "tool_order": [
+    "cognium"
+  ],
+  "cases": [
+    {
+      "id": "keyboard-div_button",
+      "mode": "tp",
+      "path": "keyboard/div_button.html",
+      "expected_criteria": [
+        "2.1.1",
+        "4.1.2"
+      ]
+    },
+    {
+      "id": "keyboard-safe_native_button",
+      "mode": "safe",
+      "path": "keyboard/safe_native_button.html",
+      "expected_criteria": [
+        "2.1.1",
+        "4.1.2"
+      ]
+    },
+    {
+      "id": "journey-booking-broken",
+      "mode": "tp",
+      "path": "journeys/booking/broken/index.html",
+      "expected_criteria": [
+        "3.2.3",
+        "3.3.4",
+        "3.3.7",
+        "2.4.3"
+      ]
+    },
+    {
+      "id": "journey-booking-correct",
+      "mode": "safe",
+      "path": "journeys/booking/correct/index.html",
+      "expected_criteria": [
+        "3.2.3",
+        "3.3.4",
+        "3.3.7",
+        "2.4.3"
+      ]
+    }
+  ],
+  "tools": {
+    "cognium": {
+      "label": "Cognium Conformis",
+      "version": "a11y/html@0.0.0-fixture",
+      "source": {
+        "kind": "sanitized-import",
+        "generated": "2026-11-04",
+        "view": "all declared comparison pages, as built in the browser",
+        "capture": {
+          "digest": "live:fixture",
+          "fixture_pages": 4,
+          "hydrated_pages": 4,
+          "support_pages": 0,
+          "capture_misses": 0,
+          "reproduced_pages": 4,
+          "run_errors": 0,
+          "outside_the_proofgraph": 0
+        },
+        "environment": {
+          "browser": "Chromium 149.0.7827.0",
+          "platform": "linux/arm64",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          }
+        },
+        "versions": {
+          "packs": {
+            "a11y/html": "0.0.0-fixture"
+          },
+          "catalogs": {},
+          "drivers": {
+            "browser": "0.0.0-fixture"
+          },
+          "datasets": {}
+        },
+        "conformis": {
+          "repository": "cogniumhq/conformis",
+          "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "run": {
+        "started_at": "2026-11-04T00:00:00.000Z",
+        "completed_at": "2026-11-04T01:00:00.000Z",
+        "repeat": 1
+      },
+      "lineage": {
+        "name": "Cognium Conformis",
+        "engine_family": "Conformis a11y/html and tech/html-aria",
+        "tool_surface": "site scan with subject-declared entry pages",
+        "independence": "independent-engine",
+        "metric_family": "criterion-mapped automated detection"
+      },
+      "summary": {
+        "cases": 4,
+        "errors": 0,
+        "tp_cases": 2,
+        "tp_pages_with_target_findings": 2,
+        "tp_pages_with_other_findings_only": 0,
+        "safe_cases": 2,
+        "safe_pages_without_target_findings": 2,
+        "safe_pages_with_target_findings": 0,
+        "safe_pages_with_other_findings_only": 0,
+        "expected_criteria": 6,
+        "expected_criteria_matched": 3,
+        "manual_review_items": 1,
+        "duration_ms": 0
+      },
+      "traceability": null,
+      "cases": [
+        {
+          "id": "keyboard-div_button",
+          "mode": "tp",
+          "path": "keyboard/div_button.html",
+          "expected_criteria": [
+            "2.1.1",
+            "4.1.2"
+          ],
+          "status": "ok",
+          "automated_findings": 2,
+          "manual_review_items": 1,
+          "found_criteria": [
+            "2.1.1",
+            "4.1.2"
+          ],
+          "matched_expected_criteria": [
+            "2.1.1",
+            "4.1.2"
+          ],
+          "findings": [
+            {
+              "rule": "AX-10/2.1.1",
+              "count": 2,
+              "criteria": [
+                "2.1.1",
+                "4.1.2"
+              ]
+            }
+          ],
+          "duration_ms": null,
+          "imported": true,
+          "source_output_sha256": "sha256:cd29bf8f634a744de122d2c82621a33b5725600dbcbae7aec4a5b3aed7eb96ca"
+        },
+        {
+          "id": "keyboard-safe_native_button",
+          "mode": "safe",
+          "path": "keyboard/safe_native_button.html",
+          "expected_criteria": [
+            "2.1.1",
+            "4.1.2"
+          ],
+          "status": "ok",
+          "automated_findings": 0,
+          "manual_review_items": 0,
+          "found_criteria": [],
+          "matched_expected_criteria": [],
+          "findings": [],
+          "duration_ms": null,
+          "imported": true,
+          "source_output_sha256": "sha256:cd29bf8f634a744de122d2c82621a33b5725600dbcbae7aec4a5b3aed7eb96ca"
+        },
+        {
+          "id": "journey-booking-broken",
+          "mode": "tp",
+          "path": "journeys/booking/broken/index.html",
+          "expected_criteria": [
+            "3.2.3",
+            "3.3.4",
+            "3.3.7",
+            "2.4.3"
+          ],
+          "status": "ok",
+          "automated_findings": 3,
+          "manual_review_items": 0,
+          "found_criteria": [
+            "2.4.3"
+          ],
+          "matched_expected_criteria": [
+            "2.4.3"
+          ],
+          "findings": [
+            {
+              "rule": "AX-08/2.4.3",
+              "count": 3,
+              "criteria": [
+                "2.4.3"
+              ]
+            }
+          ],
+          "duration_ms": null,
+          "imported": true,
+          "source_output_sha256": "sha256:cd29bf8f634a744de122d2c82621a33b5725600dbcbae7aec4a5b3aed7eb96ca"
+        },
+        {
+          "id": "journey-booking-correct",
+          "mode": "safe",
+          "path": "journeys/booking/correct/index.html",
+          "expected_criteria": [
+            "3.2.3",
+            "3.3.4",
+            "3.3.7",
+            "2.4.3"
+          ],
+          "status": "ok",
+          "automated_findings": 0,
+          "manual_review_items": 0,
+          "found_criteria": [],
+          "matched_expected_criteria": [],
+          "findings": [],
+          "duration_ms": null,
+          "imported": true,
+          "source_output_sha256": "sha256:cd29bf8f634a744de122d2c82621a33b5725600dbcbae7aec4a5b3aed7eb96ca"
+        }
+      ]
+    }
+  }
+}

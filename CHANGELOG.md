@@ -80,6 +80,20 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Added
 
+- Two **variants** of the `latest-browser-served` comparison lane
+  (`comparison/lanes.mjs`; techspec G-91 BM-18 and BM-19), each published apart
+  under its own lane name and bundle path, labelled, and never quoted as the
+  lane: `latest-browser-served-explore-2` (the same pin, pages and subject,
+  scanned by Cognium Conformis at state exploration depth 2, which the report
+  must record) and `latest-browser-served-journey-pages` (each of the lane's 18
+  journey cases scanned as its own subject over its declared `steps` pages,
+  never pooled into one site; `comparison/import-cognium-journeys.mjs`
+  attributes site-anchored findings to the journey's case). `run.mjs --lane`
+  writes a variant under `<out>/<variant>/`; a run, `merge.mjs`, `diff.mjs` and
+  `check/comparable-lane.mjs` each refuse to pool a variant with the default
+  lane. Without `--lane` the default lane's output is byte-identical:
+  `check/comparison-lanes.test.mjs` holds its export and snapshot to what the
+  previous runner wrote. No variant has been run or published.
 - `comparison/`: a pinned runner for the multi-tool browser-served lane, so the
   2026-10-13 `latest-browser-served` result can be repeated from committed
   inputs. `package-lock.json` pins every tool and its dependency tree;

@@ -1,0 +1,9 @@
+{
+  "name": "latest-browser-served-journey-pages",
+  "description": "Test fixture: one journey, broken and corrected, each its own subject.",
+  "variant_of": "latest-browser-served",
+  "case_ids": [
+    "journey-booking-broken",
+    "journey-booking-correct"
+  ]
+}

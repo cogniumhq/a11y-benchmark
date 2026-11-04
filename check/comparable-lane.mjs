@@ -30,9 +30,19 @@
 //   expectation   "must-not-report" marks a control; anything else is a defect
 //   criteria      the WCAG criteria the page declares
 //   hitCriteria   the declared criteria the tool actually reported
+//
+// LANE VARIANTS (comparison/lanes.mjs) are never pooled into the lane they vary.
+// A row, or the rows file, may name its lane (`lane: "<name>"` or `lane: { name }`).
+// Scoring against the published `latest-browser-served` lane refuses any row of a
+// variant such as `latest-browser-served-explore-2`: its pages are the lane's, so the
+// denominator check above would pass it, and the figure would be quoted as the lane.
+// `--lane <name>` scores a variant's own published result; it is otherwise read from
+// the published result's run id.
 
 import fs from 'node:fs';
 import path from 'node:path';
+
+import { DEFAULT_LANE, laneByName, variantNamedIn } from '../comparison/lanes.mjs';
 
 const readJson = (file) => JSON.parse(fs.readFileSync(path.resolve(file), 'utf8'));
 
@@ -52,7 +62,8 @@ export function laneOf(publishedResult) {
  * never ran is not a miss, it is an incomparable run, and quietly dropping it
  * shrinks the denominator in the tool's favour.
  */
-export function scoreLane(rows, lane) {
+export function scoreLane(rows, lane, { laneName = DEFAULT_LANE } = {}) {
+  assertRowsInLane(rows, laneName);
   const byPath = new Map(rows.map((row) => [row.path, row]));
   const missing = [...lane].filter((p) => !byPath.has(p)).sort();
   const present = [...lane].filter((p) => byPath.has(p)).map((p) => byPath.get(p));
@@ -82,28 +93,59 @@ export function scoreLane(rows, lane) {
   };
 }
 
+const laneOfRow = (row) => (typeof row?.lane === 'string' ? row.lane : row?.lane?.name) ?? null;
+
+/** Refuse rows of another lane: a variant's rows never score the lane it varies. */
+export function assertRowsInLane(rows, laneName = DEFAULT_LANE) {
+  laneByName(laneName);
+  for (const row of rows) {
+    const rowLane = laneOfRow(row) ?? DEFAULT_LANE;
+    if (rowLane !== laneName) {
+      throw new Error(`${row.path ?? row.id}: a row of lane ${rowLane} cannot be scored as lane ${laneName}; `
+        + 'a variant is published apart and never pooled with the lane it varies');
+    }
+  }
+}
+
+/** The lane a published result measured: named by `--lane`, else by its run id. */
+export function laneOfPublished(publishedResult, explicit = null) {
+  if (explicit) return laneByName(explicit).name;
+  return variantNamedIn(publishedResult?.run?.id) ?? DEFAULT_LANE;
+}
+
 const rate = (n, d) => (d ? `${((n / d) * 100).toFixed(1)}%` : 'n/a');
 
 function main(argv) {
-  const files = argv.filter((a) => !a.startsWith('--'));
+  const files = argv.filter((a, i) => !a.startsWith('--') && !['--json', '--lane'].includes(argv[i - 1]));
   if (files.length < 2) {
     console.error('usage: node check/comparable-lane.mjs <published-result.json> '
-      + '<tool-rows.json> [--json <file>]');
+      + '<tool-rows.json> [--lane <name>] [--json <file>]');
     return 2;
   }
   const [publishedFile, rowsFile] = files;
   const published = readJson(publishedFile);
   const source = readJson(rowsFile);
-  const rows = Array.isArray(source) ? source : source.rows;
-  if (!Array.isArray(rows)) {
+  const sourceRows = Array.isArray(source) ? source : source.rows;
+  if (!Array.isArray(sourceRows)) {
     console.error(`${rowsFile}: expected an array of rows, or an object with a "rows" array`);
     return 2;
   }
+  // a rows file that names its lane passes it to every row that does not name one
+  const fileLane = Array.isArray(source) ? null : laneOfRow(source);
+  const rows = fileLane ? sourceRows.map((row) => (laneOfRow(row) ? row : { ...row, lane: fileLane })) : sourceRows;
 
+  const laneFlag = argv.indexOf('--lane');
+  const laneName = laneOfPublished(published, laneFlag >= 0 ? argv[laneFlag + 1] : null);
   const lane = laneOf(published);
-  const scored = scoreLane(rows, lane);
+  let scored;
+  try {
+    scored = scoreLane(rows, lane, { laneName });
+  } catch (error) {
+    console.error(`REFUSED ${error.message}`);
+    return 2;
+  }
 
-  console.log(`lane            ${lane.size} cases from ${path.basename(publishedFile)}`);
+  console.log(`lane            ${laneName}: ${lane.size} cases from ${path.basename(publishedFile)}`);
   console.log(`tool rows       ${rows.length}`);
   if (scored.missing.length) {
     console.log(`NOT RUN         ${scored.missing.length} lane case(s) absent from the tool run`);

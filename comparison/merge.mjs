@@ -7,11 +7,15 @@
 // that differ in corpus revision, manifest, suite, case list or runner pins, and a
 // tool that appears twice. The top-level environment is that of the first snapshot
 // that ran a tool live; an imported tool keeps its own environment in its source.
+// It refuses snapshots of two lanes (lanes.mjs): a variant is published apart and
+// its rows never join the lane it varies.
 
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+
+import { assertOneLane } from './lanes.mjs';
 
 const args = process.argv.slice(2);
 const outIndex = args.indexOf('--out');
@@ -22,6 +26,7 @@ assert.ok(inputs.length >= 2, 'give at least two snapshots');
 
 const snapshots = inputs.map((file) => JSON.parse(fs.readFileSync(path.resolve(file), 'utf8')));
 const [first] = snapshots;
+assertOneLane(snapshots, inputs);
 const sameAs = (key, value) => snapshots.forEach((snapshot, index) =>
   assert.deepEqual(value(snapshot), value(first), `${inputs[index]} differs in ${key}`));
 sameAs('corpus', (s) => s.corpus);

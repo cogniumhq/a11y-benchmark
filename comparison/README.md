@@ -73,6 +73,78 @@ It refuses two snapshots measured against different corpus revisions, prints
 both sets of lane metrics, and lists every case whose cell or matched criteria
 differ, with the native rules that mapped.
 
+## Lane variants
+
+Two **variants** of this lane change one thing on the Cognium Conformis side
+and keep everything else: the corpus revision, the pins, the scoring rule. A
+variant is published apart, under its own lane name and bundle path
+(`results/<date>-v0.1.0-<variant>`), labelled as a variant, and **never quoted
+as the `latest-browser-served` lane**. Its figures are printed beside this
+lane's, never summed with them and never read as a gain over them. Only Cognium
+Conformis is run in a variant: the direct tools have no such setting. The lanes
+are defined in [`lanes.mjs`](lanes.mjs) (`node comparison/lanes.mjs list`).
+
+| Lane | What changes | Pages | Subject |
+|---|---|---|---|
+| `latest-browser-served` | nothing: the published lane | 214 | `cognium/latest-browser-served-subject.yaml` |
+| `latest-browser-served-explore-2` | state exploration depth 2 (`--explore=2`) | the same 214, same order | the same subject |
+| `latest-browser-served-journey-pages` | each journey case is its own subject over its declared `steps` pages | the lane's 18 journey cases | `cognium/journey-pages/<case id>.yaml`, one per case |
+
+```sh
+# explore-2: the same subject, scanned at depth 2
+npm run a11y:site -- --subject <this repo>/comparison/cognium/latest-browser-served-subject.yaml \
+  --live --explore=2 --out out/latest-browser-served-explore-2/report          # inside cogniumhq/conformis
+node comparison/import-cognium.mjs --lane latest-browser-served-explore-2 \
+  --source out/latest-browser-served-explore-2/report --fixture-root <corpus> \
+  --out out/latest-browser-served-explore-2/cognium-export.json --conformis-revision <commit>
+node comparison/run.mjs --lane latest-browser-served-explore-2 --fixture-root <corpus> --out out \
+  --tools cognium --cognium-export out/latest-browser-served-explore-2/cognium-export.json
+
+# journey pages: one scan per journey case, never one site
+for subject in <this repo>/comparison/cognium/journey-pages/*.yaml; do
+  npm run a11y:site -- --subject "$subject" --live \
+    --out "out/latest-browser-served-journey-pages/reports/$(basename "$subject" .yaml)"  # inside cogniumhq/conformis
+done
+node comparison/import-cognium-journeys.mjs --source out/latest-browser-served-journey-pages/reports \
+  --fixture-root <corpus> --out out/latest-browser-served-journey-pages/cognium-export.json \
+  --conformis-revision <commit>
+node comparison/run.mjs --lane latest-browser-served-journey-pages --fixture-root <corpus> --out out \
+  --tools cognium --cognium-export out/latest-browser-served-journey-pages/cognium-export.json
+```
+
+What keeps them apart:
+
+- `run.mjs --lane <variant>` writes `<out>/<variant>/comparison.json`, never
+  `<out>/comparison.json`, with a `lane` block that names the variant, the lane
+  it varies and how it may be quoted. Without `--lane`, the run and its output
+  are byte for byte what they were before variants existed.
+- An export carries its lane. A run of one lane refuses an export of another,
+  and an importer refuses to write a variant's export outside a path named for
+  it.
+- `merge.mjs` refuses to join snapshots of two lanes. `diff.mjs` refuses to diff
+  two lanes unless given `--across-lanes`, and then prints the result as a
+  difference between lanes, not a change in either.
+- [`check/comparable-lane.mjs`](../check/comparable-lane.mjs) refuses rows of a
+  variant when it scores this lane.
+
+**explore-2.** The importer requires the report itself to record
+`explore: 2`; the operator's word is not enough. A live run whose inventory
+probe may not click on the subject's host ignores `--explore` and would pass a
+depth-0 run off as the variant. The default lane refuses a report that records
+any state exploration.
+
+**journey pages.** The subjects are generated from the pinned corpus's
+`journeys.json` (`node comparison/lanes.mjs write-journey-subjects
+--fixture-root <corpus at the pin>`); a test holds the committed files to it.
+The broken and the corrected version of a journey are separate subjects, and no
+page is an entry point of two subjects: pooled into one site, a site-anchored
+finding from one journey would land on every other journey, corrected controls
+included. A finding the scan anchors to the site (the relationships between
+pages that 3.2.3, 3.2.4, 3.2.6 and 3.3.7 are about), or to any of the case's
+steps pages, is attributed to that journey's case; each row says how many came
+from each (`attribution`). A finding anchored to a page outside the case's
+steps is refused.
+
 ## Scoring
 
 The published lane's rule, also in [`check/comparable-lane.mjs`](../check/comparable-lane.mjs):

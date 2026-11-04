@@ -5,6 +5,15 @@
 //        --out <directory> [--suite latest-browser-served|all] [--tools axe,ibm,...] \
 //        [--chromium <executable>] [--cognium-export <file>] [--allow-unpinned]
 //
+//   node comparison/run.mjs --lane latest-browser-served-explore-2 | latest-browser-served-journey-pages \
+//        --fixture-root <corpus> --out <directory> --tools cognium --cognium-export <file>
+//
+// `--lane` names a VARIANT of the published lane (lanes.mjs). A variant is
+// Cognium-only, writes <out>/<variant>/comparison.json with a `lane` block, is
+// published apart under its own bundle name and is never quoted as the
+// latest-browser-served lane. Without `--lane` the run and its output are what
+// they were before variants existed.
+//
 // It writes <out>/comparison.json in the shape the published results repository
 // imports (`scripts/import-comparison.mjs` there), and prints the lane metrics.
 //
@@ -56,6 +65,13 @@ import lighthouse from 'lighthouse';
 import pa11y from 'pa11y';
 import { chromium } from 'playwright';
 import puppeteer from 'puppeteer';
+
+import { DEFAULT_LANE, laneByName, snapshotFile } from './lanes.mjs';
+import {
+  buildSnapshot, cogniumRows, expectedCriteria, rowFor, summarize, toolEntry,
+} from './snapshot.mjs';
+
+export { summarize };
 
 const { ACTRules } = qualwebActRules;
 const { BestPractices } = qualwebBestPractices;
@@ -165,12 +181,6 @@ function git(cwd, args) {
 
 // ------------------------------------------------------------------ mappings
 
-function expectedCriteria(testCase) {
-  return testCase.mode === 'tp'
-    ? Object.keys(testCase.min_criteria || {})
-    : [...(testCase.must_not_report || [])];
-}
-
 function criteriaFromAxeTags(tags = []) {
   return [...new Set(tags.flatMap((tag) => {
     const match = /^wcag(\d{3,4})$/.exec(tag);
@@ -217,26 +227,6 @@ function aggregateFindings(items, rule, count, criteria) {
     .sort((a, b) => a.rule.localeCompare(b.rule));
 }
 
-function rowFor(testCase, started, findings, manualCount = 0, extra = {}) {
-  const foundCriteria = [...new Set(findings.flatMap((finding) => finding.criteria))].sort();
-  const expected = expectedCriteria(testCase);
-  const matchedExpected = expected.filter((criterion) => foundCriteria.includes(criterion));
-  return {
-    id: testCase.id,
-    mode: testCase.mode,
-    path: testCase.path,
-    expected_criteria: expected,
-    status: 'ok',
-    automated_findings: findings.reduce((sum, finding) => sum + finding.count, 0),
-    manual_review_items: manualCount,
-    found_criteria: foundCriteria,
-    matched_expected_criteria: matchedExpected,
-    findings,
-    duration_ms: Date.now() - started,
-    ...extra,
-  };
-}
-
 let FIXTURE_ROOT = '';
 
 function errorRow(testCase, started, error) {
@@ -268,26 +258,7 @@ let COGNIUM_EXPORT = null;
 function runCognium(cases) {
   assert.ok(COGNIUM_EXPORT, 'cognium needs --cognium-export <file> written by import-cognium.mjs');
   const exported = JSON.parse(fs.readFileSync(COGNIUM_EXPORT, 'utf8'));
-  assert.equal(exported.schema_version, 2);
-  assert.equal(exported.suite, SUITE_NAME, 'Cognium export was made for another suite');
-  assert.equal(exported.fixture?.commit, CORPUS_REVISION, 'Cognium export was made against another corpus revision');
-  assert.equal(exported.capture?.capture_misses, 0, 'Cognium export has incomplete capture dependencies');
-  assert.equal(exported.capture?.run_errors, 0, 'Cognium export has run errors');
-  assert.equal(exported.capture?.outside_the_proofgraph ?? 0, 0, 'Cognium export has records outside the proofgraph');
-  const rowById = new Map(exported.cases.map((row) => [row.id, row]));
-  const rows = cases.map((testCase) => {
-    const source = rowById.get(testCase.id);
-    assert.ok(source, `Cognium export has no row for ${testCase.id}`);
-    assert.equal(source.path, testCase.path, `Cognium path differs for ${testCase.id}`);
-    const row = rowFor(testCase, Date.now(), source.findings, source.manual_review_items, {
-      duration_ms: null,
-      imported: true,
-      source_output_sha256: exported.source_artifact_sha256,
-    });
-    assert.deepEqual(row.found_criteria, source.found_criteria);
-    return row;
-  });
-  return { rows, exported };
+  return cogniumRows(exported, cases, { suiteName: SUITE_NAME, corpusRevision: CORPUS_REVISION, laneName: LANE_NAME });
 }
 
 async function loadPage(page, url, testCase) {
@@ -664,47 +635,38 @@ async function runNu(cases, baseUrl, executablePath) {
   return rows;
 }
 
-// ------------------------------------------------------------------ scoring
-
-export function summarize(rows) {
-  const successful = rows.filter((row) => row.status === 'ok');
-  const tp = successful.filter((row) => row.mode === 'tp');
-  const safe = successful.filter((row) => row.mode === 'safe');
-  return {
-    cases: rows.length,
-    errors: rows.filter((row) => row.status === 'error').length,
-    tp_cases: tp.length,
-    tp_pages_with_target_findings: tp.filter((row) => row.matched_expected_criteria.length > 0).length,
-    tp_pages_with_other_findings_only: tp.filter((row) =>
-      row.automated_findings > 0 && row.matched_expected_criteria.length === 0).length,
-    safe_cases: safe.length,
-    safe_pages_without_target_findings: safe.filter((row) => row.matched_expected_criteria.length === 0).length,
-    safe_pages_with_target_findings: safe.filter((row) => row.matched_expected_criteria.length > 0).length,
-    safe_pages_with_other_findings_only: safe.filter((row) =>
-      row.automated_findings > 0 && row.matched_expected_criteria.length === 0).length,
-    expected_criteria: tp.reduce((sum, row) => sum + row.expected_criteria.length, 0),
-    expected_criteria_matched: tp.reduce((sum, row) => sum + row.matched_expected_criteria.length, 0),
-    manual_review_items: successful.reduce((sum, row) => sum + row.manual_review_items, 0),
-    duration_ms: successful.reduce((sum, row) => sum + (row.duration_ms || 0), 0),
-  };
-}
+// Rows, lane metrics and the snapshot are in snapshot.mjs (no dependencies, so the
+// corpus checks can hold the default lane's output to its earlier bytes).
 
 // ------------------------------------------------------------------ main
 
 let SUITE_NAME = 'latest-browser-served';
+let LANE_NAME = DEFAULT_LANE;
 let CORPUS_REVISION = '';
 
 async function main() {
   FIXTURE_ROOT = path.resolve(arg('fixture-root', process.env.A11Y_BENCHMARK_ROOT || ''));
   const outDir = arg('out');
   if (!arg('fixture-root') && !process.env.A11Y_BENCHMARK_ROOT || !outDir) {
-    console.error('usage: node run.mjs --fixture-root <corpus checkout> --out <directory> [--suite <name>] [--tools <ids>] [--chromium <executable>] [--cognium-export <file>] [--allow-unpinned]');
+    console.error('usage: node run.mjs --fixture-root <corpus checkout> --out <directory> [--lane <name>] [--suite <name>] [--tools <ids>] [--chromium <executable>] [--cognium-export <file>] [--allow-unpinned]');
     process.exit(2);
   }
-  SUITE_NAME = arg('suite', PINS.lane);
+  // `--lane <variant>` (lanes.mjs): a variant of the published lane, written under
+  // <out>/<variant>/ and never at <out>/comparison.json. Without it, nothing changes.
+  const lane = laneByName(arg('lane', PINS.lane));
+  LANE_NAME = lane.name;
+  if (lane.variant_of) {
+    assert.equal(arg('suite'), undefined, `--suite is fixed by lane ${lane.name}`);
+    SUITE_NAME = lane.name;
+  } else {
+    SUITE_NAME = arg('suite', PINS.lane);
+  }
   const allowUnpinned = process.argv.includes('--allow-unpinned');
-  const toolIds = arg('tools', DIRECT_TOOL_IDS.join(',')).split(',').map((value) => value.trim()).filter(Boolean);
+  const toolIds = arg('tools', (lane.tools ?? DIRECT_TOOL_IDS).join(',')).split(',').map((value) => value.trim()).filter(Boolean);
   for (const id of toolIds) assert.ok(ALL_TOOL_IDS.includes(id), `unknown tool: ${id}`);
+  for (const id of toolIds) {
+    assert.ok(!lane.tools || lane.tools.includes(id), `lane ${lane.name} runs only ${lane.tools?.join(', ')}; ${id} has no such variant`);
+  }
   if (toolIds.includes('cognium')) COGNIUM_EXPORT = path.resolve(arg('cognium-export', ''));
 
   // ---- corpus identity
@@ -748,9 +710,12 @@ async function main() {
     selectedCases = allCases.filter((testCase) => ['tp', 'safe'].includes(testCase.mode)
       && testCase.expected_outcome !== 'cannot-tell' && testCase.fixture_family !== 'guided');
   } else {
-    const suiteFile = path.join(HERE, 'suites', `${SUITE_NAME}.json`);
-    assert.ok(fs.existsSync(suiteFile), `unknown suite: ${SUITE_NAME}`);
+    const suiteFileName = lane.variant_of ? lane.suite : SUITE_NAME;
+    const suiteFile = path.join(HERE, 'suites', `${suiteFileName}.json`);
+    assert.ok(fs.existsSync(suiteFile), `unknown suite: ${suiteFileName}`);
     suite = JSON.parse(fs.readFileSync(suiteFile, 'utf8'));
+    // a variant is named and described as itself, never as the suite it shares
+    if (lane.variant_of) suite = { ...suite, name: lane.name, description: lane.description };
     const byId = new Map(allCases.map((testCase) => [testCase.id, testCase]));
     selectedCases = suite.case_ids.map((id) => {
       const testCase = byId.get(id);
@@ -810,30 +775,16 @@ async function main() {
       const startedAt = new Date().toISOString();
       const result = await runners[id](selectedCases, baseUrl, executablePath);
       const completedAt = new Date().toISOString();
-      const rows = id === 'cognium' ? result.rows : result;
-      tools[id] = {
+      tools[id] = toolEntry({
+        id,
         label: TOOL_LABELS[id],
-        version: id === 'cognium' ? result.exported.version : versionOf[id](),
-        source: id === 'cognium' ? {
-          kind: 'sanitized-import',
-          generated: result.exported.generated,
-          view: result.exported.source_view,
-          capture: result.exported.capture,
-          environment: result.exported.environment,
-          versions: result.exported.versions,
-          ...(result.exported.conformis ? { conformis: result.exported.conformis } : {}),
-        } : {
-          kind: 'live-local-scan',
-          ...(id === 'ibm' ? { rule_engine: IBM_ENGINE } : {}),
-        },
-        run: id === 'cognium' && result.exported.run
-          ? result.exported.run
-          : { started_at: startedAt, completed_at: completedAt, repeat: 1 },
+        version: id === 'cognium' ? null : versionOf[id](),
+        result,
+        startedAt,
+        completedAt,
+        ibmEngine: IBM_ENGINE,
         lineage: TOOL_LINEAGE[id],
-        summary: summarize(rows),
-        traceability: null,
-        cases: rows,
-      };
+      });
     }
   } finally {
     await new Promise((resolve) => server.close(resolve));
@@ -846,10 +797,10 @@ async function main() {
     runnerDirty = git(HERE, ['status', '--porcelain', '--', '.']) !== '';
   } catch { /* not a git checkout */ }
 
-  const snapshot = {
-    schema_version: 1,
+  const snapshot = buildSnapshot({
+    laneName: LANE_NAME,
     generated: new Date().toISOString().slice(0, 10),
-    suite: { name: suite.name, description: suite.description, has_scenario_traceability: false },
+    suite,
     corpus: {
       repository: corpusManifest.corpus.id,
       version: `v${fs.readFileSync(path.join(FIXTURE_ROOT, 'VERSION'), 'utf8').trim()}`,
@@ -879,24 +830,14 @@ async function main() {
       package_lock_sha256: sha256File(path.join(HERE, 'package-lock.json')),
       unpinned: pinProblems,
     },
-    privacy: {
-      target: 'ephemeral localhost server only',
-      hosted_services: false,
-      repository_content_uploaded: false,
-      install_scripts_disabled_by_npmrc: true,
-      ibm_scan_metrics_suppressed: true,
-      ibm_rules_served_locally: true,
-      cognium_export_contains_raw_evidence: false,
-    },
-    tool_order: toolIds,
-    cases: selectedCases.map((testCase) => ({
-      id: testCase.id, mode: testCase.mode, path: testCase.path, expected_criteria: expectedCriteria(testCase),
-    })),
+    toolIds,
+    selectedCases,
     tools,
-  };
+  });
 
-  fs.mkdirSync(path.resolve(outDir), { recursive: true });
-  const outFile = path.join(path.resolve(outDir), 'comparison.json');
+  // the default lane writes <out>/comparison.json as it always has; a variant, <out>/<variant>/comparison.json
+  const outFile = snapshotFile(outDir, LANE_NAME);
+  fs.mkdirSync(path.dirname(outFile), { recursive: true });
   fs.writeFileSync(outFile, `${JSON.stringify(snapshot, null, 2)}\n`);
 
   console.log('\n| Tool | Known-defect cases target-detected | Expected criteria matched | Corrected controls target-clean | Errors |');
@@ -906,6 +847,7 @@ async function main() {
     console.log(`| ${tools[id].label} ${tools[id].version} | ${s.tp_pages_with_target_findings}/${s.tp_cases} | ${s.expected_criteria_matched}/${s.expected_criteria} | ${s.safe_pages_without_target_findings}/${s.safe_cases} | ${s.errors} |`);
   }
   console.log(`\nChromium ${browserVersion} (${browserSource}); wrote ${outFile}`);
+  if (lane.variant_of) console.log(`VARIANT ${lane.name} of ${lane.variant_of}: publish apart, labelled; never quote it as ${lane.variant_of}`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
