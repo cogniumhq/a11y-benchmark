@@ -31,6 +31,13 @@ jobs:
           fetch-depth: 0
       - name: Fetch every public head and tag for the privacy audit
         run: git fetch --force --prune --prune-tags --tags origin '+refs/heads/*:refs/remotes/origin/*'
+      - name: Drop pull request refs left in the runner workspace
+        # The grace workspace persists between jobs, and actions/checkout leaves each PR's
+        # refs/remotes/pull/<n>/merge behind. Those synthetic merge commits are never
+        # published, but `git log --all` in the privacy test reads them, and the --prune
+        # above covers only refs/heads/*. HEAD stays checked out, so this run's own merge
+        # commit is still seen (and skipped) by the test.
+        run: git for-each-ref --format='%(refname)' refs/remotes/pull | xargs -r -n1 git update-ref -d
       - uses: actions/setup-node@v7
         with:
           node-version: 22

@@ -1,0 +1,24 @@
+<!--
+  A sequence whose visual order is not the DOM order
+  WCAG: 1.3.2
+  Expectation: a control SHOULD report this
+  1.3.2. row-reverse shows the steps right to left while the source order stays left to right.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A sequence whose visual order is not the DOM order</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>A sequence whose visual order is not the DOM order</h1>
+<ol style="display:flex;flex-direction:row-reverse;gap:1rem;list-style:none;padding:0">
+<li>Choose a fare</li><li>Enter payment</li><li>Confirm the booking</li>
+</ol>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>
