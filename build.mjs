@@ -502,6 +502,96 @@ for (var d = 1; d <= 7; d++) {
     body: `<style>.col{width:320px}.line{min-height:1.2em}</style>
 <div class="col"><p class="line">Baggage allowance is one cabin bag plus one personal item per traveller, and it must stay readable.</p></div>`,
   },
+  {
+    dir: 'static', file: 'ancestor_click.html', expect: 'flag',
+    sc: ['2.1.1', '4.1.2'], manual: [],
+    title: 'A click handled on an ancestor of the control',
+    note: 'The pointer handler is on the wrapping div. The link inside has no handler of its own, so the keyboard path and the pointer path disagree.',
+    body: `<div onclick="location.href='fare.html'"><a href="fare.html">Flexible fare</a></div>`,
+  },
+  {
+    dir: 'static', file: 'safe_ancestor_click.html', expect: 'clean',
+    sc: ['2.1.1', '4.1.2'], manual: [],
+    title: 'A click handled on the control itself',
+    note: 'Negative control for ancestor_click.html. The link is the handler.',
+    body: `<p><a href="fare.html">Flexible fare</a></p>`,
+  },
+  {
+    dir: 'static', file: 'grid_opened.html', expect: 'flag',
+    sc: ['1.3.1', '4.1.2'], manual: [],
+    title: 'An opened calendar with no grid semantics',
+    note: 'The popover is already open. Day cells are clickable divs, so the open state still has no row or column.',
+    body: `<div role="dialog" aria-label="Choose a day">
+<div id="cal"></div>
+</div>
+<script>
+var cal = document.getElementById('cal');
+for (var d = 1; d <= 7; d++) {
+  var cell = document.createElement('div');
+  cell.textContent = String(d);
+  cell.onclick = function () {};
+  cal.appendChild(cell);
+}
+</script>`,
+  },
+  {
+    dir: 'static', file: 'safe_grid_opened.html', expect: 'clean',
+    sc: ['1.3.1', '4.1.2'], manual: [],
+    title: 'An opened calendar exposed as a grid',
+    note: 'Negative control for grid_opened.html. The open popover is a grid with column headers.',
+    body: `<div role="dialog" aria-label="Choose a day">
+<table>
+<caption>May</caption>
+<thead><tr><th scope="col">Mon</th><th scope="col">Tue</th></tr></thead>
+<tbody><tr><td><button type="button">1</button></td><td><button type="button">2</button></td></tr></tbody>
+</table>
+</div>`,
+  },
+  {
+    dir: 'static', file: 'css_reordered_sequence.html', expect: 'flag',
+    sc: ['1.3.2'], manual: [],
+    title: 'A sequence whose visual order is not the DOM order',
+    note: '1.3.2. row-reverse shows the steps right to left while the source order stays left to right.',
+    body: `<ol style="display:flex;flex-direction:row-reverse;gap:1rem;list-style:none;padding:0">
+<li>Choose a fare</li><li>Enter payment</li><li>Confirm the booking</li>
+</ol>`,
+  },
+  {
+    dir: 'static', file: 'safe_css_reordered_sequence.html', expect: 'clean',
+    sc: ['1.3.2'], manual: [],
+    title: 'A sequence whose visual order matches the DOM',
+    note: 'Negative control for css_reordered_sequence.html. Source order and visual order are the same.',
+    body: `<ol>
+<li>Choose a fare</li><li>Enter payment</li><li>Confirm the booking</li>
+</ol>`,
+  },
+  {
+    dir: 'static', file: 'choice_loads_page.html', expect: 'flag',
+    sc: ['3.2.2'], manual: [],
+    title: 'A choice that loads a page',
+    note: '3.2.2. Changing the select navigates immediately. There is no separate submit.',
+    body: `<label for="dest">Destination</label>
+<select id="dest" onchange="location.href=this.value">
+<option value="">Choose</option>
+<option value="paris.html">Paris</option>
+<option value="rome.html">Rome</option>
+</select>`,
+  },
+  {
+    dir: 'static', file: 'safe_choice_loads_page.html', expect: 'clean',
+    sc: ['3.2.2'], manual: [],
+    title: 'A choice that waits for an explicit submit',
+    note: 'Negative control for choice_loads_page.html. Changing the select does not load a page.',
+    body: `<form action="search.html">
+<label for="dest-safe">Destination</label>
+<select id="dest-safe" name="dest">
+<option value="">Choose</option>
+<option value="paris">Paris</option>
+<option value="rome">Rome</option>
+</select>
+<button type="submit">Show fares</button>
+</form>`,
+  },
 ];
 
 // ───────────────────────── write
