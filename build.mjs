@@ -422,6 +422,86 @@ ${Array.from({ length: 12 }, (_, i) => `<p><button${i === 11 ? ' class="focus-ta
     note: 'Negative control for vague_heading_and_label.html. The heading and button describe their topic and action.',
     body: `<section><h2>Optional fare details</h2><p>Review change and cancellation terms.</p><button type="button">Review fare details</button></section>`,
   },
+  {
+    dir: 'static', file: 'nested_control.html', expect: 'flag',
+    sc: ['4.1.2'], manual: [],
+    title: 'A control nested inside another control',
+    note: 'AX-06/4.1.2-nested. A button inside a link exposes one name and role for two actions.',
+    body: `<a href="#fare">Flexible fare <button type="button">Details</button></a>`,
+  },
+  {
+    dir: 'static', file: 'safe_nested_control.html', expect: 'clean',
+    sc: ['4.1.2'], manual: [],
+    title: 'Adjacent controls, not nested',
+    note: 'Negative control for nested_control.html. The link and the button are siblings.',
+    body: `<p><a href="#fare">Flexible fare</a> <button type="button">Details</button></p>`,
+  },
+  {
+    dir: 'static', file: 'unmatched_animation.html', expect: 'clean',
+    sc: ['2.2.2'], manual: [],
+    title: 'A motion rule that matches nothing drawn',
+    note: 'AX-19/2.2.2. The keyframes rule matches no element, so nothing on the page moves.',
+    body: `<style>
+@keyframes spin{to{transform:rotate(360deg)}}
+.not-on-this-page{animation:spin 1s linear infinite}
+</style>
+<p>This page does not use that class.</p>`,
+  },
+  {
+    dir: 'static', file: 'blur_on_focus.html', expect: 'flag',
+    sc: ['2.1.1'], manual: [],
+    title: 'A link that drops focus as soon as it receives it',
+    note: 'The only way onward blurs itself on focus, so a keyboard user cannot activate it.',
+    body: `<p><a href="next.html" onfocus="this.blur()">Continue to payment</a></p>`,
+  },
+  {
+    dir: 'static', file: 'safe_blur_on_focus.html', expect: 'clean',
+    sc: ['2.1.1'], manual: [],
+    title: 'A link that keeps focus',
+    note: 'Negative control for blur_on_focus.html. Focus stays on the link until the user activates it.',
+    body: `<p><a href="next.html">Continue to payment</a></p>`,
+  },
+  {
+    dir: 'static', file: 'script_grid.html', expect: 'flag',
+    sc: ['1.3.1'], manual: [],
+    title: 'A script-built calendar with no grid semantics',
+    note: 'Clickable day cells are plain divs. Rows and columns are not exposed.',
+    body: `<div id="cal"></div>
+<script>
+var cal = document.getElementById('cal');
+for (var d = 1; d <= 7; d++) {
+  var cell = document.createElement('div');
+  cell.textContent = String(d);
+  cell.onclick = function () {};
+  cal.appendChild(cell);
+}
+</script>`,
+  },
+  {
+    dir: 'static', file: 'safe_script_grid.html', expect: 'clean',
+    sc: ['1.3.1'], manual: [],
+    title: 'A script-built calendar exposed as a grid',
+    note: 'Negative control for script_grid.html. The same cells are a grid with row and column headers.',
+    body: `<table id="cal"><caption>May</caption>
+<thead><tr><th scope="col">Mon</th><th scope="col">Tue</th></tr></thead>
+<tbody><tr><td>1</td><td>2</td></tr></tbody></table>`,
+  },
+  {
+    dir: 'static', file: 'reflow_320.html', expect: 'flag',
+    sc: ['1.4.10', '1.4.12'], manual: [],
+    title: 'Text that clips at 320 CSS pixels when spacing is raised',
+    note: '1.4.12 measured at 320 CSS px. A fixed-height line inside a 320px column clips once line height and letter spacing increase.',
+    body: `<style>.col{width:320px}.line{height:1.2em;overflow:hidden;line-height:1.1!important;letter-spacing:normal!important;white-space:nowrap}</style>
+<div class="col"><p class="line">Baggage allowance is one cabin bag plus one personal item per traveller, and it must stay readable.</p></div>`,
+  },
+  {
+    dir: 'static', file: 'safe_reflow_320.html', expect: 'clean',
+    sc: ['1.4.10', '1.4.12'], manual: [],
+    title: 'Text that reflows at 320 CSS pixels',
+    note: 'Negative control for reflow_320.html. No fixed height and no nowrap, so spacing overrides wrap instead of clipping.',
+    body: `<style>.col{width:320px}.line{min-height:1.2em}</style>
+<div class="col"><p class="line">Baggage allowance is one cabin bag plus one personal item per traveller, and it must stay readable.</p></div>`,
+  },
 ];
 
 // ───────────────────────── write

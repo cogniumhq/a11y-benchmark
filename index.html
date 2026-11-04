@@ -83,7 +83,16 @@
 <li><a href="static/ambiguous_link_purpose.html">Links without contextual purpose</a> — 2.4.4 — <strong>should flag</strong></li>
 <li><a href="static/safe_link_purpose.html">Links with specific purpose</a> — 2.4.4 — <strong>must not flag</strong></li>
 <li><a href="static/vague_heading_and_label.html">Vague heading and control label</a> — 2.4.6 — <strong>should flag</strong></li>
-<li><a href="static/safe_descriptive_heading_and_label.html">Descriptive heading and control label</a> — 2.4.6 — <strong>must not flag</strong></li></ul>
+<li><a href="static/safe_descriptive_heading_and_label.html">Descriptive heading and control label</a> — 2.4.6 — <strong>must not flag</strong></li>
+<li><a href="static/nested_control.html">A control nested inside another control</a> — 4.1.2 — <strong>should flag</strong></li>
+<li><a href="static/safe_nested_control.html">Adjacent controls, not nested</a> — 4.1.2 — <strong>must not flag</strong></li>
+<li><a href="static/unmatched_animation.html">A motion rule that matches nothing drawn</a> — 2.2.2 — <strong>must not flag</strong></li>
+<li><a href="static/blur_on_focus.html">A link that drops focus as soon as it receives it</a> — 2.1.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_blur_on_focus.html">A link that keeps focus</a> — 2.1.1 — <strong>must not flag</strong></li>
+<li><a href="static/script_grid.html">A script-built calendar with no grid semantics</a> — 1.3.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_script_grid.html">A script-built calendar exposed as a grid</a> — 1.3.1 — <strong>must not flag</strong></li>
+<li><a href="static/reflow_320.html">Text that clips at 320 CSS pixels when spacing is raised</a> — 1.4.10, 1.4.12 — <strong>should flag</strong></li>
+<li><a href="static/safe_reflow_320.html">Text that reflows at 320 CSS pixels</a> — 1.4.10, 1.4.12 — <strong>must not flag</strong></li></ul>
 </main>
 <p><a href="../index.html">Back to the index</a></p>
 </body>
