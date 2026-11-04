@@ -9,15 +9,15 @@
   "generated": "2026-11-04",
   "counts": {
     "families": 15,
-    "cases": 291
+    "cases": 299
   },
   "digest_policy": "SHA-256 of parsed family JSON with the top-level generated field removed, serialized with JSON.stringify.",
   "families": [
     {
       "id": "core",
       "file": "catalog.json",
-      "case_count": 53,
-      "content_sha256": "sha256:1d101a9ffc4c12d0a0cc249293e04356ab73bd1035846afff9cc40b7397f4fa5"
+      "case_count": 61,
+      "content_sha256": "sha256:e365af9d1351bd0fb5c30d83c1c9d83e5163fba1f047d2f30378e22dc2d1a57b"
     },
     {
       "id": "pipeline",

@@ -1,0 +1,30 @@
+<!--
+  A choice that waits for an explicit submit
+  WCAG: 3.2.2
+  Expectation: NO control should report this (negative control)
+  Negative control for choice_loads_page.html. Changing the select does not load a page.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A choice that waits for an explicit submit</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>A choice that waits for an explicit submit</h1>
+<form action="search.html">
+<label for="dest-safe">Destination</label>
+<select id="dest-safe" name="dest">
+<option value="">Choose</option>
+<option value="paris">Paris</option>
+<option value="rome">Rome</option>
+</select>
+<button type="submit">Show fares</button>
+</form>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>
