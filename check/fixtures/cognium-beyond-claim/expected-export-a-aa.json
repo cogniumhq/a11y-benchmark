@@ -1,0 +1,82 @@
+{
+  "schema_version": 2,
+  "product": "Cognium",
+  "suite": "latest-browser-served",
+  "version": "a11y/html@0.0.0-fixture",
+  "generated": "2026-11-04",
+  "run": {
+    "started_at": "2026-11-04T00:00:00.000Z",
+    "completed_at": "2026-11-04T01:00:00.000Z",
+    "repeat": 1
+  },
+  "fixture": {
+    "commit": "<fixture-commit>"
+  },
+  "source_artifact_sha256": "sha256:3c731dbc0cac6505767b7639752cfa898b9b9d5ad36bd22da3367d2d9b89e25c",
+  "source_view": "all declared comparison pages, as built in the browser",
+  "flows": {
+    "source": "subject-declaration",
+    "count": 0,
+    "names": []
+  },
+  "capture": {
+    "digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "fixture_pages": 2,
+    "hydrated_pages": 2,
+    "support_pages": 0,
+    "capture_misses": 0,
+    "reproduced_pages": 2,
+    "run_errors": 0,
+    "outside_the_proofgraph": 0
+  },
+  "environment": {
+    "browser": "Chromium 0.0.0.0",
+    "platform": "linux",
+    "viewport": "1280x720"
+  },
+  "versions": {
+    "packs": {
+      "a11y/html": "0.0.0-fixture"
+    },
+    "catalogs": {},
+    "drivers": {},
+    "datasets": {}
+  },
+  "cases": [
+    {
+      "id": "keyboard-div_button",
+      "path": "keyboard/div_button.html",
+      "automated_findings": 3,
+      "manual_review_items": 1,
+      "found_criteria": [
+        "2.1.1",
+        "4.1.2"
+      ],
+      "findings": [
+        {
+          "rule": "html/focusable",
+          "count": 2,
+          "criteria": [
+            "2.1.1"
+          ]
+        },
+        {
+          "rule": "html/keyboard-operable",
+          "count": 1,
+          "criteria": [
+            "2.1.1",
+            "4.1.2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "keyboard-safe_native_button",
+      "path": "keyboard/safe_native_button.html",
+      "automated_findings": 0,
+      "manual_review_items": 0,
+      "found_criteria": [],
+      "findings": []
+    }
+  ]
+}
