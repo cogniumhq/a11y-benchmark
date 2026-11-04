@@ -43,7 +43,13 @@ jobs:
 
       - name: Drive every declared state and confirm it was reached
         run: |
-          npx --prefix check playwright install --with-deps chromium
+          # The self-hosted runner has the browser's system libraries and no
+          # passwordless sudo, so only a GitHub-hosted runner installs them.
+          if [ "${RUNNER_ENVIRONMENT:-}" = "github-hosted" ]; then
+            npx --prefix check playwright install --with-deps chromium
+          else
+            npx --prefix check playwright install chromium
+          fi
           node check/verify-state-drivers.mjs
 
       - name: Validate and score the published result examples
