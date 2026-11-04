@@ -134,6 +134,7 @@ native/              real PDF and OOXML artifacts for non-web surfaces
 surface-contracts.json  native artifact format, harness and standard per unrepresented surface
 evidence/            the execution and verification evidence ledger
 starter/             copy-and-fill kit for publishing a result bundle
+comparison/          pinned multi-tool runner for the browser-served lane (see its README)
 delivery.mjs         regenerates the delivery matrix
 wiring.mjs           regenerates the event-wiring matrix
 patterns.mjs         regenerates the pattern pairs

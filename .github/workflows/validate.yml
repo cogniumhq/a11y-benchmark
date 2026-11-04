@@ -30,7 +30,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Fetch every public head and tag for the privacy audit
-        run: git fetch --force --tags origin '+refs/heads/*:refs/remotes/origin/*'
+        run: git fetch --force --prune --prune-tags --tags origin '+refs/heads/*:refs/remotes/origin/*'
       - uses: actions/setup-node@v7
         with:
           node-version: 22
@@ -43,7 +43,13 @@ jobs:
 
       - name: Drive every declared state and confirm it was reached
         run: |
-          npx --prefix check playwright install --with-deps chromium
+          # The self-hosted runner has the browser's system libraries and no
+          # passwordless sudo, so only a GitHub-hosted runner installs them.
+          if [ "${RUNNER_ENVIRONMENT:-}" = "github-hosted" ]; then
+            npx --prefix check playwright install --with-deps chromium
+          else
+            npx --prefix check playwright install chromium
+          fi
           node check/verify-state-drivers.mjs
 
       - name: Validate and score the published result examples
