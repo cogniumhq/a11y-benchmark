@@ -1,0 +1,23 @@
+<!--
+  Text that clips at 320 CSS pixels when spacing is raised
+  WCAG: 1.4.10, 1.4.12
+  Expectation: a control SHOULD report this
+  1.4.12 measured at 320 CSS px. A fixed-height line inside a 320px column clips once line height and letter spacing increase.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Text that clips at 320 CSS pixels when spacing is raised</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Text that clips at 320 CSS pixels when spacing is raised</h1>
+<style>.col{width:320px}.line{height:1.2em;overflow:hidden;line-height:1.1!important;letter-spacing:normal!important;white-space:nowrap}</style>
+<div class="col"><p class="line">Baggage allowance is one cabin bag plus one personal item per traveller, and it must stay readable.</p></div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>
