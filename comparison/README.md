@@ -55,6 +55,12 @@ node comparison/run.mjs --fixture-root <corpus> --out out/cognium \
   --tools cognium --cognium-export out/cognium-export.json
 ```
 
+`import-cognium.mjs` reads the report's A/AA view (`nodes`, `witnesses`) into
+`cases`. AAA candidates the subject did not adopt are in the report's separate
+`beyondClaim` block; the importer exports them under `beyond_claim` and prints
+them on an AAA line of their own. They are never added to a `cases` row, count
+or criterion, and `run.mjs` does not score them.
+
 `run.mjs` writes `comparison.json` in the shape the results repository's
 `scripts/import-comparison.mjs` publishes, and prints, per tool, the
 known-defect cases target-detected, the declared criteria matched and the

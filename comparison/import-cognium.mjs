@@ -12,6 +12,10 @@
 // It refuses a report with run errors, page-build failures, capture misses,
 // non-reproduced pages or records outside the proofgraph, and a report that is
 // missing any declared page: a page the product never evaluated is not a miss.
+//
+// AAA candidates the subject did not adopt sit in the report's separate `beyondClaim`
+// block. They are exported under `beyond_claim` and printed on an AAA line of their own;
+// they never change an A/AA row, count or criterion.
 
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -49,53 +53,16 @@ export async function importCognium({ source, fixtureRoot, suite, output, confor
   assert.equal(report.hydration?.reproduced, report.hydration?.pages, 'Cognium report has non-reproducible pages');
   assert.equal(report.flows?.count ?? 0, 0, 'this lane declares no flows; the report ran some');
 
-  const nodesByPage = new Map();
-  for (const node of graph.nodes || []) {
-    const criterion = /^wcag@2\.2:(\d+\.\d+\.\d+)$/.exec(String(node.obligation || ''))?.[1];
-    const page = node.anchorSet?.type === 'product' ? node.anchorSet.content : null;
-    if (!criterion || !page || page === 'site') continue;
-    const nodes = nodesByPage.get(page) || [];
-    nodes.push({ ...node, criterion });
-    nodesByPage.set(page, nodes);
-  }
-
+  // The A/AA view is `nodes` + `witnesses`. AAA candidates the subject did not adopt are
+  // written by the site scan to a separate `beyondClaim` block (conformis `graphDocument`);
+  // they are read on their own below and never enter these rows or their counts.
+  const nodesByPage = wcagNodesByPage(graph.nodes);
   const normalizedCases = cases.map((testCase) => {
     const nodes = nodesByPage.get(testCase.path) || [];
     assert.ok(nodes.length, `Cognium proofgraph has no WCAG nodes for declared page ${testCase.path}`);
-    const grouped = new Map();
-    const reviewRecords = new Set();
-    for (const node of nodes) {
-      for (const recordId of node.records || []) {
-        const witness = graph.witnesses?.[recordId];
-        if (!witness) continue;
-        if (witness.verdict === 'abstain') reviewRecords.add(recordId);
-        if (witness.verdict !== 'deviation') continue;
-        const rule = witness.control || 'unknown-control';
-        const item = grouped.get(rule) || { rule, criteria: new Set(), records: new Map() };
-        item.criteria.add(node.criterion);
-        if (!item.records.has(recordId)) {
-          const count = Array.isArray(witness.failing) && witness.failing.length
-            ? witness.failing.length
-            : Math.max(1, Number(witness.counts?.deviations) || 0);
-          item.records.set(recordId, count);
-        }
-        grouped.set(rule, item);
-      }
-    }
-    const findings = [...grouped.values()].map((item) => ({
-      rule: item.rule,
-      count: [...item.records.values()].reduce((sum, count) => sum + count, 0),
-      criteria: [...item.criteria].sort(),
-    })).sort((a, b) => a.rule.localeCompare(b.rule));
-    return {
-      id: testCase.id,
-      path: testCase.path,
-      automated_findings: findings.reduce((sum, finding) => sum + finding.count, 0),
-      manual_review_items: reviewRecords.size,
-      found_criteria: [...new Set(findings.flatMap((finding) => finding.criteria))].sort(),
-      findings,
-    };
+    return normalizeCase(testCase, nodes, graph.witnesses);
   });
+  const beyondClaim = importBeyondClaim(graph.beyondClaim, cases);
 
   const lock = report['derived-from']?.lock || {};
   const packVersions = Object.entries(lock.packs || {}).map(([id, version]) => `${id}@${version}`);
@@ -139,6 +106,7 @@ export async function importCognium({ source, fixtureRoot, suite, output, confor
       datasets: lock.datasets || {},
     },
     cases: normalizedCases,
+    ...(beyondClaim ? { beyond_claim: beyondClaim } : {}),
   };
 
   const text = JSON.stringify(exported);
@@ -148,6 +116,82 @@ export async function importCognium({ source, fixtureRoot, suite, output, confor
   fs.mkdirSync(path.dirname(path.resolve(output)), { recursive: true });
   fs.writeFileSync(path.resolve(output), `${JSON.stringify(exported, null, 2)}\n`);
   return exported;
+}
+
+function wcagNodesByPage(graphNodes) {
+  const nodesByPage = new Map();
+  for (const node of graphNodes || []) {
+    const criterion = /^wcag@2\.2:(\d+\.\d+\.\d+)$/.exec(String(node.obligation || ''))?.[1];
+    const page = node.anchorSet?.type === 'product' ? node.anchorSet.content : null;
+    if (!criterion || !page || page === 'site') continue;
+    const nodes = nodesByPage.get(page) || [];
+    nodes.push({ ...node, criterion });
+    nodesByPage.set(page, nodes);
+  }
+  return nodesByPage;
+}
+
+function normalizeCase(testCase, nodes, witnesses) {
+  const grouped = new Map();
+  const reviewRecords = new Set();
+  for (const node of nodes) {
+    for (const recordId of node.records || []) {
+      const witness = witnesses?.[recordId];
+      if (!witness) continue;
+      if (witness.verdict === 'abstain') reviewRecords.add(recordId);
+      if (witness.verdict !== 'deviation') continue;
+      const rule = witness.control || 'unknown-control';
+      const item = grouped.get(rule) || { rule, criteria: new Set(), records: new Map() };
+      item.criteria.add(node.criterion);
+      if (!item.records.has(recordId)) {
+        const count = Array.isArray(witness.failing) && witness.failing.length
+          ? witness.failing.length
+          : Math.max(1, Number(witness.counts?.deviations) || 0);
+        item.records.set(recordId, count);
+      }
+      grouped.set(rule, item);
+    }
+  }
+  const findings = [...grouped.values()].map((item) => ({
+    rule: item.rule,
+    count: [...item.records.values()].reduce((sum, count) => sum + count, 0),
+    criteria: [...item.criteria].sort(),
+  })).sort((a, b) => a.rule.localeCompare(b.rule));
+  return {
+    id: testCase.id,
+    path: testCase.path,
+    automated_findings: findings.reduce((sum, finding) => sum + finding.count, 0),
+    manual_review_items: reviewRecords.size,
+    found_criteria: [...new Set(findings.flatMap((finding) => finding.criteria))].sort(),
+    findings,
+  };
+}
+
+// AAA candidates from the report's `beyondClaim` block, per declared page, in the same row
+// shape as the A/AA cases but kept apart: they are reported on a line of their own and are
+// never added to the A/AA rows, counts or criteria. A page with no AAA node has no row.
+export function importBeyondClaim(block, cases) {
+  if (!block) return null;
+  assert.equal(block.level, 'AAA', 'Cognium beyondClaim block is not the AAA view');
+  const nodesByPage = wcagNodesByPage(block.nodes);
+  const rows = cases
+    .filter((testCase) => nodesByPage.has(testCase.path))
+    .map((testCase) => normalizeCase(testCase, nodesByPage.get(testCase.path), block.witnesses));
+  const obligations = [...new Set((block.obligations || [])
+    .map((id) => /^wcag@2\.2:(\d+\.\d+\.\d+)$/.exec(String(id))?.[1])
+    .filter(Boolean))].sort();
+  return { level: 'AAA', obligations, cases: rows };
+}
+
+// One line for the AAA view, printed beside (never folded into) the A/AA line.
+export function beyondClaimLine(exported) {
+  const block = exported.beyond_claim;
+  if (!block) return 'AAA (beyond the claim, not in the A/AA count): no beyondClaim block in this report';
+  const findings = block.cases.reduce((sum, row) => sum + row.automated_findings, 0);
+  const review = block.cases.reduce((sum, row) => sum + row.manual_review_items, 0);
+  const criteria = [...new Set(block.cases.flatMap((row) => row.found_criteria))].sort();
+  return `AAA (beyond the claim, not in the A/AA count): ${findings} findings and ${review} review items `
+    + `on ${block.cases.length} of ${exported.cases.length} pages; criteria found: ${criteria.join(', ') || 'none'}`;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
@@ -164,4 +208,5 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   const suite = JSON.parse(fs.readFileSync(path.join(HERE, 'suites', `${suiteName}.json`), 'utf8'));
   const exported = await importCognium({ source, fixtureRoot: path.resolve(fixtureRoot), suite, output, conformisRevision });
   console.log(`wrote ${output}: ${exported.cases.length} pages, ${exported.version}`);
+  console.log(beyondClaimLine(exported));
 }
