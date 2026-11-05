@@ -7,6 +7,14 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Fixed
 
+- `comparison/import-cognium.mjs` now reads the AAA candidates a Conformis site
+  scan writes to its separate `beyondClaim` block. Before, it read only the A/AA
+  `nodes` and `witnesses`, so no AAA finding from the site lane was ever seen
+  (cogniumhq/conformis#307). They are exported under `beyond_claim` and printed
+  on an AAA line of their own, and never change an A/AA row, count or
+  criterion. `check/import-cognium.test.mjs` compares the A/AA export byte for
+  byte with the previous importer's output on a fixture graph.
+
 - A machine-readable **state-driver contract** declares how to reach the state
   each case is about (#46). `state-drivers.json` answers for all 94 cases that
   declare a non-default `ui_state` or an `interaction` / `state-exploration`

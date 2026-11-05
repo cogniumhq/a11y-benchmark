@@ -1,0 +1,15 @@
+{
+  "level": "AAA",
+  "obligations": ["wcag@2.2:2.1.3", "wcag@2.2:2.4.9", "wcag@2.2:1.4.6"],
+  "nodes": [
+    { "obligation": "wcag@2.2:2.1.3", "anchorSet": { "type": "product", "content": "keyboard/div_button.html" }, "records": ["a1"] },
+    { "obligation": "wcag@2.2:2.4.9", "anchorSet": { "type": "product", "content": "keyboard/div_button.html" }, "records": ["a2", "a3"] },
+    { "obligation": "wcag@2.2:1.4.6", "anchorSet": { "type": "product", "content": "keyboard/not_in_this_suite.html" }, "records": ["a4"] }
+  ],
+  "witnesses": {
+    "a1": { "record": "a1", "control": "html/keyboard-operable", "verdict": "deviation", "counts": { "deviations": 3 }, "failing": [{}, {}, {}] },
+    "a2": { "record": "a2", "control": "html/link-purpose-link-only", "verdict": "deviation", "counts": { "deviations": 1 }, "failing": [] },
+    "a3": { "record": "a3", "control": "html/link-purpose-link-only", "verdict": "abstain", "counts": {}, "failing": [] },
+    "a4": { "record": "a4", "control": "html/contrast-enhanced", "verdict": "deviation", "counts": { "deviations": 1 }, "failing": [{}] }
+  }
+}
