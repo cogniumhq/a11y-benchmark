@@ -921,7 +921,7 @@
     "act_rules": 2,
     "act_failed": 17,
     "act_passed": 18,
-    "act_inapplicable": 6,
+    "act_inapplicable": 4,
     "local_tp": "scenarios/label_in_name.html",
     "local_safe": "scenarios/safe_label_in_name.html",
     "guided": "",
