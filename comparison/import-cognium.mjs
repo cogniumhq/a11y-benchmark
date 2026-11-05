@@ -2,6 +2,15 @@
 //
 //   node import-cognium.mjs --source <report dir> --fixture-root <corpus checkout> \
 //        --out <export.json> [--suite latest-browser-served] [--conformis-revision <sha>]
+//        [--lane latest-browser-served-explore-2]
+//
+// `--lane latest-browser-served-explore-2` imports a report of the explore-2 VARIANT
+// (lanes.mjs): the same subject scanned with `--explore=2`. The report must record
+// that depth itself (`explore: 2`); an operator's word is not enough, because a live
+// run whose probe may not click ignores `--explore` and would pass a depth-0 run off
+// as the variant. The export names its lane and is refused by a default-lane run.
+// The default lane refuses a report made with state exploration for the same reason.
+// The journey-pages variant has one subject per journey: import-cognium-journeys.mjs.
 //
 // The report directory is what `npm run a11y:site -- --subject <subject> --live --out <dir>`
 // writes in cogniumhq/conformis. This reads its all-pages proofgraph (not the sampled
@@ -25,6 +34,8 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
+import { DEFAULT_LANE, assertVariantPath, laneBlock, laneByName } from './lanes.mjs';
+
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
 function option(name, fallback) {
@@ -32,7 +43,10 @@ function option(name, fallback) {
   return index >= 0 ? process.argv[index + 1] : fallback;
 }
 
-export async function importCognium({ source, fixtureRoot, suite, output, conformisRevision = null }) {
+export async function importCognium({ source, fixtureRoot, suite, output, conformisRevision = null, lane = DEFAULT_LANE }) {
+  const laneDef = laneByName(lane);
+  assert.equal(laneDef.subjects, 'one-site', `${lane} has one subject per journey case: use import-cognium-journeys.mjs`);
+  assertVariantPath(output, lane);
   const sourceDir = path.resolve(source);
   assert.ok(fs.existsSync(path.join(fixtureRoot, 'fixture-families.mjs')), 'fixture checkout is missing');
   const { loadFixtureCases } = await import(pathToFileURL(path.join(fixtureRoot, 'fixture-families.mjs')).href);
@@ -52,6 +66,12 @@ export async function importCognium({ source, fixtureRoot, suite, output, confor
   assert.equal(report.hydration?.['capture-misses'], 0, 'Cognium report has incomplete capture dependencies');
   assert.equal(report.hydration?.reproduced, report.hydration?.pages, 'Cognium report has non-reproducible pages');
   assert.equal(report.flows?.count ?? 0, 0, 'this lane declares no flows; the report ran some');
+  if (laneDef.explore) {
+    assert.equal(report.explore, laneDef.explore,
+      `${lane} needs a report that records state exploration depth ${laneDef.explore}; this one records ${report.explore ?? 'none'}`);
+  } else {
+    assert.ok(!report.explore, `this report was made with state exploration (${report.explore}); it belongs to a variant lane, not ${lane}`);
+  }
 
   // The A/AA view is `nodes` + `witnesses`. AAA candidates the subject did not adopt are
   // written by the site scan to a separate `beyondClaim` block (conformis `graphDocument`);
@@ -69,7 +89,8 @@ export async function importCognium({ source, fixtureRoot, suite, output, confor
   const exported = {
     schema_version: 2,
     product: 'Cognium',
-    suite: suite.name,
+    suite: laneDef.variant_of ? laneDef.name : suite.name,
+    ...(laneDef.variant_of ? { lane: laneBlock(lane) } : {}),
     version: packVersions.join(' + ') || 'unversioned',
     generated: report.generated,
     run: {
@@ -80,7 +101,10 @@ export async function importCognium({ source, fixtureRoot, suite, output, confor
     fixture: { commit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: fixtureRoot, encoding: 'utf8' }).trim() },
     ...(conformisRevision ? { conformis: { repository: 'cogniumhq/conformis', revision: conformisRevision } } : {}),
     source_artifact_sha256: `sha256:${crypto.createHash('sha256').update(graphBytes).digest('hex')}`,
-    source_view: 'all declared comparison pages, as built in the browser',
+    source_view: laneDef.explore
+      ? `all declared comparison pages, as built in the browser, with state exploration depth ${laneDef.explore}`
+      : 'all declared comparison pages, as built in the browser',
+    ...(laneDef.explore ? { explore: { depth: report.explore, recorded_by: 'report.json `explore`' } } : {}),
     flows: { source: report.flows?.source ?? 'subject-declaration', count: 0, names: [] },
     capture: {
       digest: report.pin,
@@ -198,15 +222,17 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   const source = option('--source');
   const fixtureRoot = option('--fixture-root');
   const output = option('--out');
-  const suiteName = option('--suite', 'latest-browser-served');
+  const lane = laneByName(option('--lane', DEFAULT_LANE));
+  const suiteName = lane.variant_of ? lane.suite : option('--suite', 'latest-browser-served');
+  if (lane.variant_of) assert.equal(option('--suite'), undefined, `--suite is fixed by lane ${lane.name}`);
   const conformisRevision = option('--conformis-revision', null);
   if (!source || !fixtureRoot || !output) {
-    console.error('usage: node import-cognium.mjs --source <report dir> --fixture-root <corpus> --out <export.json> [--suite <name>] [--conformis-revision <sha>]');
+    console.error('usage: node import-cognium.mjs --source <report dir> --fixture-root <corpus> --out <export.json> [--suite <name> | --lane <variant>] [--conformis-revision <sha>]');
     process.exit(2);
   }
   if (conformisRevision) assert.match(conformisRevision, /^[a-f0-9]{40}$/, 'Conformis revision must be a 40-character commit');
   const suite = JSON.parse(fs.readFileSync(path.join(HERE, 'suites', `${suiteName}.json`), 'utf8'));
-  const exported = await importCognium({ source, fixtureRoot: path.resolve(fixtureRoot), suite, output, conformisRevision });
+  const exported = await importCognium({ source, fixtureRoot: path.resolve(fixtureRoot), suite, output, conformisRevision, lane: lane.name });
   console.log(`wrote ${output}: ${exported.cases.length} pages, ${exported.version}`);
   console.log(beyondClaimLine(exported));
 }

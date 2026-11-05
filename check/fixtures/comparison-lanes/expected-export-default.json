@@ -1,0 +1,110 @@
+{
+  "schema_version": 2,
+  "product": "Cognium",
+  "suite": "latest-browser-served",
+  "version": "a11y/html@0.0.0-fixture",
+  "generated": "2026-11-04",
+  "run": {
+    "started_at": "2026-11-04T00:00:00.000Z",
+    "completed_at": "2026-11-04T01:00:00.000Z",
+    "repeat": 1
+  },
+  "fixture": {
+    "commit": "<fixture-commit>"
+  },
+  "conformis": {
+    "repository": "cogniumhq/conformis",
+    "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "source_artifact_sha256": "sha256:cd29bf8f634a744de122d2c82621a33b5725600dbcbae7aec4a5b3aed7eb96ca",
+  "source_view": "all declared comparison pages, as built in the browser",
+  "flows": {
+    "source": "subject-declaration",
+    "count": 0,
+    "names": []
+  },
+  "capture": {
+    "digest": "live:fixture",
+    "fixture_pages": 4,
+    "hydrated_pages": 4,
+    "support_pages": 0,
+    "capture_misses": 0,
+    "reproduced_pages": 4,
+    "run_errors": 0,
+    "outside_the_proofgraph": 0
+  },
+  "environment": {
+    "browser": "Chromium 149.0.7827.0",
+    "platform": "linux/arm64",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    }
+  },
+  "versions": {
+    "packs": {
+      "a11y/html": "0.0.0-fixture"
+    },
+    "catalogs": {},
+    "drivers": {
+      "browser": "0.0.0-fixture"
+    },
+    "datasets": {}
+  },
+  "cases": [
+    {
+      "id": "keyboard-div_button",
+      "path": "keyboard/div_button.html",
+      "automated_findings": 2,
+      "manual_review_items": 1,
+      "found_criteria": [
+        "2.1.1",
+        "4.1.2"
+      ],
+      "findings": [
+        {
+          "rule": "AX-10/2.1.1",
+          "count": 2,
+          "criteria": [
+            "2.1.1",
+            "4.1.2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "keyboard-safe_native_button",
+      "path": "keyboard/safe_native_button.html",
+      "automated_findings": 0,
+      "manual_review_items": 0,
+      "found_criteria": [],
+      "findings": []
+    },
+    {
+      "id": "journey-booking-broken",
+      "path": "journeys/booking/broken/index.html",
+      "automated_findings": 3,
+      "manual_review_items": 0,
+      "found_criteria": [
+        "2.4.3"
+      ],
+      "findings": [
+        {
+          "rule": "AX-08/2.4.3",
+          "count": 3,
+          "criteria": [
+            "2.4.3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "journey-booking-correct",
+      "path": "journeys/booking/correct/index.html",
+      "automated_findings": 0,
+      "manual_review_items": 0,
+      "found_criteria": [],
+      "findings": []
+    }
+  ]
+}

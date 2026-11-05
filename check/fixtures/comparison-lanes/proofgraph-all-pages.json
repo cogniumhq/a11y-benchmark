@@ -1,0 +1,18 @@
+{
+  "nodes": [
+    { "obligation": "wcag@2.2:2.1.1", "anchorSet": { "type": "product", "content": "keyboard/div_button.html" }, "records": ["r1", "r2"] },
+    { "obligation": "wcag@2.2:4.1.2", "anchorSet": { "type": "product", "content": "keyboard/div_button.html" }, "records": ["r1"] },
+    { "obligation": "wcag@2.2:2.1.1", "anchorSet": { "type": "product", "content": "keyboard/safe_native_button.html" }, "records": ["r3"] },
+    { "obligation": "wcag@2.2:2.4.3", "anchorSet": { "type": "product", "content": "journeys/booking/broken/index.html" }, "records": ["r4"] },
+    { "obligation": "wcag@2.2:3.2.3", "anchorSet": { "type": "product", "content": "site" }, "records": ["r5"] },
+    { "obligation": "wcag@2.2:1.1.1", "anchorSet": { "type": "product", "content": "journeys/booking/correct/index.html" }, "records": ["r6"] }
+  ],
+  "witnesses": {
+    "r1": { "verdict": "deviation", "control": "AX-10/2.1.1", "failing": [1, 2] },
+    "r2": { "verdict": "abstain", "control": "AX-11/2.1.1" },
+    "r3": { "verdict": "pass", "control": "AX-10/2.1.1" },
+    "r4": { "verdict": "deviation", "control": "AX-08/2.4.3", "counts": { "deviations": 3 } },
+    "r5": { "verdict": "deviation", "control": "AX-21/3.2.3" },
+    "r6": { "verdict": "pass", "control": "AX-01/1.1.1" }
+  }
+}

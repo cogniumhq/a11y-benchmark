@@ -1,0 +1,66 @@
+{
+  "nodes": [
+    {
+      "obligation": "wcag@2.2:3.2.3",
+      "anchorSet": {
+        "type": "product",
+        "content": "site"
+      },
+      "records": [
+        "s1"
+      ]
+    },
+    {
+      "obligation": "wcag@2.2:3.3.7",
+      "anchorSet": {
+        "type": "product",
+        "content": "journeys/booking/broken/step2.html"
+      },
+      "records": [
+        "p1"
+      ]
+    },
+    {
+      "obligation": "wcag@2.2:2.4.3",
+      "anchorSet": {
+        "type": "product",
+        "content": "journeys/booking/broken/index.html"
+      },
+      "records": [
+        "p2"
+      ]
+    },
+    {
+      "obligation": "wcag@2.2:1.1.1",
+      "anchorSet": {
+        "type": "product",
+        "content": "journeys/booking/broken/help.html"
+      },
+      "records": [
+        "p3"
+      ]
+    }
+  ],
+  "witnesses": {
+    "s1": {
+      "verdict": "deviation",
+      "control": "AX-21/3.2.3"
+    },
+    "p1": {
+      "verdict": "deviation",
+      "control": "AX-09/3.3.7",
+      "failing": [
+        1,
+        2
+      ]
+    },
+    "p2": {
+      "verdict": "abstain",
+      "control": "AX-08/2.4.3"
+    },
+    "p3": {
+      "verdict": "pass",
+      "control": "AX-01/1.1.1"
+    }
+  }
+}

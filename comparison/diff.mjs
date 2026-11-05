@@ -8,13 +8,17 @@
 // the declared criteria matched, the cell (T target, o other finding only,
 // . nothing, E error) and the native rules that mapped to a declared criterion.
 // It refuses two snapshots measured against different corpus revisions or
-// manifests, because their ground truths differ.
+// manifests, because their ground truths differ, and two lanes (lanes.mjs): a
+// variant against the lane it varies is refused unless `--across-lanes` is given,
+// and then it is printed as a difference between lanes, never as a gain in either.
 
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+
+import { laneOfDocument } from './lanes.mjs';
 
 function option(name) {
   const index = process.argv.indexOf(`--${name}`);
@@ -75,6 +79,12 @@ function main() {
   const [base, cand] = files.map((file) => JSON.parse(fs.readFileSync(path.resolve(file), 'utf8')));
   assert.equal(base.corpus.revision, cand.corpus.revision, 'different corpus revisions: not comparable');
   assert.equal(base.corpus.manifest_sha256, cand.corpus.manifest_sha256, 'different corpus manifests: not comparable');
+  const lanes = [laneOfDocument(base), laneOfDocument(cand)];
+  if (lanes[0] !== lanes[1]) {
+    assert.ok(process.argv.includes('--across-lanes'),
+      `lane ${lanes[0]} against lane ${lanes[1]}: a variant is not a re-run of its lane (--across-lanes prints the difference as such)`);
+    console.log(`ACROSS LANES ${lanes[0]} -> ${lanes[1]}: a difference between two lanes, not a change in either; never quote it as a gain`);
+  }
   const pairs = option('as')
     ? option('as').split(',').map((pair) => pair.split('='))
     : (option('tools') ? option('tools').split(',') : base.tool_order.filter((id) => cand.tools[id]))

@@ -1,0 +1,34 @@
+{
+  "nodes": [
+    {
+      "obligation": "wcag@2.2:3.2.3",
+      "anchorSet": {
+        "type": "product",
+        "content": "site"
+      },
+      "records": [
+        "s1"
+      ]
+    },
+    {
+      "obligation": "wcag@2.2:2.4.3",
+      "anchorSet": {
+        "type": "product",
+        "content": "journeys/booking/correct/step1.html"
+      },
+      "records": [
+        "p1"
+      ]
+    }
+  ],
+  "witnesses": {
+    "s1": {
+      "verdict": "pass",
+      "control": "AX-21/3.2.3"
+    },
+    "p1": {
+      "verdict": "pass",
+      "control": "AX-08/2.4.3"
+    }
+  }
+}
