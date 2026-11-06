@@ -1,0 +1,22 @@
+<!--
+  Scrollable region with no tabindex
+  WCAG: 2.1.1
+  Expectation: NO control should report this (negative control)
+  Negative control for scroll_region_out_of_tab_order.html. On Chromium 1228, Tab reaches an overflowing scroller that has no tabindex, even though element.tabIndex stays -1. A check that requires the attribute reports a region the keyboard can already scroll.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scrollable region with no tabindex</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Scrollable region with no tabindex</h1>
+<div style="height:5rem;overflow:auto;border:1px solid #c9c9c9;padding:.5rem"><p>Each passenger may carry one cabin bag and one personal item. Larger bags are checked at the desk and charged by weight. Sports equipment, musical instruments and prams are accepted at the oversize desk only. Allow extra time for the oversize queue at peak hours.</p></div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

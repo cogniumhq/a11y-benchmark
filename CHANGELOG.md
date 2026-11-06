@@ -88,6 +88,8 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Added
 
+- **A scroll region with no `tabindex` is a negative control** (`static/safe_scroll_region_no_tabindex.html`, 2.1.1). Measured on Chromium 1228, the build Conformis pins: Tab reaches an overflowing scroller that has no `tabindex`, and `element.tabIndex` stays -1, the same value as `tabindex="-1"`. The failure remains `scroll_region_out_of_tab_order.html`, which sets `tabindex="-1"`. Core cases 158 → 159, corpus 396 → 397.
+
 - **Boundary pairs for shapes that external audit reviews keep raising.** 97 new
   core cases in `static/` (40 should-flag, 57 negative controls), generated from
   `boundary-shapes.mjs`, covering 12 success criteria: 1.1.1 (8), 1.3.1 (18),

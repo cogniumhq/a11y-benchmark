@@ -2,7 +2,7 @@
   Scrollable region removed from the tab order
   WCAG: 2.1.1
   Expectation: a control SHOULD report this
-  tabindex="-1" takes the scroller out of keyboard reach, and it holds no focusable content. Expected instances: 1. A scroller with no tabindex at all is not here, because current Chromium makes it focusable by default.
+  tabindex="-1" takes the scroller out of keyboard reach, and it holds no focusable content. Expected instances: 1. Measured on Chromium 1228: Tab skips tabindex="-1" and lands on the same scroller when the attribute is absent (scroll_region_no_tabindex.html).
 -->
 <!doctype html>
 <html lang="en">

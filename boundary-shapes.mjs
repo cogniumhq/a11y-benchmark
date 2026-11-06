@@ -367,8 +367,12 @@ document.getElementById('pause').addEventListener('click',function(){clearInterv
   // ───────────────── 2.1.1 scrollable regions
   flag('scroll_region_out_of_tab_order', ['2.1.1'],
     'Scrollable region removed from the tab order',
-    'tabindex="-1" takes the scroller out of keyboard reach, and it holds no focusable content. Expected instances: 1. A scroller with no tabindex at all is not here, because current Chromium makes it focusable by default.',
+    'tabindex="-1" takes the scroller out of keyboard reach, and it holds no focusable content. Expected instances: 1. Measured on Chromium 1228: Tab skips tabindex="-1" and lands on the same scroller when the attribute is absent (scroll_region_no_tabindex.html).',
     `<div tabindex="-1" style="height:5rem;overflow:auto;border:1px solid #c9c9c9;padding:.5rem"><p>${LONG}</p></div>`),
+  clean('scroll_region_no_tabindex', ['2.1.1'],
+    'Scrollable region with no tabindex',
+    'Negative control for scroll_region_out_of_tab_order.html. On Chromium 1228, Tab reaches an overflowing scroller that has no tabindex, even though element.tabIndex stays -1. A check that requires the attribute reports a region the keyboard can already scroll.',
+    `<div style="height:5rem;overflow:auto;border:1px solid #c9c9c9;padding:.5rem"><p>${LONG}</p></div>`),
   clean('scroll_region_tabindex_zero', ['2.1.1'],
     'Scrollable region that is focusable and named',
     'Negative control for scroll_region_out_of_tab_order.html.',
