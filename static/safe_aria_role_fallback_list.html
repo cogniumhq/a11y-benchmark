@@ -1,0 +1,22 @@
+<!--
+  Role fallback list whose second token is valid
+  WCAG: 4.1.2
+  Expectation: NO control should report this (negative control)
+  Boundary. ARIA allows a space-separated list and uses the first token it recognises, so a list with one valid token is not an invalid role.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Role fallback list whose second token is valid</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Role fallback list whose second token is valid</h1>
+<div role="unknownwidget button" tabindex="0" onclick="void 0" onkeydown="if(event.key==='Enter'||event.key===' ')event.preventDefault()">Search flights</div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

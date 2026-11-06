@@ -1,0 +1,27 @@
+<!--
+  Rotating message with no pause
+  WCAG: 2.2.2
+  Expectation: a control SHOULD report this
+  Script swaps the message every 1.5s for as long as the page is open. Content that updates by itself beside other content needs a pause, stop or hide. Expected instances: 1.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rotating message with no pause</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Rotating message with no pause</h1>
+<p id="msg">Free cancellation on every fare.</p>
+<p>Offers change every few seconds.</p>
+<script>
+var m=['Free cancellation on every fare.','Fly with one bag included.','Change your seat at no cost.'],i=0;
+setInterval(function(){i=(i+1)%m.length;document.getElementById('msg').textContent=m[i];},1500);
+</script>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

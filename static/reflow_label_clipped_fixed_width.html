@@ -1,0 +1,22 @@
+<!--
+  A label cut off at a fixed width
+  WCAG: 1.4.10
+  Expectation: a control SHOULD report this
+  A nowrap label in a box with overflow:hidden loses its end at 320 CSS px and cannot be read by scrolling. Expected instances: 1.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A label cut off at a fixed width</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>A label cut off at a fixed width</h1>
+<div style="width:12rem;overflow:hidden;white-space:nowrap;border:1px solid #c9c9c9;padding:.25rem">Passenger name exactly as it appears on the passport</div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

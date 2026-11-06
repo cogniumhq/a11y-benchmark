@@ -1,0 +1,22 @@
+<!--
+  Valid role with keyboard support
+  WCAG: 4.1.2
+  Expectation: NO control should report this (negative control)
+  Negative control for aria_role_invalid.html. A real role, focusable, with a key handler, so nothing else is declared.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Valid role with keyboard support</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Valid role with keyboard support</h1>
+<div role="button" tabindex="0" onclick="void 0" onkeydown="if(event.key==='Enter'||event.key===' ')event.preventDefault()">Search flights</div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

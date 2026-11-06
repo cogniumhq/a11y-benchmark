@@ -1,7 +1,7 @@
 {
   "description": "Ground truth for the a11y-benchmark fixture corpus. Each case names the WCAG success criteria a correct scanner should report (min_criteria) or, for a negative control, the criteria it must NOT report (expected-clean). Browser reference facts live in check/reference.json, never here.",
   "version": 1,
-  "generated": "2026-11-05",
+  "generated": "2026-11-06",
   "scoring": {
     "recall": "sum(criteria reported on tp cases) / sum(min_criteria) across mode=tp",
     "fp_rate": "a finding for a criterion listed in must_not_report on a mode=safe case is a false positive; other criteria require their own ground truth",
@@ -13,9 +13,9 @@
     }
   },
   "counts": {
-    "total": 61,
-    "tp": 29,
-    "safe": 32
+    "total": 158,
+    "tp": 69,
+    "safe": 89
   },
   "cases": [
     {
@@ -744,6 +744,1075 @@
       ],
       "derived_from_manual_rows": [],
       "notes": "Negative control for choice_loads_page.html. Changing the select does not load a page."
+    },
+    {
+      "id": "static-text_contrast_just_below_aa",
+      "mode": "tp",
+      "path": "static/text_contrast_just_below_aa.html",
+      "min_criteria": {
+        "1.4.3": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. #777777 on white is 4.48:1, under the 4.5:1 line for normal text. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_text_contrast_just_above_aa",
+      "mode": "safe",
+      "path": "static/safe_text_contrast_just_above_aa.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.3"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for text_contrast_just_below_aa.html. #767676 on white is 4.54:1, the darkest grey that still clears the line."
+    },
+    {
+      "id": "static-text_contrast_light_on_dark_just_below",
+      "mode": "tp",
+      "path": "static/text_contrast_light_on_dark_just_below.html",
+      "min_criteria": {
+        "1.4.3": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary through the background rather than the text colour. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_text_contrast_light_on_dark_just_above",
+      "mode": "safe",
+      "path": "static/safe_text_contrast_light_on_dark_just_above.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.3"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for text_contrast_light_on_dark_just_below.html."
+    },
+    {
+      "id": "static-text_contrast_large_just_below",
+      "mode": "tp",
+      "path": "static/text_contrast_large_just_below.html",
+      "min_criteria": {
+        "1.4.3": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary on the large-text line. 24px text needs 3:1; #959595 on white is 2.99:1. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_text_contrast_large_at_threshold",
+      "mode": "safe",
+      "path": "static/safe_text_contrast_large_at_threshold.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.3"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for text_contrast_large_just_below.html. The same 24px size at #949494 (3.03:1) passes because large text only needs 3:1."
+    },
+    {
+      "id": "static-text_contrast_bold_below_large_size",
+      "mode": "tp",
+      "path": "static/text_contrast_bold_below_large_size.html",
+      "min_criteria": {
+        "1.4.3": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary on size, not colour. Bold text counts as large from 14pt (18.66px). At 18.4px it is normal text and 3.03:1 is not enough. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_text_contrast_bold_at_large_size",
+      "mode": "safe",
+      "path": "static/safe_text_contrast_bold_at_large_size.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.3"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for text_contrast_bold_below_large_size.html. 18.72px bold is large text, so the same colour passes."
+    },
+    {
+      "id": "static-placeholder_low_contrast",
+      "mode": "tp",
+      "path": "static/placeholder_low_contrast.html",
+      "min_criteria": {
+        "1.4.3": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "The field has a visible label, so the only defect is the placeholder colour. #a0a0a0 on white is 2.62:1. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_placeholder_contrast_at_aa",
+      "mode": "safe",
+      "path": "static/safe_placeholder_contrast_at_aa.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.3"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for placeholder_low_contrast.html."
+    },
+    {
+      "id": "static-input_value_low_contrast",
+      "mode": "tp",
+      "path": "static/input_value_low_contrast.html",
+      "min_criteria": {
+        "1.4.3": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "The typed value, not the placeholder, is the low-contrast text. #aaaaaa on white is 2.32:1. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_input_value_contrast",
+      "mode": "safe",
+      "path": "static/safe_input_value_contrast.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.3"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for input_value_low_contrast.html."
+    },
+    {
+      "id": "static-text_contrast_effective_opacity",
+      "mode": "tp",
+      "path": "static/text_contrast_effective_opacity.html",
+      "min_criteria": {
+        "1.4.3": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "The text colour #595959 is 7:1 on its own. At opacity .5 it composites to #acacac, 2.27:1. A scanner that reads color without the alpha passes it. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_text_contrast_opacity_passing",
+      "mode": "safe",
+      "path": "static/safe_text_contrast_opacity_passing.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.3"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for text_contrast_effective_opacity.html. #1a1a1a at opacity .85 composites to #3c3c3c, 11:1."
+    },
+    {
+      "id": "static-safe_text_contrast_disabled_control",
+      "mode": "safe",
+      "path": "static/safe_text_contrast_disabled_control.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.3"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Inactive user interface components are exempt from 1.4.3. A scanner that reports a disabled button is wrong."
+    },
+    {
+      "id": "static-control_border_contrast_just_below",
+      "mode": "tp",
+      "path": "static/control_border_contrast_just_below.html",
+      "min_criteria": {
+        "1.4.11": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "The border is the only thing that identifies the field. #959595 on white is 2.99:1, under the 3:1 line. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_control_border_contrast_at_threshold",
+      "mode": "safe",
+      "path": "static/safe_control_border_contrast_at_threshold.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.11"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for control_border_contrast_just_below.html."
+    },
+    {
+      "id": "static-anim_finite_over_five_seconds",
+      "mode": "tp",
+      "path": "static/anim_finite_over_five_seconds.html",
+      "min_criteria": {
+        "2.2.2": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. 2.2.2 applies to motion that lasts more than five seconds, and finite is not the same as short. Six one-second turns beside other content, with no pause. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_anim_finite_exactly_five_seconds",
+      "mode": "safe",
+      "path": "static/safe_anim_finite_exactly_five_seconds.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.2.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for anim_finite_over_five_seconds.html. \"More than five seconds\" excludes five, so five one-second turns pass."
+    },
+    {
+      "id": "static-safe_anim_hidden_subject",
+      "mode": "safe",
+      "path": "static/safe_anim_hidden_subject.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.2.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "The rule exists and is infinite, but its subject is display:none, so nothing moves. Reporting it is a false positive."
+    },
+    {
+      "id": "static-safe_anim_with_pause_control",
+      "mode": "safe",
+      "path": "static/safe_anim_with_pause_control.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.2.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "A mechanism to pause is the 2.2.2 answer. The spinner runs indefinitely and the page offers a button that stops it."
+    },
+    {
+      "id": "static-safe_anim_user_triggered_transition",
+      "mode": "safe",
+      "path": "static/safe_anim_user_triggered_transition.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.2.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Motion the user starts is not \"starts automatically\". A scanner that reports every transition is wrong."
+    },
+    {
+      "id": "static-motion_rotation_no_pause",
+      "mode": "tp",
+      "path": "static/motion_rotation_no_pause.html",
+      "min_criteria": {
+        "2.2.2": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Script swaps the message every 1.5s for as long as the page is open. Content that updates by itself beside other content needs a pause, stop or hide. Expected instances: 1."
+    },
+    {
+      "id": "static-motion_rotation_stops_after_eight_seconds",
+      "mode": "tp",
+      "path": "static/motion_rotation_stops_after_eight_seconds.html",
+      "min_criteria": {
+        "2.2.2": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. The motion does end, but only after eight seconds with no pause. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_motion_rotation_stops_within_four_seconds",
+      "mode": "safe",
+      "path": "static/safe_motion_rotation_stops_within_four_seconds.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.2.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for motion_rotation_stops_after_eight_seconds.html. Four seconds is under the limit, so no pause is required."
+    },
+    {
+      "id": "static-safe_motion_rotation_with_pause",
+      "mode": "safe",
+      "path": "static/safe_motion_rotation_with_pause.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.2.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for motion_rotation_no_pause.html. The same rotation, with a button that stops it."
+    },
+    {
+      "id": "static-aria_label_on_generic_div",
+      "mode": "tp",
+      "path": "static/aria_label_on_generic_div.html",
+      "min_criteria": {
+        "4.1.2": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "A div has no role, so aria-label is prohibited on it and is not exposed. The label is the only thing that says what this square means, so the information is lost. Expected instances: 1."
+    },
+    {
+      "id": "static-aria_label_on_generic_span",
+      "mode": "tp",
+      "path": "static/aria_label_on_generic_span.html",
+      "min_criteria": {
+        "4.1.2": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Same defect on the other generic element, again with no text for the label to repeat. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_aria_label_on_region_and_nav",
+      "mode": "safe",
+      "path": "static/safe_aria_label_on_region_and_nav.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "4.1.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for the two aria_label_on_generic pages. A section, a nav and a role=group all take aria-label."
+    },
+    {
+      "id": "static-safe_aria_label_on_role_img",
+      "mode": "safe",
+      "path": "static/safe_aria_label_on_role_img.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "4.1.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. The same div that fails with no role is correct once it has a role that supports a name."
+    },
+    {
+      "id": "static-safe_aria_label_on_native_button",
+      "mode": "safe",
+      "path": "static/safe_aria_label_on_native_button.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "4.1.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control. A native control takes aria-label, and the name contains the visible words."
+    },
+    {
+      "id": "static-aria_attribute_misspelled",
+      "mode": "tp",
+      "path": "static/aria_attribute_misspelled.html",
+      "min_criteria": {
+        "4.1.2": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "aria-lable is not an ARIA attribute. It does nothing, and it is an invalid-attribute failure. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_aria_attribute_spelled_correctly",
+      "mode": "safe",
+      "path": "static/safe_aria_attribute_spelled_correctly.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "4.1.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for aria_attribute_misspelled.html."
+    },
+    {
+      "id": "static-aria_role_invalid",
+      "mode": "tp",
+      "path": "static/aria_role_invalid.html",
+      "min_criteria": {
+        "4.1.2": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "role=\"buttn\" is not a role. The element falls back to a generic div. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_aria_role_valid",
+      "mode": "safe",
+      "path": "static/safe_aria_role_valid.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "4.1.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for aria_role_invalid.html. A real role, focusable, with a key handler, so nothing else is declared."
+    },
+    {
+      "id": "static-safe_aria_role_fallback_list",
+      "mode": "safe",
+      "path": "static/safe_aria_role_fallback_list.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "4.1.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. ARIA allows a space-separated list and uses the first token it recognises, so a list with one valid token is not an invalid role."
+    },
+    {
+      "id": "static-iframe_no_title",
+      "mode": "tp",
+      "path": "static/iframe_no_title.html",
+      "min_criteria": {
+        "4.1.2": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "No title, no aria-label, no aria-labelledby. Expected instances: 1."
+    },
+    {
+      "id": "static-iframe_empty_title",
+      "mode": "tp",
+      "path": "static/iframe_empty_title.html",
+      "min_criteria": {
+        "4.1.2": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. title=\"\" is present but gives no name. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_iframe_title",
+      "mode": "safe",
+      "path": "static/safe_iframe_title.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "4.1.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for the iframe pages."
+    },
+    {
+      "id": "static-safe_iframe_aria_label",
+      "mode": "safe",
+      "path": "static/safe_iframe_aria_label.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "4.1.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. An aria-label is an accessible name, so a frame with no title attribute is not a failure."
+    },
+    {
+      "id": "static-role_menu_without_menuitems",
+      "mode": "tp",
+      "path": "static/role_menu_without_menuitems.html",
+      "min_criteria": {
+        "1.3.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "A menu must own menuitem children. A navigation list marked up as a menu does not. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_role_menu_with_menuitems",
+      "mode": "safe",
+      "path": "static/safe_role_menu_with_menuitems.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.3.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for role_menu_without_menuitems.html. Each item is a menuitem, with its list-item role removed."
+    },
+    {
+      "id": "static-safe_role_menu_group_of_menuitems",
+      "mode": "safe",
+      "path": "static/safe_role_menu_group_of_menuitems.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.3.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. A menu may own a named group, and the group owns the items. Reporting this as \"no menu items\" is wrong."
+    },
+    {
+      "id": "static-role_list_without_listitems",
+      "mode": "tp",
+      "path": "static/role_list_without_listitems.html",
+      "min_criteria": {
+        "1.3.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "A list must own listitem children. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_role_list_with_listitems",
+      "mode": "safe",
+      "path": "static/safe_role_list_with_listitems.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.3.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for role_list_without_listitems.html."
+    },
+    {
+      "id": "static-link_no_text_variants",
+      "mode": "tp",
+      "path": "static/link_no_text_variants.html",
+      "min_criteria": {
+        "2.4.4": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "An empty link, an image link with alt=\"\", an SVG link with no title, a link holding only a non-breaking space, and a link holding only an aria-hidden glyph. Expected instances: 5 (#l1 to #l5). A scanner that counts four has missed one of the shapes."
+    },
+    {
+      "id": "static-safe_link_name_variants",
+      "mode": "safe",
+      "path": "static/safe_link_name_variants.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.4.4"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for link_no_text_variants.html: aria-label, visually hidden text, an image with alt, an SVG with role=img and a label, and aria-labelledby pointing at visible text. Expected instances: 0."
+    },
+    {
+      "id": "static-safe_link_empty_in_hidden_container",
+      "mode": "safe",
+      "path": "static/safe_link_empty_in_hidden_container.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.4.4"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. A link nobody can reach is not a link with no name. Reporting it inflates the count."
+    },
+    {
+      "id": "static-safe_anchor_target_without_href",
+      "mode": "safe",
+      "path": "static/safe_anchor_target_without_href.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.4.4"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. An <a> with no href is not a link, so it needs no name. It is only a place to jump to."
+    },
+    {
+      "id": "static-img_alt_is_filename",
+      "mode": "tp",
+      "path": "static/img_alt_is_filename.html",
+      "min_criteria": {
+        "1.1.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "The attribute is present and says nothing. F30. Expected instances: 2."
+    },
+    {
+      "id": "static-input_image_no_alt",
+      "mode": "tp",
+      "path": "static/input_image_no_alt.html",
+      "min_criteria": {
+        "1.1.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "type=image is an image that acts as a button, and it needs alt. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_input_image_alt",
+      "mode": "safe",
+      "path": "static/safe_input_image_alt.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.1.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for input_image_no_alt.html."
+    },
+    {
+      "id": "static-svg_role_img_no_name",
+      "mode": "tp",
+      "path": "static/svg_role_img_no_name.html",
+      "min_criteria": {
+        "1.1.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "An SVG announced as an image with nothing to announce. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_svg_role_img_named",
+      "mode": "safe",
+      "path": "static/safe_svg_role_img_named.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.1.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for svg_role_img_no_name.html."
+    },
+    {
+      "id": "static-safe_svg_decorative_hidden",
+      "mode": "safe",
+      "path": "static/safe_svg_decorative_hidden.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.1.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. aria-hidden marks an SVG as decoration, which is the declared intent that alt=\"\" gives an image."
+    },
+    {
+      "id": "static-area_no_alt",
+      "mode": "tp",
+      "path": "static/area_no_alt.html",
+      "min_criteria": {
+        "1.1.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Each area of an image map is a link and needs its own text. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_area_alt",
+      "mode": "safe",
+      "path": "static/safe_area_alt.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.1.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for area_no_alt.html."
+    },
+    {
+      "id": "static-scroll_region_out_of_tab_order",
+      "mode": "tp",
+      "path": "static/scroll_region_out_of_tab_order.html",
+      "min_criteria": {
+        "2.1.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "tabindex=\"-1\" takes the scroller out of keyboard reach, and it holds no focusable content. Expected instances: 1. A scroller with no tabindex at all is not here, because current Chromium makes it focusable by default."
+    },
+    {
+      "id": "static-safe_scroll_region_tabindex_zero",
+      "mode": "safe",
+      "path": "static/safe_scroll_region_tabindex_zero.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.1.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for scroll_region_out_of_tab_order.html."
+    },
+    {
+      "id": "static-safe_scroll_region_with_focusable_child",
+      "mode": "safe",
+      "path": "static/safe_scroll_region_with_focusable_child.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.1.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. A focusable child makes the region reachable, so a rule that demands tabindex on the scroller is wrong."
+    },
+    {
+      "id": "static-safe_scroll_region_not_overflowing",
+      "mode": "safe",
+      "path": "static/safe_scroll_region_not_overflowing.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.1.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. overflow:auto with nothing to scroll is not a scroller anyone needs to reach."
+    },
+    {
+      "id": "static-button_contains_link",
+      "mode": "tp",
+      "path": "static/button_contains_link.html",
+      "min_criteria": {
+        "4.1.2": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Interactive content is not allowed inside a button; the inner action is unreachable or doubled. Expected instances: 1."
+    },
+    {
+      "id": "static-role_button_contains_input",
+      "mode": "tp",
+      "path": "static/role_button_contains_input.html",
+      "min_criteria": {
+        "4.1.2": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "A role=button owns its content as presentational, so the field inside it has no usable role. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_label_wraps_input",
+      "mode": "safe",
+      "path": "static/safe_label_wraps_input.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "4.1.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control. A label around a control is the implicit association, not a nested control."
+    },
+    {
+      "id": "static-safe_link_contains_image_and_text",
+      "mode": "safe",
+      "path": "static/safe_link_contains_image_and_text.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "4.1.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control. Non-interactive content inside a link is the normal case."
+    },
+    {
+      "id": "static-click_handler_on_list_item",
+      "mode": "tp",
+      "path": "static/click_handler_on_list_item.html",
+      "min_criteria": {
+        "2.1.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "The item looks clickable and handles clicks, but a keyboard user cannot reach it. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_click_delegation_on_list",
+      "mode": "safe",
+      "path": "static/safe_click_delegation_on_list.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.1.1",
+        "4.1.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. The handler is on the list, but every actionable thing inside it is a native button. Reporting the list is a false positive."
+    },
+    {
+      "id": "static-safe_click_listener_on_document",
+      "mode": "safe",
+      "path": "static/safe_click_listener_on_document.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.1.1",
+        "4.1.2"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. Analytics and menu-dismiss listeners are not controls. The page has no element that depends on a pointer."
+    },
+    {
+      "id": "static-radio_group_without_group",
+      "mode": "tp",
+      "path": "static/radio_group_without_group.html",
+      "min_criteria": {
+        "1.3.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Three radios share a name and a question, and nothing groups or names them. Expected instances: 1 group."
+    },
+    {
+      "id": "static-safe_radio_group_fieldset_legend",
+      "mode": "safe",
+      "path": "static/safe_radio_group_fieldset_legend.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.3.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for radio_group_without_group.html."
+    },
+    {
+      "id": "static-safe_radio_group_role_radiogroup",
+      "mode": "safe",
+      "path": "static/safe_radio_group_role_radiogroup.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.3.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. A fieldset is not the only valid grouping. role=radiogroup with aria-labelledby is equivalent."
+    },
+    {
+      "id": "static-checkbox_group_without_group",
+      "mode": "tp",
+      "path": "static/checkbox_group_without_group.html",
+      "min_criteria": {
+        "1.3.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Three checkboxes answer one question and nothing groups or names them. Expected instances: 1 group."
+    },
+    {
+      "id": "static-safe_single_checkbox_no_group",
+      "mode": "safe",
+      "path": "static/safe_single_checkbox_no_group.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.3.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. One checkbox has nothing to be grouped with, so a rule that wants a fieldset around every checkbox is wrong."
+    },
+    {
+      "id": "static-fieldset_without_legend",
+      "mode": "tp",
+      "path": "static/fieldset_without_legend.html",
+      "min_criteria": {
+        "1.3.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "A group with no name. Expected instances: 1."
+    },
+    {
+      "id": "static-fieldset_empty_legend",
+      "mode": "tp",
+      "path": "static/fieldset_empty_legend.html",
+      "min_criteria": {
+        "1.3.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. A legend element is present and gives no name. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_fieldset_aria_label",
+      "mode": "safe",
+      "path": "static/safe_fieldset_aria_label.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.3.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. An aria-label names a fieldset as well as a legend does."
+    },
+    {
+      "id": "static-safe_fieldset_hidden_inputs_only",
+      "mode": "safe",
+      "path": "static/safe_fieldset_hidden_inputs_only.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.3.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. Hidden inputs show nothing, so there is no information for a group name to carry. Reporting it is a false positive."
+    },
+    {
+      "id": "static-heading_styled_paragraph",
+      "mode": "tp",
+      "path": "static/heading_styled_paragraph.html",
+      "min_criteria": {
+        "1.3.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Large, bold, set apart and followed by the text it introduces, but marked up as a p. F2. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_heading_element_same_style",
+      "mode": "safe",
+      "path": "static/safe_heading_element_same_style.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.3.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for heading_styled_paragraph.html. Identical appearance, correct element."
+    },
+    {
+      "id": "static-safe_heading_role_on_div",
+      "mode": "safe",
+      "path": "static/safe_heading_role_on_div.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.3.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. role=heading with aria-level is a heading, so a scanner that only looks for h1 to h6 is wrong."
+    },
+    {
+      "id": "static-safe_bold_run_in_label",
+      "mode": "safe",
+      "path": "static/safe_bold_run_in_label.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.3.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. Bold text that is part of a sentence is emphasis, not a heading. Reporting it is a false positive."
+    },
+    {
+      "id": "static-focus_indicator_nearly_invisible",
+      "mode": "tp",
+      "path": "static/focus_indicator_nearly_invisible.html",
+      "min_criteria": {
+        "2.4.7": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. An outline exists and is 1.02:1 against the background, so there is a ring on paper and none to the eye. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_focus_box_shadow_ring",
+      "mode": "safe",
+      "path": "static/safe_focus_box_shadow_ring.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.4.7"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. The default outline is gone, and a 3px 7.9:1 ring takes its place. A scanner that only checks outline-style is wrong."
+    },
+    {
+      "id": "static-safe_focus_transparent_outline_with_ring",
+      "mode": "safe",
+      "path": "static/safe_focus_transparent_outline_with_ring.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.4.7"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. The transparent outline is the forced-colours fallback pattern. The ring is what sighted users see."
+    },
+    {
+      "id": "static-focus_image_link_outline_removed",
+      "mode": "tp",
+      "path": "static/focus_image_link_outline_removed.html",
+      "min_criteria": {
+        "2.4.7": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "A link whose only content is an image, with outline:none and nothing in its place. Expected instances: 1."
+    },
+    {
+      "id": "static-focus_input_outline_removed",
+      "mode": "tp",
+      "path": "static/focus_input_outline_removed.html",
+      "min_criteria": {
+        "2.4.7": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "outline:none on focus and no border, shadow or background change in its place. Expected instances: 1."
+    },
+    {
+      "id": "static-label_in_name_different_words",
+      "mode": "tp",
+      "path": "static/label_in_name_different_words.html",
+      "min_criteria": {
+        "2.5.3": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Visible \"Open support options\", name \"Chat with an agent\". A voice-control user says what they see and nothing happens. Expected instances: 1."
+    },
+    {
+      "id": "static-label_in_name_words_reordered",
+      "mode": "tp",
+      "path": "static/label_in_name_words_reordered.html",
+      "min_criteria": {
+        "2.5.3": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. Every visible word is in the name, but the visible string is not, which is what 2.5.3 tests. F96. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_label_in_name_extra_words",
+      "mode": "safe",
+      "path": "static/safe_label_in_name_extra_words.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.5.3"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. The name contains the visible string, so it passes even though it is longer."
+    },
+    {
+      "id": "static-safe_label_in_name_case_differs",
+      "mode": "safe",
+      "path": "static/safe_label_in_name_case_differs.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.5.3"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. The comparison is case-insensitive."
+    },
+    {
+      "id": "static-safe_label_in_name_icon_only",
+      "mode": "safe",
+      "path": "static/safe_label_in_name_icon_only.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.5.3"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. There is no visible text label, so there is nothing for the name to contain."
+    },
+    {
+      "id": "static-reflow_label_clipped_fixed_width",
+      "mode": "tp",
+      "path": "static/reflow_label_clipped_fixed_width.html",
+      "min_criteria": {
+        "1.4.10": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "A nowrap label in a box with overflow:hidden loses its end at 320 CSS px and cannot be read by scrolling. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_reflow_label_wraps",
+      "mode": "safe",
+      "path": "static/safe_reflow_label_wraps.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.10"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for reflow_label_clipped_fixed_width.html."
+    },
+    {
+      "id": "static-safe_reflow_data_table_scrolls_in_container",
+      "mode": "safe",
+      "path": "static/safe_reflow_data_table_scrolls_in_container.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.10"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. Two-dimensional data is an exception to reflow, so a table that scrolls in its own region while the page does not is correct."
+    },
+    {
+      "id": "static-link_in_text_colour_only",
+      "mode": "tp",
+      "path": "static/link_in_text_colour_only.html",
+      "min_criteria": {
+        "1.4.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "No underline, and the link colour is 2.2:1 against the surrounding text, under the 3:1 that G183 needs. Expected instances: 1."
+    },
+    {
+      "id": "static-safe_link_in_text_underlined",
+      "mode": "safe",
+      "path": "static/safe_link_in_text_underlined.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for link_in_text_colour_only.html."
+    },
+    {
+      "id": "static-safe_nav_links_no_underline",
+      "mode": "safe",
+      "path": "static/safe_nav_links_no_underline.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Boundary. Links in a navigation list are not in a block of text, so colour alone is acceptable there. Reporting them is a false positive."
     }
   ]
 }

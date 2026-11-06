@@ -1,0 +1,22 @@
+<!--
+  Scrollable region that contains a link
+  WCAG: 2.1.1
+  Expectation: NO control should report this (negative control)
+  Boundary. A focusable child makes the region reachable, so a rule that demands tabindex on the scroller is wrong.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scrollable region that contains a link</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Scrollable region that contains a link</h1>
+<div style="height:5rem;overflow:auto;border:1px solid #c9c9c9;padding:.5rem"><p><a href="#rules">Full baggage rules</a></p><p>Each passenger may carry one cabin bag and one personal item. Larger bags are checked at the desk and charged by weight. Sports equipment, musical instruments and prams are accepted at the oversize desk only. Allow extra time for the oversize queue at peak hours.</p></div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

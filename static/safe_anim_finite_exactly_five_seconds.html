@@ -1,0 +1,27 @@
+<!--
+  Finite animation that runs for exactly five seconds
+  WCAG: 2.2.2
+  Expectation: NO control should report this (negative control)
+  Negative control for anim_finite_over_five_seconds.html. "More than five seconds" excludes five, so five one-second turns pass.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Finite animation that runs for exactly five seconds</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Finite animation that runs for exactly five seconds</h1>
+<style>
+@keyframes turn{to{transform:rotate(360deg)}}
+.turn{animation:turn 1s linear 5;display:inline-block}
+</style>
+<div class="turn">&#9992;</div>
+<p>Your search is running.</p>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

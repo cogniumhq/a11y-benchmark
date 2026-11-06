@@ -1,0 +1,23 @@
+<!--
+  Outline removed and replaced by a box-shadow ring
+  WCAG: 2.4.7
+  Expectation: NO control should report this (negative control)
+  Boundary. The default outline is gone, and a 3px 7.9:1 ring takes its place. A scanner that only checks outline-style is wrong.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Outline removed and replaced by a box-shadow ring</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Outline removed and replaced by a box-shadow ring</h1>
+<style>a.ring:focus-visible{outline:none;box-shadow:0 0 0 3px #30556e}</style>
+<a class="ring" href="#rules">Baggage rules</a>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

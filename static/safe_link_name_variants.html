@@ -1,0 +1,29 @@
+<!--
+  Five links that are named, each in a different way
+  WCAG: 2.4.4
+  Expectation: NO control should report this (negative control)
+  Negative control for link_no_text_variants.html: aria-label, visually hidden text, an image with alt, an SVG with role=img and a label, and aria-labelledby pointing at visible text. Expected instances: 0.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Five links that are named, each in a different way</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Five links that are named, each in a different way</h1>
+<style>.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}</style>
+<p>
+<a href="#a" aria-label="Open the map"><span aria-hidden="true">&#9733;</span></a>
+<a href="#b"><span class="vh">Baggage rules</span><span aria-hidden="true">&#9733;</span></a>
+<a href="#c"><img src="../pixel.png" alt="Home" width="24" height="24"></a>
+<a href="#d"><svg role="img" aria-label="Help" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg></a>
+<a href="#e" aria-labelledby="lbl">&#9733;</a> <span id="lbl">Seat map</span>
+</p>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

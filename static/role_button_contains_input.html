@@ -1,0 +1,22 @@
+<!--
+  A text field inside role=button
+  WCAG: 4.1.2
+  Expectation: a control SHOULD report this
+  A role=button owns its content as presentational, so the field inside it has no usable role. Expected instances: 1.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A text field inside role=button</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>A text field inside role=button</h1>
+<div role="button" tabindex="0">Tip <input type="text" aria-label="Tip amount"></div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

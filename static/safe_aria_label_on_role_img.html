@@ -1,0 +1,22 @@
+<!--
+  aria-label on a div that has role=img
+  WCAG: 4.1.2
+  Expectation: NO control should report this (negative control)
+  Boundary. The same div that fails with no role is correct once it has a role that supports a name.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aria-label on a div that has role=img</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>aria-label on a div that has role=img</h1>
+<div role="img" aria-label="Seat map, row 12 selected" style="width:6rem;height:3rem;background:#30556e"></div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!--
+  role=menu that owns menu items
+  WCAG: 1.3.1
+  Expectation: NO control should report this (negative control)
+  Negative control for role_menu_without_menuitems.html. Each item is a menuitem, with its list-item role removed.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>role=menu that owns menu items</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>role=menu that owns menu items</h1>
+<ul role="menu">
+<li role="none"><a role="menuitem" href="#home">Home</a></li>
+<li role="none"><a role="menuitem" href="#trips">My trips</a></li>
+<li role="none"><a role="menuitem" href="#help">Help</a></li>
+</ul>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

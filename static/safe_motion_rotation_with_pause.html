@@ -1,0 +1,28 @@
+<!--
+  Rotating message with a pause control
+  WCAG: 2.2.2
+  Expectation: NO control should report this (negative control)
+  Negative control for motion_rotation_no_pause.html. The same rotation, with a button that stops it.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rotating message with a pause control</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Rotating message with a pause control</h1>
+<p id="msg">Free cancellation on every fare.</p>
+<button type="button" id="pause">Pause offers</button>
+<script>
+var m=['Free cancellation on every fare.','Fly with one bag included.','Change your seat at no cost.'],i=0;
+var t=setInterval(function(){i=(i+1)%m.length;document.getElementById('msg').textContent=m[i];},1500);
+document.getElementById('pause').addEventListener('click',function(){clearInterval(t);});
+</script>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

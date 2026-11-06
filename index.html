@@ -100,7 +100,104 @@
 <li><a href="static/css_reordered_sequence.html">A sequence whose visual order is not the DOM order</a> — 1.3.2 — <strong>should flag</strong></li>
 <li><a href="static/safe_css_reordered_sequence.html">A sequence whose visual order matches the DOM</a> — 1.3.2 — <strong>must not flag</strong></li>
 <li><a href="static/choice_loads_page.html">A choice that loads a page</a> — 3.2.2 — <strong>should flag</strong></li>
-<li><a href="static/safe_choice_loads_page.html">A choice that waits for an explicit submit</a> — 3.2.2 — <strong>must not flag</strong></li></ul>
+<li><a href="static/safe_choice_loads_page.html">A choice that waits for an explicit submit</a> — 3.2.2 — <strong>must not flag</strong></li>
+<li><a href="static/text_contrast_just_below_aa.html">Body text at 4.48:1</a> — 1.4.3 — <strong>should flag</strong></li>
+<li><a href="static/safe_text_contrast_just_above_aa.html">Body text at 4.54:1</a> — 1.4.3 — <strong>must not flag</strong></li>
+<li><a href="static/text_contrast_light_on_dark_just_below.html">White text on a #777777 background at 4.48:1</a> — 1.4.3 — <strong>should flag</strong></li>
+<li><a href="static/safe_text_contrast_light_on_dark_just_above.html">White text on a #767676 background at 4.54:1</a> — 1.4.3 — <strong>must not flag</strong></li>
+<li><a href="static/text_contrast_large_just_below.html">Large text at 2.99:1</a> — 1.4.3 — <strong>should flag</strong></li>
+<li><a href="static/safe_text_contrast_large_at_threshold.html">Large text at 3.03:1</a> — 1.4.3 — <strong>must not flag</strong></li>
+<li><a href="static/text_contrast_bold_below_large_size.html">Bold text just under the large-text size at 3.03:1</a> — 1.4.3 — <strong>should flag</strong></li>
+<li><a href="static/safe_text_contrast_bold_at_large_size.html">Bold text at the large-text size at 3.03:1</a> — 1.4.3 — <strong>must not flag</strong></li>
+<li><a href="static/placeholder_low_contrast.html">Placeholder text at 2.6:1</a> — 1.4.3 — <strong>should flag</strong></li>
+<li><a href="static/safe_placeholder_contrast_at_aa.html">Placeholder text at 4.54:1</a> — 1.4.3 — <strong>must not flag</strong></li>
+<li><a href="static/input_value_low_contrast.html">Text typed into a field at 2.3:1</a> — 1.4.3 — <strong>should flag</strong></li>
+<li><a href="static/safe_input_value_contrast.html">Text typed into a field at 16.6:1</a> — 1.4.3 — <strong>must not flag</strong></li>
+<li><a href="static/text_contrast_effective_opacity.html">Text that fails only after opacity is applied</a> — 1.4.3 — <strong>should flag</strong></li>
+<li><a href="static/safe_text_contrast_opacity_passing.html">Text that still passes after opacity is applied</a> — 1.4.3 — <strong>must not flag</strong></li>
+<li><a href="static/safe_text_contrast_disabled_control.html">Disabled control with muted text</a> — 1.4.3 — <strong>must not flag</strong></li>
+<li><a href="static/control_border_contrast_just_below.html">Input boundary at 2.99:1</a> — 1.4.11 — <strong>should flag</strong></li>
+<li><a href="static/safe_control_border_contrast_at_threshold.html">Input boundary at 3.03:1</a> — 1.4.11 — <strong>must not flag</strong></li>
+<li><a href="static/anim_finite_over_five_seconds.html">Finite animation that runs for six seconds</a> — 2.2.2 — <strong>should flag</strong></li>
+<li><a href="static/safe_anim_finite_exactly_five_seconds.html">Finite animation that runs for exactly five seconds</a> — 2.2.2 — <strong>must not flag</strong></li>
+<li><a href="static/safe_anim_hidden_subject.html">Infinite animation on an element that is not rendered</a> — 2.2.2 — <strong>must not flag</strong></li>
+<li><a href="static/safe_anim_with_pause_control.html">Infinite animation with a pause control</a> — 2.2.2 — <strong>must not flag</strong></li>
+<li><a href="static/safe_anim_user_triggered_transition.html">Transition that only runs on hover</a> — 2.2.2 — <strong>must not flag</strong></li>
+<li><a href="static/motion_rotation_no_pause.html">Rotating message with no pause</a> — 2.2.2 — <strong>should flag</strong></li>
+<li><a href="static/motion_rotation_stops_after_eight_seconds.html">Rotating message that stops after eight seconds</a> — 2.2.2 — <strong>should flag</strong></li>
+<li><a href="static/safe_motion_rotation_stops_within_four_seconds.html">Rotating message that stops after four seconds</a> — 2.2.2 — <strong>must not flag</strong></li>
+<li><a href="static/safe_motion_rotation_with_pause.html">Rotating message with a pause control</a> — 2.2.2 — <strong>must not flag</strong></li>
+<li><a href="static/aria_label_on_generic_div.html">aria-label on a div with no role</a> — 4.1.2 — <strong>should flag</strong></li>
+<li><a href="static/aria_label_on_generic_span.html">aria-label on a span with no role</a> — 4.1.2 — <strong>should flag</strong></li>
+<li><a href="static/safe_aria_label_on_region_and_nav.html">aria-label on elements that support a name</a> — 4.1.2 — <strong>must not flag</strong></li>
+<li><a href="static/safe_aria_label_on_role_img.html">aria-label on a div that has role=img</a> — 4.1.2 — <strong>must not flag</strong></li>
+<li><a href="static/safe_aria_label_on_native_button.html">aria-label on a native button whose visible text is contained in it</a> — 4.1.2 — <strong>must not flag</strong></li>
+<li><a href="static/aria_attribute_misspelled.html">Misspelled aria attribute</a> — 4.1.2 — <strong>should flag</strong></li>
+<li><a href="static/safe_aria_attribute_spelled_correctly.html">Correctly spelled aria attribute</a> — 4.1.2 — <strong>must not flag</strong></li>
+<li><a href="static/aria_role_invalid.html">Role that does not exist</a> — 4.1.2 — <strong>should flag</strong></li>
+<li><a href="static/safe_aria_role_valid.html">Valid role with keyboard support</a> — 4.1.2 — <strong>must not flag</strong></li>
+<li><a href="static/safe_aria_role_fallback_list.html">Role fallback list whose second token is valid</a> — 4.1.2 — <strong>must not flag</strong></li>
+<li><a href="static/iframe_no_title.html">Frame with no title</a> — 4.1.2 — <strong>should flag</strong></li>
+<li><a href="static/iframe_empty_title.html">Frame with an empty title</a> — 4.1.2 — <strong>should flag</strong></li>
+<li><a href="static/safe_iframe_title.html">Frame with a title</a> — 4.1.2 — <strong>must not flag</strong></li>
+<li><a href="static/safe_iframe_aria_label.html">Frame named with aria-label instead of title</a> — 4.1.2 — <strong>must not flag</strong></li>
+<li><a href="static/role_menu_without_menuitems.html">role=menu whose children are not menu items</a> — 1.3.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_role_menu_with_menuitems.html">role=menu that owns menu items</a> — 1.3.1 — <strong>must not flag</strong></li>
+<li><a href="static/safe_role_menu_group_of_menuitems.html">role=menu that owns a group of menu items</a> — 1.3.1 — <strong>must not flag</strong></li>
+<li><a href="static/role_list_without_listitems.html">role=list whose children are not list items</a> — 1.3.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_role_list_with_listitems.html">role=list that owns list items</a> — 1.3.1 — <strong>must not flag</strong></li>
+<li><a href="static/link_no_text_variants.html">Five links that have no name, each in a different way</a> — 2.4.4 — <strong>should flag</strong></li>
+<li><a href="static/safe_link_name_variants.html">Five links that are named, each in a different way</a> — 2.4.4 — <strong>must not flag</strong></li>
+<li><a href="static/safe_link_empty_in_hidden_container.html">Empty link inside a container that is not rendered</a> — 2.4.4 — <strong>must not flag</strong></li>
+<li><a href="static/safe_anchor_target_without_href.html">Empty anchor that is a target, not a link</a> — 2.4.4 — <strong>must not flag</strong></li>
+<li><a href="static/img_alt_is_filename.html">Image whose alt text is a file name</a> — 1.1.1 — <strong>should flag</strong></li>
+<li><a href="static/input_image_no_alt.html">Image button with no alt</a> — 1.1.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_input_image_alt.html">Image button with alt</a> — 1.1.1 — <strong>must not flag</strong></li>
+<li><a href="static/svg_role_img_no_name.html">SVG with role=img and no name</a> — 1.1.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_svg_role_img_named.html">SVG with role=img and a name</a> — 1.1.1 — <strong>must not flag</strong></li>
+<li><a href="static/safe_svg_decorative_hidden.html">Decorative SVG removed from the accessibility tree</a> — 1.1.1 — <strong>must not flag</strong></li>
+<li><a href="static/area_no_alt.html">Image map area with no alt</a> — 1.1.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_area_alt.html">Image map area with alt</a> — 1.1.1 — <strong>must not flag</strong></li>
+<li><a href="static/scroll_region_out_of_tab_order.html">Scrollable region removed from the tab order</a> — 2.1.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_scroll_region_tabindex_zero.html">Scrollable region that is focusable and named</a> — 2.1.1 — <strong>must not flag</strong></li>
+<li><a href="static/safe_scroll_region_with_focusable_child.html">Scrollable region that contains a link</a> — 2.1.1 — <strong>must not flag</strong></li>
+<li><a href="static/safe_scroll_region_not_overflowing.html">Scrollable region whose content fits</a> — 2.1.1 — <strong>must not flag</strong></li>
+<li><a href="static/button_contains_link.html">A link inside a button</a> — 4.1.2 — <strong>should flag</strong></li>
+<li><a href="static/role_button_contains_input.html">A text field inside role=button</a> — 4.1.2 — <strong>should flag</strong></li>
+<li><a href="static/safe_label_wraps_input.html">A label that wraps its input</a> — 4.1.2 — <strong>must not flag</strong></li>
+<li><a href="static/safe_link_contains_image_and_text.html">A link that contains an image and text</a> — 4.1.2 — <strong>must not flag</strong></li>
+<li><a href="static/click_handler_on_list_item.html">A click handler on a plain list item</a> — 2.1.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_click_delegation_on_list.html">Click delegation on a list of real buttons</a> — 2.1.1, 4.1.2 — <strong>must not flag</strong></li>
+<li><a href="static/safe_click_listener_on_document.html">A click listener on the document</a> — 2.1.1, 4.1.2 — <strong>must not flag</strong></li>
+<li><a href="static/radio_group_without_group.html">Related radios with no group</a> — 1.3.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_radio_group_fieldset_legend.html">Related radios in a fieldset with a legend</a> — 1.3.1 — <strong>must not flag</strong></li>
+<li><a href="static/safe_radio_group_role_radiogroup.html">Related radios in a role=radiogroup named by a visible heading</a> — 1.3.1 — <strong>must not flag</strong></li>
+<li><a href="static/checkbox_group_without_group.html">Related checkboxes with no group</a> — 1.3.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_single_checkbox_no_group.html">A single checkbox with no group</a> — 1.3.1 — <strong>must not flag</strong></li>
+<li><a href="static/fieldset_without_legend.html">Fieldset with no legend</a> — 1.3.1 — <strong>should flag</strong></li>
+<li><a href="static/fieldset_empty_legend.html">Fieldset with an empty legend</a> — 1.3.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_fieldset_aria_label.html">Fieldset named with aria-label</a> — 1.3.1 — <strong>must not flag</strong></li>
+<li><a href="static/safe_fieldset_hidden_inputs_only.html">Fieldset that holds only hidden inputs</a> — 1.3.1 — <strong>must not flag</strong></li>
+<li><a href="static/heading_styled_paragraph.html">A paragraph styled as a heading</a> — 1.3.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_heading_element_same_style.html">The same text as a real heading</a> — 1.3.1 — <strong>must not flag</strong></li>
+<li><a href="static/safe_heading_role_on_div.html">A heading made with role=heading</a> — 1.3.1 — <strong>must not flag</strong></li>
+<li><a href="static/safe_bold_run_in_label.html">A bold lead-in word inside a paragraph</a> — 1.3.1 — <strong>must not flag</strong></li>
+<li><a href="static/focus_indicator_nearly_invisible.html">Focus ring that is almost the page colour</a> — 2.4.7 — <strong>should flag</strong></li>
+<li><a href="static/safe_focus_box_shadow_ring.html">Outline removed and replaced by a box-shadow ring</a> — 2.4.7 — <strong>must not flag</strong></li>
+<li><a href="static/safe_focus_transparent_outline_with_ring.html">Transparent outline plus a box-shadow ring</a> — 2.4.7 — <strong>must not flag</strong></li>
+<li><a href="static/focus_image_link_outline_removed.html">Image link with its focus outline removed</a> — 2.4.7 — <strong>should flag</strong></li>
+<li><a href="static/focus_input_outline_removed.html">Text field with its focus outline removed</a> — 2.4.7 — <strong>should flag</strong></li>
+<li><a href="static/label_in_name_different_words.html">Accessible name that does not contain the visible label</a> — 2.5.3 — <strong>should flag</strong></li>
+<li><a href="static/label_in_name_words_reordered.html">Accessible name that uses the visible words in a different order</a> — 2.5.3 — <strong>should flag</strong></li>
+<li><a href="static/safe_label_in_name_extra_words.html">Accessible name that contains the visible label and more</a> — 2.5.3 — <strong>must not flag</strong></li>
+<li><a href="static/safe_label_in_name_case_differs.html">Accessible name that differs from the visible label only by case</a> — 2.5.3 — <strong>must not flag</strong></li>
+<li><a href="static/safe_label_in_name_icon_only.html">Icon-only button with an accessible name</a> — 2.5.3 — <strong>must not flag</strong></li>
+<li><a href="static/reflow_label_clipped_fixed_width.html">A label cut off at a fixed width</a> — 1.4.10 — <strong>should flag</strong></li>
+<li><a href="static/safe_reflow_label_wraps.html">The same label allowed to wrap</a> — 1.4.10 — <strong>must not flag</strong></li>
+<li><a href="static/safe_reflow_data_table_scrolls_in_container.html">A wide data table that scrolls inside its own container</a> — 1.4.10 — <strong>must not flag</strong></li>
+<li><a href="static/link_in_text_colour_only.html">A link in running text told apart by colour alone</a> — 1.4.1 — <strong>should flag</strong></li>
+<li><a href="static/safe_link_in_text_underlined.html">A link in running text that is underlined</a> — 1.4.1 — <strong>must not flag</strong></li>
+<li><a href="static/safe_nav_links_no_underline.html">Navigation links with no underline</a> — 1.4.1 — <strong>must not flag</strong></li></ul>
 </main>
 <p><a href="../index.html">Back to the index</a></p>
 </body>
