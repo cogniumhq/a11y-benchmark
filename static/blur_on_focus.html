@@ -1,0 +1,22 @@
+<!--
+  A link that drops focus as soon as it receives it
+  WCAG: 2.1.1
+  Expectation: a control SHOULD report this
+  The only way onward blurs itself on focus, so a keyboard user cannot activate it.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A link that drops focus as soon as it receives it</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>A link that drops focus as soon as it receives it</h1>
+<p><a href="next.html" onfocus="this.blur()">Continue to payment</a></p>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

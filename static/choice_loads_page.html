@@ -1,0 +1,27 @@
+<!--
+  A choice that loads a page
+  WCAG: 3.2.2
+  Expectation: a control SHOULD report this
+  3.2.2. Changing the select navigates immediately. There is no separate submit.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A choice that loads a page</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>A choice that loads a page</h1>
+<label for="dest">Destination</label>
+<select id="dest" onchange="location.href=this.value">
+<option value="">Choose</option>
+<option value="paris.html">Paris</option>
+<option value="rome.html">Rome</option>
+</select>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

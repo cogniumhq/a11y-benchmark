@@ -1,0 +1,5 @@
+{
+  "name": "latest-browser-served",
+  "description": "Test-only suite for check/import-cognium.test.mjs: one defect page and its corrected control.",
+  "case_ids": ["keyboard-div_button", "keyboard-safe_native_button"]
+}

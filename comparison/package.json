@@ -1,0 +1,32 @@
+{
+  "name": "a11y-benchmark-comparison",
+  "private": true,
+  "type": "module",
+  "description": "Pinned multi-tool comparison runner for the browser-served lane. Every tool is an exact version; package-lock.json pins the whole tree.",
+  "scripts": {
+    "compare": "node run.mjs",
+    "import:cognium": "node import-cognium.mjs",
+    "diff": "node diff.mjs"
+  },
+  "engines": {
+    "node": ">=22.19"
+  },
+  "dependencies": {
+    "@qualweb/act-rules": "0.8.6",
+    "@qualweb/best-practices": "0.7.13",
+    "@qualweb/core": "0.9.5",
+    "@qualweb/wcag-techniques": "0.4.9",
+    "@siteimprove/alfa-act": "0.119.0",
+    "@siteimprove/alfa-puppeteer": "0.84.2",
+    "@siteimprove/alfa-rules": "0.119.0",
+    "accessibility-checker": "4.0.34",
+    "accessibility-checker-engine": "4.0.27",
+    "axe-core": "4.14.0",
+    "chrome-launcher": "1.2.2",
+    "ibm-rule-archive-list": "npm:accessibility-checker-engine@4.0.29",
+    "lighthouse": "13.5.0",
+    "pa11y": "10.0.0",
+    "playwright": "1.61.1",
+    "puppeteer": "25.13.0"
+  }
+}

@@ -1,0 +1,26 @@
+<!--
+  A motion rule that matches nothing drawn
+  WCAG: 2.2.2
+  Expectation: NO control should report this (negative control)
+  AX-19/2.2.2. The keyframes rule matches no element, so nothing on the page moves.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A motion rule that matches nothing drawn</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>A motion rule that matches nothing drawn</h1>
+<style>
+@keyframes spin{to{transform:rotate(360deg)}}
+.not-on-this-page{animation:spin 1s linear infinite}
+</style>
+<p>This page does not use that class.</p>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

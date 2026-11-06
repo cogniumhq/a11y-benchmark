@@ -1,0 +1,23 @@
+<!--
+  Text that reflows at 320 CSS pixels
+  WCAG: 1.4.10, 1.4.12
+  Expectation: NO control should report this (negative control)
+  Negative control for reflow_320.html. No fixed height and no nowrap, so spacing overrides wrap instead of clipping.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Text that reflows at 320 CSS pixels</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Text that reflows at 320 CSS pixels</h1>
+<style>.col{width:320px}.line{min-height:1.2em}</style>
+<div class="col"><p class="line">Baggage allowance is one cabin bag plus one personal item per traveller, and it must stay readable.</p></div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

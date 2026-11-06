@@ -1,0 +1,116 @@
+{
+  "suiteName": "latest-browser-served",
+  "suite": {
+    "name": "latest-browser-served",
+    "description": "Test fixture: four cases of the browser-served lane.",
+    "case_ids": [
+      "keyboard-div_button",
+      "keyboard-safe_native_button",
+      "journey-booking-broken",
+      "journey-booking-correct"
+    ]
+  },
+  "exportFile": "check/fixtures/comparison-lanes/expected-export-default.json",
+  "corpus": {
+    "revision": "<fixture-commit>",
+    "manifest_sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "cases": [
+    {
+      "id": "keyboard-div_button",
+      "mode": "tp",
+      "path": "keyboard/div_button.html",
+      "min_criteria": {
+        "2.1.1": 1,
+        "4.1.2": 1
+      },
+      "must_not_report": []
+    },
+    {
+      "id": "keyboard-safe_native_button",
+      "mode": "safe",
+      "path": "keyboard/safe_native_button.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.1.1",
+        "4.1.2"
+      ]
+    },
+    {
+      "id": "journey-booking-broken",
+      "mode": "tp",
+      "path": "journeys/booking/broken/index.html",
+      "min_criteria": {
+        "3.2.3": 1,
+        "3.3.4": 1,
+        "3.3.7": 1,
+        "2.4.3": 1
+      },
+      "must_not_report": [],
+      "steps": [
+        "journeys/booking/broken/index.html",
+        "journeys/booking/broken/step1.html",
+        "journeys/booking/broken/step2.html",
+        "journeys/booking/broken/step3.html",
+        "journeys/booking/broken/help.html"
+      ]
+    },
+    {
+      "id": "journey-booking-correct",
+      "mode": "safe",
+      "path": "journeys/booking/correct/index.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "3.2.3",
+        "3.3.4",
+        "3.3.7",
+        "2.4.3"
+      ],
+      "steps": [
+        "journeys/booking/correct/index.html",
+        "journeys/booking/correct/step1.html",
+        "journeys/booking/correct/step2.html",
+        "journeys/booking/correct/step3.html",
+        "journeys/booking/correct/done.html",
+        "journeys/booking/correct/help.html"
+      ]
+    }
+  ],
+  "lineage": {
+    "name": "Cognium Conformis",
+    "engine_family": "Conformis a11y/html and tech/html-aria",
+    "tool_surface": "site scan with subject-declared entry pages",
+    "independence": "independent-engine",
+    "metric_family": "criterion-mapped automated detection"
+  },
+  "startedAt": "2026-11-04T00:00:00.000Z",
+  "completedAt": "2026-11-04T01:00:00.000Z",
+  "corpusManifest": {
+    "corpus": {
+      "id": "cogniumhq/a11y-benchmark"
+    },
+    "counts": {
+      "cases": 270,
+      "families": 14
+    }
+  },
+  "humanProtocols": {
+    "protocols": [
+      1,
+      2,
+      3
+    ]
+  },
+  "browserVersion": "149.0.7827.55",
+  "browserSource": "Playwright 1.61.1 bundled build",
+  "runnerRevision": "0000000000000000000000000000000000000000",
+  "versionText": "0.1.0\n",
+  "fileSha": {
+    "pins.json": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+    "package-lock.json": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+  },
+  "node": "v22.0.0",
+  "platform": "linux",
+  "arch": "x64",
+  "generated": "2026-11-04"
+}
