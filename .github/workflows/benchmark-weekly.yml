@@ -1,0 +1,52 @@
+name: Weekly benchmark
+
+# Runs the pinned multi-tool comparison against the published corpus revision.
+# This is the scanner measurement. validate.yml checks the corpus contracts and
+# does not run axe, IBM, Alfa, Lighthouse, pa11y, or QualWeb.
+#
+# Cognium Conformis stays out of this job. Its runtime is private and the
+# published lane imports a sanitized export with --cognium-export.
+
+on:
+  schedule:
+    - cron: "17 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    if: github.repository == 'cogniumhq/a11y-benchmark'
+    runs-on: [self-hosted, grace]
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Check out the pinned corpus
+        run: |
+          rev=$(node -e "process.stdout.write(require('./comparison/pins.json').corpus.revision)")
+          git checkout --detach "$rev"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: comparison/package-lock.json
+
+      - name: Install the pinned tools
+        run: npm ci --prefix comparison
+
+      - name: Install Chromium
+        run: npx --prefix comparison playwright install chromium
+
+      - name: Run the published comparison
+        run: node comparison/run.mjs --fixture-root . --out "$RUNNER_TEMP/benchmark"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: weekly-benchmark
+          path: ${{ runner.temp }}/benchmark
+          retention-days: 14
