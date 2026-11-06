@@ -1,0 +1,18 @@
+{
+  "format": "proofgraph-view/1",
+  "subject": "fixture",
+  "generated": "2026-11-04",
+  "nodes": [
+    { "obligation": "wcag@2.2:2.1.1", "anchorSet": { "type": "product", "content": "keyboard/div_button.html" }, "records": ["r1", "r2"] },
+    { "obligation": "wcag@2.2:4.1.2", "anchorSet": { "type": "product", "content": "keyboard/div_button.html" }, "records": ["r1", "r3"] },
+    { "obligation": "wcag@2.2:2.1.1", "anchorSet": { "type": "product", "content": "keyboard/safe_native_button.html" }, "records": ["r4"] },
+    { "obligation": "wcag@2.2:2.4.2", "anchorSet": { "type": "product", "content": "site" }, "records": ["r5"] }
+  ],
+  "witnesses": {
+    "r1": { "record": "r1", "control": "html/keyboard-operable", "verdict": "deviation", "counts": { "deviations": 1 }, "failing": [{}] },
+    "r2": { "record": "r2", "control": "html/focusable", "verdict": "deviation", "counts": { "deviations": 2 }, "failing": [] },
+    "r3": { "record": "r3", "control": "html/name-role-value", "verdict": "abstain", "counts": {}, "failing": [] },
+    "r4": { "record": "r4", "control": "html/keyboard-operable", "verdict": "pass", "counts": {}, "failing": [] },
+    "r5": { "record": "r5", "control": "html/page-title", "verdict": "deviation", "counts": { "deviations": 1 }, "failing": [{}] }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "latest-browser-served-journey-pages",
+  "description": "VARIANT of latest-browser-served, never quoted as that lane: the 18 journey cases of that lane, in its order, each scanned as its own subject over its declared steps pages.",
+  "variant_of": "latest-browser-served",
+  "source_bundle": "cogniumhq/a11y-benchmark-results results/2026-10-13-v0.1.0-latest-browser-served",
+  "case_ids": [
+    "journey-booking-broken",
+    "journey-booking-correct",
+    "journey-signin-broken",
+    "journey-signin-correct",
+    "journey-consistent-help-broken",
+    "journey-consistent-help-correct",
+    "journey-destructive-broken",
+    "journey-destructive-correct",
+    "journey-consent-broken",
+    "journey-consent-correct",
+    "journey-navigate-broken",
+    "journey-navigate-correct",
+    "journey-signup-broken",
+    "journey-signup-correct",
+    "journey-checkout-broken",
+    "journey-checkout-correct",
+    "journey-session-broken",
+    "journey-session-correct"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "generated": "2026-11-04",
+  "captured": "2026-11-04T00:00:00.000Z",
+  "pin": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "counts": { "run-errors": 0, "outside-the-proofgraph": 0 },
+  "hydration": { "pages": 2, "failed": 0, "capture-misses": 0, "reproduced": 2 },
+  "flows": { "source": "subject-declaration", "count": 0, "names": [] },
+  "environment": { "chromium": "0.0.0.0", "platform": "linux", "viewport": "1280x720" },
+  "derived-from": { "lock": { "packs": { "a11y/html": "0.0.0-fixture" } } }
+}

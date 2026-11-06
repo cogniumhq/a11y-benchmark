@@ -2,7 +2,7 @@
   "$schema": "./schemas/sources.schema.json",
   "format": "cognium-a11y-sources",
   "format_version": "1.0.0",
-  "generated": "2026-10-13",
+  "generated": "2026-11-05",
   "policy": {
     "refresh": "node refresh-sources.mjs --check reports drift; --apply re-derives the vendored snapshots. The scheduled workflow opens a pull request and never pushes to the default branch.",
     "fail_closed": "An upstream that returns 404 or 410, or whose declared licence string has changed, stops the refresh. The stale snapshot is kept and a maintainer resolves it by hand.",
@@ -51,10 +51,10 @@
         "upstream_value": "https://act-rules.github.io/pages/license/"
       },
       "upstream": {
-        "sha256": "sha256:a9a1483e24335d9ec49429468963823673d7e27ca3085999ecc2770d5307d053",
-        "fetched": "2026-10-13",
+        "sha256": "sha256:49051da603afa6d28b94ef3e758146dafcbe72bade7202a24636bab3ea4c0036",
+        "fetched": "2026-11-05",
         "counts": {
-          "testcases": 1213
+          "testcases": 1211
         }
       }
     },
@@ -78,8 +78,8 @@
         "notice": "THIRD_PARTY_NOTICES.md"
       },
       "upstream": {
-        "sha256": "sha256:78d2582dc5b4aef7455e800e9bd306563337e3b51eb889024be6c2e1dacc3ea8",
-        "fetched": "2026-10-13"
+        "sha256": "sha256:922e99eaf10291080bde94f7cf477666a800907ca9d0c06bc2e6686b525f1b48",
+        "fetched": "2026-11-05"
       }
     }
   ]

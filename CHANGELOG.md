@@ -7,6 +7,14 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Fixed
 
+- `comparison/import-cognium.mjs` now reads the AAA candidates a Conformis site
+  scan writes to its separate `beyondClaim` block. Before, it read only the A/AA
+  `nodes` and `witnesses`, so no AAA finding from the site lane was ever seen
+  (cogniumhq/conformis#307). They are exported under `beyond_claim` and printed
+  on an AAA line of their own, and never change an A/AA row, count or
+  criterion. `check/import-cognium.test.mjs` compares the A/AA export byte for
+  byte with the previous importer's output on a fixture graph.
+
 - A machine-readable **state-driver contract** declares how to reach the state
   each case is about (#46). `state-drivers.json` answers for all 94 cases that
   declare a non-default `ui_state` or an `interaction` / `state-exploration`
@@ -80,6 +88,29 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Added
 
+- Two **variants** of the `latest-browser-served` comparison lane
+  (`comparison/lanes.mjs`; techspec G-91 BM-18 and BM-19), each published apart
+  under its own lane name and bundle path, labelled, and never quoted as the
+  lane: `latest-browser-served-explore-2` (the same pin, pages and subject,
+  scanned by Cognium Conformis at state exploration depth 2, which the report
+  must record) and `latest-browser-served-journey-pages` (each of the lane's 18
+  journey cases scanned as its own subject over its declared `steps` pages,
+  never pooled into one site; `comparison/import-cognium-journeys.mjs`
+  attributes site-anchored findings to the journey's case). `run.mjs --lane`
+  writes a variant under `<out>/<variant>/`; a run, `merge.mjs`, `diff.mjs` and
+  `check/comparable-lane.mjs` each refuse to pool a variant with the default
+  lane. Without `--lane` the default lane's output is byte-identical:
+  `check/comparison-lanes.test.mjs` holds its export and snapshot to what the
+  previous runner wrote. No variant has been run or published.
+- `comparison/`: a pinned runner for the multi-tool browser-served lane, so the
+  2026-10-13 `latest-browser-served` result can be repeated from committed
+  inputs. `package-lock.json` pins every tool and its dependency tree;
+  `pins.json` names the corpus revision and manifest digest the runner
+  requires; the IBM rule engine, which the checker otherwise downloads at run
+  time, is a locked package served on 127.0.0.1; the Cognium Conformis subject
+  declaration and importer are committed beside it. `diff.mjs` lists every
+  case whose outcome differs between two snapshots. No fixture or ground truth
+  changes.
 - `scenario-swipe_required` and its corrected control (2.5.1). A fare card
   changed by a horizontal swipe, whose direction decides the result: a real
   path-based gesture. The arrow keys also work, so 2.1.1 holds; only the

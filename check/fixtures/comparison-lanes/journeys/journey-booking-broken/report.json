@@ -1,0 +1,49 @@
+{
+  "subject": {
+    "id": "a11y-benchmark-journey-pages-journey-booking-broken",
+    "kind": "deployed-site",
+    "origin": "http://127.0.0.1:4173"
+  },
+  "pin": "live:fixture-broken",
+  "captured": "2026-11-04T00:00:00.000Z",
+  "generated": "2026-11-04",
+  "counts": {
+    "run-errors": 0,
+    "outside-the-proofgraph": 0
+  },
+  "hydration": {
+    "pages": 5,
+    "failed": 0,
+    "capture-misses": 0,
+    "reproduced": 5
+  },
+  "flows": {
+    "source": "subject-declaration",
+    "count": 0,
+    "names": []
+  },
+  "environment": {
+    "chromium": "149.0.7827.0",
+    "platform": "linux/arm64",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    }
+  },
+  "derived-from": {
+    "proofgraphs": {
+      "claim": "proofgraph.json",
+      "all-pages": "proofgraph-all-pages.json"
+    },
+    "lock": {
+      "packs": {
+        "a11y/html": "0.0.0-fixture"
+      },
+      "catalogs": {},
+      "drivers": {
+        "browser": "0.0.0-fixture"
+      },
+      "datasets": {}
+    }
+  }
+}

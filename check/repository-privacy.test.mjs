@@ -57,8 +57,15 @@ test('fixture email addresses use reserved example domains', () => {
 });
 
 test('commit authors use privacy-preserving GitHub addresses', () => {
-  const emails = execFileSync('git', ['log', '--all', '--format=%ae'], { cwd: ROOT })
-    .toString().split(/\r?\n/).filter(Boolean);
+  // On a pull_request run the checkout is GitHub's synthetic merge commit, which
+  // carries the pushing account's address and is never published; leave it out.
+  const synthetic = process.env.GITHUB_EVENT_NAME === 'pull_request'
+    ? execFileSync('git', ['rev-parse', 'HEAD'], { cwd: ROOT }).toString().trim()
+    : null;
+  const emails = execFileSync('git', ['log', '--all', '--format=%H %ae'], { cwd: ROOT })
+    .toString().split(/\r?\n/).filter(Boolean)
+    .filter((line) => line.split(' ')[0] !== synthetic)
+    .map((line) => line.slice(line.indexOf(' ') + 1));
   assert.ok(emails.length > 0);
   assert.deepEqual(emails.filter((email) => !email.endsWith('@users.noreply.github.com')), []);
 });

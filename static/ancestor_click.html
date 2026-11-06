@@ -1,0 +1,22 @@
+<!--
+  A click handled on an ancestor of the control
+  WCAG: 2.1.1, 4.1.2
+  Expectation: a control SHOULD report this
+  The pointer handler is on the wrapping div. The link inside has no handler of its own, so the keyboard path and the pointer path disagree.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A click handled on an ancestor of the control</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>A click handled on an ancestor of the control</h1>
+<div onclick="location.href='fare.html'"><a href="fare.html">Flexible fare</a></div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>
