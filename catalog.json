@@ -13,9 +13,9 @@
     }
   },
   "counts": {
-    "total": 158,
+    "total": 159,
     "tp": 69,
-    "safe": 89
+    "safe": 90
   },
   "cases": [
     {
@@ -1381,7 +1381,18 @@
       },
       "must_not_report": [],
       "derived_from_manual_rows": [],
-      "notes": "tabindex=\"-1\" takes the scroller out of keyboard reach, and it holds no focusable content. Expected instances: 1. A scroller with no tabindex at all is not here, because current Chromium makes it focusable by default."
+      "notes": "tabindex=\"-1\" takes the scroller out of keyboard reach, and it holds no focusable content. Expected instances: 1. Measured on Chromium 1228: Tab skips tabindex=\"-1\" and lands on the same scroller when the attribute is absent (scroll_region_no_tabindex.html)."
+    },
+    {
+      "id": "static-safe_scroll_region_no_tabindex",
+      "mode": "safe",
+      "path": "static/safe_scroll_region_no_tabindex.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.1.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for scroll_region_out_of_tab_order.html. On Chromium 1228, Tab reaches an overflowing scroller that has no tabindex, even though element.tabIndex stays -1. A check that requires the attribute reports a region the keyboard can already scroll."
     },
     {
       "id": "static-safe_scroll_region_tabindex_zero",
