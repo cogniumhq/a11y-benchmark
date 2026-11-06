@@ -1,0 +1,23 @@
+<!--
+  Fieldset that holds only hidden inputs
+  WCAG: 1.3.1
+  Expectation: NO control should report this (negative control)
+  Boundary. Hidden inputs show nothing, so there is no information for a group name to carry. Reporting it is a false positive.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fieldset that holds only hidden inputs</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Fieldset that holds only hidden inputs</h1>
+<form action="#" onsubmit="return false"><fieldset><input type="hidden" name="session" value="a1"><input type="hidden" name="locale" value="en"></fieldset>
+<button type="submit">Continue</button></form>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

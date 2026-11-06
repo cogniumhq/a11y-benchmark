@@ -1,0 +1,24 @@
+<!--
+  aria-label on elements that support a name
+  WCAG: 4.1.2
+  Expectation: NO control should report this (negative control)
+  Negative control for the two aria_label_on_generic pages. A section, a nav and a role=group all take aria-label.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aria-label on elements that support a name</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>aria-label on elements that support a name</h1>
+<section aria-label="Fare summary"><p>One adult, one bag.</p></section>
+<nav aria-label="Booking steps"><a href="#a">Search</a> <a href="#b">Pay</a></nav>
+<div role="group" aria-label="Passenger details"><p>Adult, window seat.</p></div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

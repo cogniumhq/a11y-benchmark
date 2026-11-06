@@ -1,0 +1,27 @@
+<!--
+  Rotating message that stops after eight seconds
+  WCAG: 2.2.2
+  Expectation: a control SHOULD report this
+  Boundary. The motion does end, but only after eight seconds with no pause. Expected instances: 1.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rotating message that stops after eight seconds</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Rotating message that stops after eight seconds</h1>
+<p id="msg">Free cancellation on every fare.</p>
+<p>Offers change every second for a short while.</p>
+<script>
+var m=['Free cancellation on every fare.','Fly with one bag included.','Change your seat at no cost.'],i=0,n=0;
+var t=setInterval(function(){i=(i+1)%m.length;document.getElementById('msg').textContent=m[i];if(++n>=8)clearInterval(t);},1000);
+</script>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

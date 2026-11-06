@@ -1,0 +1,24 @@
+<!--
+  Text field with its focus outline removed
+  WCAG: 2.4.7
+  Expectation: a control SHOULD report this
+  outline:none on focus and no border, shadow or background change in its place. Expected instances: 1.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Text field with its focus outline removed</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Text field with its focus outline removed</h1>
+<style>input.bare:focus,input.bare:focus-visible{outline:none}</style>
+<label for="q">Search</label>
+<input id="q" class="bare" type="text">
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

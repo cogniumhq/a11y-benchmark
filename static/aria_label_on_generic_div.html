@@ -1,0 +1,22 @@
+<!--
+  aria-label on a div with no role
+  WCAG: 4.1.2
+  Expectation: a control SHOULD report this
+  A div has no role, so aria-label is prohibited on it and is not exposed. The label is the only thing that says what this square means, so the information is lost. Expected instances: 1.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aria-label on a div with no role</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>aria-label on a div with no role</h1>
+<div aria-label="Seat 12A is taken" style="width:1.5rem;height:1.5rem;background:#30556e"></div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!--
+  Scrollable region removed from the tab order
+  WCAG: 2.1.1
+  Expectation: a control SHOULD report this
+  tabindex="-1" takes the scroller out of keyboard reach, and it holds no focusable content. Expected instances: 1. A scroller with no tabindex at all is not here, because current Chromium makes it focusable by default.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scrollable region removed from the tab order</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Scrollable region removed from the tab order</h1>
+<div tabindex="-1" style="height:5rem;overflow:auto;border:1px solid #c9c9c9;padding:.5rem"><p>Each passenger may carry one cabin bag and one personal item. Larger bags are checked at the desk and charged by weight. Sports equipment, musical instruments and prams are accepted at the oversize desk only. Allow extra time for the oversize queue at peak hours.</p></div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!--
+  Transparent outline plus a box-shadow ring
+  WCAG: 2.4.7
+  Expectation: NO control should report this (negative control)
+  Boundary. The transparent outline is the forced-colours fallback pattern. The ring is what sighted users see.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Transparent outline plus a box-shadow ring</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Transparent outline plus a box-shadow ring</h1>
+<style>a.ring:focus-visible{outline:3px solid transparent;box-shadow:0 0 0 3px #30556e}</style>
+<a class="ring" href="#rules">Baggage rules</a>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

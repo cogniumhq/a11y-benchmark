@@ -1,0 +1,23 @@
+<!--
+  A heading made with role=heading
+  WCAG: 1.3.1
+  Expectation: NO control should report this (negative control)
+  Boundary. role=heading with aria-level is a heading, so a scanner that only looks for h1 to h6 is wrong.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A heading made with role=heading</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>A heading made with role=heading</h1>
+<div role="heading" aria-level="2" style="font-size:1.5rem;font-weight:700;margin:1.5rem 0 .5rem">Baggage allowance</div>
+<p>Each passenger may carry one cabin bag and one personal item.</p>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

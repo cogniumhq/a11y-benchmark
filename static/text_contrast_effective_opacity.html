@@ -1,0 +1,22 @@
+<!--
+  Text that fails only after opacity is applied
+  WCAG: 1.4.3
+  Expectation: a control SHOULD report this
+  The text colour #595959 is 7:1 on its own. At opacity .5 it composites to #acacac, 2.27:1. A scanner that reads color without the alpha passes it. Expected instances: 1.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Text that fails only after opacity is applied</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Text that fails only after opacity is applied</h1>
+<p style="color:#595959;opacity:.5">Seat selection opens at check-in.</p>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

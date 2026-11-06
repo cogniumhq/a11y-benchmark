@@ -1,0 +1,23 @@
+<!--
+  Transition that only runs on hover
+  WCAG: 2.2.2
+  Expectation: NO control should report this (negative control)
+  Motion the user starts is not "starts automatically". A scanner that reports every transition is wrong.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Transition that only runs on hover</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Transition that only runs on hover</h1>
+<style>.lift{transition:transform .2s}.lift:hover{transform:translateY(-2px)}</style>
+<a class="lift" href="#fare">Flexible fare</a>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

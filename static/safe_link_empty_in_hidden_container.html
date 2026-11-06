@@ -1,0 +1,24 @@
+<!--
+  Empty link inside a container that is not rendered
+  WCAG: 2.4.4
+  Expectation: NO control should report this (negative control)
+  Boundary. A link nobody can reach is not a link with no name. Reporting it inflates the count.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Empty link inside a container that is not rendered</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Empty link inside a container that is not rendered</h1>
+<div hidden><a href="#a"></a></div>
+<div style="display:none"><a href="#b"></a></div>
+<p>Nothing on this page is an unnamed link.</p>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

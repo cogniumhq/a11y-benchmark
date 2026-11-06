@@ -1,0 +1,22 @@
+<!--
+  aria-label on a span with no role
+  WCAG: 4.1.2
+  Expectation: a control SHOULD report this
+  Same defect on the other generic element, again with no text for the label to repeat. Expected instances: 1.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>aria-label on a span with no role</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>aria-label on a span with no role</h1>
+<p>Status: <span aria-label="Check-in is open" style="display:inline-block;width:1rem;height:1rem;background:#30556e;vertical-align:middle"></span></p>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

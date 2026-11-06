@@ -1,0 +1,23 @@
+<!--
+  Image map area with alt
+  WCAG: 1.1.1
+  Expectation: NO control should report this (negative control)
+  Negative control for area_no_alt.html.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Image map area with alt</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Image map area with alt</h1>
+<img src="../pixel.png" alt="Terminal map" usemap="#terminals" width="200" height="100">
+<map name="terminals"><area shape="rect" coords="0,0,100,100" href="#t1" alt="Terminal 1"></map>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

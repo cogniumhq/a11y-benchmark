@@ -88,6 +88,38 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Added
 
+- **Boundary pairs for shapes that external audit reviews keep raising.** 97 new
+  core cases in `static/` (40 should-flag, 57 negative controls), generated from
+  `boundary-shapes.mjs`, covering 12 success criteria: 1.1.1 (8), 1.3.1 (18),
+  1.4.1 (3), 1.4.3 (15), 1.4.10 (3), 1.4.11 (2), 2.1.1 (7), 2.2.2 (9),
+  2.4.4 (4), 2.4.7 (5), 2.5.3 (5) and 4.1.2 (20). The core family grows from
+  61 to 158 cases and the corpus from 299 to 396.
+
+  The pairs sit on the threshold rather than beside it: 4.48:1 against 4.54:1
+  for normal text and 2.99:1 against 3.03:1 for large text, bold text just under
+  and just at the 14pt large-text size, text that only fails once its opacity is
+  composited, a five-second animation against a six-second one, a motion that
+  stops at four seconds against one that stops at eight, a name that contains the
+  visible words against one that only reorders them, and `aria-label` on a
+  `role=img` div against the same div with no role. Negative controls include the
+  shapes scanners most often get wrong in the other direction: a disabled
+  control, a hidden animated element, an empty link in a container that is not
+  rendered, a fieldset of hidden inputs, a `role=menu` that owns a group of menu
+  items, and a data table that scrolls inside its own region.
+
+  Ground truth states what WCAG requires, not what any scanner reports. A shape
+  whose verdict depends on the browser (a scroll region with no `tabindex`,
+  which Chromium now focuses by default) or on reviewer judgement (a placeholder
+  as the only visible label) is left out rather than guessed. Each note carries
+  an `Expected instances: N` count, so a scanner that finds four of five unnamed
+  links can be told apart from one that finds all five; `catalog.json` itself
+  still scores criteria per page.
+
+  Checked against axe-core 4.14.0 on Chromium as a fixture sanity pass, not as
+  ground truth: every page axe can test agrees with its declared mode, and no
+  negative control draws a finding other than the page-level `region`
+  best-practice that every fixture shares.
+
 - Two **variants** of the `latest-browser-served` comparison lane
   (`comparison/lanes.mjs`; techspec G-91 BM-18 and BM-19), each published apart
   under its own lane name and bundle path, labelled, and never quoted as the

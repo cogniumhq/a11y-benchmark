@@ -1,0 +1,27 @@
+<!--
+  Rotating message that stops after four seconds
+  WCAG: 2.2.2
+  Expectation: NO control should report this (negative control)
+  Negative control for motion_rotation_stops_after_eight_seconds.html. Four seconds is under the limit, so no pause is required.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rotating message that stops after four seconds</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Rotating message that stops after four seconds</h1>
+<p id="msg">Free cancellation on every fare.</p>
+<p>Offers change every second for a short while.</p>
+<script>
+var m=['Free cancellation on every fare.','Fly with one bag included.','Change your seat at no cost.'],i=0,n=0;
+var t=setInterval(function(){i=(i+1)%m.length;document.getElementById('msg').textContent=m[i];if(++n>=4)clearInterval(t);},1000);
+</script>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

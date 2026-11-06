@@ -1,0 +1,23 @@
+<!--
+  Image map area with no alt
+  WCAG: 1.1.1
+  Expectation: a control SHOULD report this
+  Each area of an image map is a link and needs its own text. Expected instances: 1.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Image map area with no alt</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Image map area with no alt</h1>
+<img src="../pixel.png" alt="Terminal map" usemap="#terminals" width="200" height="100">
+<map name="terminals"><area shape="rect" coords="0,0,100,100" href="#t1"></map>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!--
+  Navigation links with no underline
+  WCAG: 1.4.1
+  Expectation: NO control should report this (negative control)
+  Boundary. Links in a navigation list are not in a block of text, so colour alone is acceptable there. Reporting them is a false positive.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Navigation links with no underline</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Navigation links with no underline</h1>
+<style>nav.plain a{text-decoration:none}</style>
+<nav class="plain" aria-label="Booking steps"><a href="#a">Search</a> <a href="#b">Select</a> <a href="#c">Pay</a></nav>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

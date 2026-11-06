@@ -1,0 +1,27 @@
+<!--
+  Infinite animation with a pause control
+  WCAG: 2.2.2
+  Expectation: NO control should report this (negative control)
+  A mechanism to pause is the 2.2.2 answer. The spinner runs indefinitely and the page offers a button that stops it.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Infinite animation with a pause control</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Infinite animation with a pause control</h1>
+<style>
+@keyframes turn{to{transform:rotate(360deg)}}
+.turn{animation:turn 1s linear infinite;display:inline-block}
+</style>
+<div class="turn" id="spin">&#9992;</div>
+<button type="button" onclick="document.getElementById('spin').style.animationPlayState='paused'">Pause animation</button>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

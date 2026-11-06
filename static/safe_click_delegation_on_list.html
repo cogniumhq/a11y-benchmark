@@ -1,0 +1,22 @@
+<!--
+  Click delegation on a list of real buttons
+  WCAG: 2.1.1, 4.1.2
+  Expectation: NO control should report this (negative control)
+  Boundary. The handler is on the list, but every actionable thing inside it is a native button. Reporting the list is a false positive.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Click delegation on a list of real buttons</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Click delegation on a list of real buttons</h1>
+<ul onclick="void 0"><li><button type="button">Add bag</button></li><li><button type="button">Add seat</button></li></ul>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

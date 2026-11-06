@@ -1,0 +1,27 @@
+<!--
+  A wide data table that scrolls inside its own container
+  WCAG: 1.4.10
+  Expectation: NO control should report this (negative control)
+  Boundary. Two-dimensional data is an exception to reflow, so a table that scrolls in its own region while the page does not is correct.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A wide data table that scrolls inside its own container</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>A wide data table that scrolls inside its own container</h1>
+<div tabindex="0" role="region" aria-label="Fare table" style="overflow-x:auto">
+<table style="min-width:44rem;border-collapse:collapse"><caption>Fares by cabin</caption>
+<thead><tr><th scope="col">Cabin</th><th scope="col">Bag</th><th scope="col">Seat</th><th scope="col">Meal</th><th scope="col">Change</th><th scope="col">Refund</th><th scope="col">Lounge</th></tr></thead>
+<tbody><tr><th scope="row">Basic</th><td>No</td><td>Fee</td><td>Fee</td><td>Fee</td><td>No</td><td>No</td></tr>
+<tr><th scope="row">Flex</th><td>Yes</td><td>Free</td><td>Free</td><td>Free</td><td>Yes</td><td>No</td></tr></tbody></table>
+</div>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

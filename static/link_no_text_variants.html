@@ -1,0 +1,28 @@
+<!--
+  Five links that have no name, each in a different way
+  WCAG: 2.4.4
+  Expectation: a control SHOULD report this
+  An empty link, an image link with alt="", an SVG link with no title, a link holding only a non-breaking space, and a link holding only an aria-hidden glyph. Expected instances: 5 (#l1 to #l5). A scanner that counts four has missed one of the shapes.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Five links that have no name, each in a different way</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Five links that have no name, each in a different way</h1>
+<p>
+<a id="l1" href="#a"></a>
+<a id="l2" href="#b"><img src="../pixel.png" alt="" width="24" height="24"></a>
+<a id="l3" href="#c"><svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg></a>
+<a id="l4" href="#d">&nbsp;</a>
+<a id="l5" href="#e"><span aria-hidden="true">&#9733;</span></a>
+</p>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

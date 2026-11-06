@@ -1,0 +1,27 @@
+<!--
+  Finite animation that runs for six seconds
+  WCAG: 2.2.2
+  Expectation: a control SHOULD report this
+  Boundary. 2.2.2 applies to motion that lasts more than five seconds, and finite is not the same as short. Six one-second turns beside other content, with no pause. Expected instances: 1.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Finite animation that runs for six seconds</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Finite animation that runs for six seconds</h1>
+<style>
+@keyframes turn{to{transform:rotate(360deg)}}
+.turn{animation:turn 1s linear 6;display:inline-block}
+</style>
+<div class="turn">&#9992;</div>
+<p>Your search is running.</p>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

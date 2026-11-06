@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import './pipeline.mjs';
+import { BOUNDARY_SHAPES } from './boundary-shapes.mjs';
 
 const ROOT = path.dirname(new URL(import.meta.url).pathname);
 
@@ -592,6 +593,9 @@ for (var d = 1; d <= 7; d++) {
 <button type="submit">Show fares</button>
 </form>`,
   },
+
+  // Boundary pairs for shapes external reviews keep raising (boundary-shapes.mjs).
+  ...BOUNDARY_SHAPES,
 ];
 
 // ───────────────────────── write

@@ -1,0 +1,25 @@
+<!--
+  Fieldset named with aria-label
+  WCAG: 1.3.1
+  Expectation: NO control should report this (negative control)
+  Boundary. An aria-label names a fieldset as well as a legend does.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fieldset named with aria-label</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Fieldset named with aria-label</h1>
+<fieldset aria-label="Seat position">
+<label><input type="radio" name="seat" value="w"> Window</label>
+<label><input type="radio" name="seat" value="a"> Aisle</label>
+</fieldset>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

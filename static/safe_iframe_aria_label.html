@@ -1,0 +1,22 @@
+<!--
+  Frame named with aria-label instead of title
+  WCAG: 4.1.2
+  Expectation: NO control should report this (negative control)
+  Boundary. An aria-label is an accessible name, so a frame with no title attribute is not a failure.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Frame named with aria-label instead of title</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Frame named with aria-label instead of title</h1>
+<iframe aria-label="Terminal map" srcdoc="<p>Terminal map placeholder</p>"></iframe>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!--
+  Infinite animation on an element that is not rendered
+  WCAG: 2.2.2
+  Expectation: NO control should report this (negative control)
+  The rule exists and is infinite, but its subject is display:none, so nothing moves. Reporting it is a false positive.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Infinite animation on an element that is not rendered</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Infinite animation on an element that is not rendered</h1>
+<style>
+@keyframes turn{to{transform:rotate(360deg)}}
+.turn{animation:turn 1s linear infinite}
+</style>
+<div class="turn" style="display:none">&#9992;</div>
+<p>Nothing on this page moves.</p>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

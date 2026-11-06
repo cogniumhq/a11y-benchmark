@@ -1,0 +1,23 @@
+<!--
+  A click listener on the document
+  WCAG: 2.1.1, 4.1.2
+  Expectation: NO control should report this (negative control)
+  Boundary. Analytics and menu-dismiss listeners are not controls. The page has no element that depends on a pointer.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A click listener on the document</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>A click listener on the document</h1>
+<p><a href="#fare">Flexible fare</a></p>
+<script>document.addEventListener('click',function(){});</script>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>
