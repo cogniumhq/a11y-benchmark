@@ -2,7 +2,7 @@
   "$schema": "./schemas/sources.schema.json",
   "format": "cognium-a11y-sources",
   "format_version": "1.0.0",
-  "generated": "2026-11-05",
+  "generated": "2026-11-09",
   "policy": {
     "refresh": "node refresh-sources.mjs --check reports drift; --apply re-derives the vendored snapshots. The scheduled workflow opens a pull request and never pushes to the default branch.",
     "fail_closed": "An upstream that returns 404 or 410, or whose declared licence string has changed, stops the refresh. The stale snapshot is kept and a maintainer resolves it by hand.",
@@ -24,8 +24,8 @@
         "notice": "THIRD_PARTY_NOTICES.md"
       },
       "upstream": {
-        "sha256": "sha256:3a034865a879a7d874b60ff2aec7f430cf37bc1597a1e00985680fd80ef5cf75",
-        "fetched": "2026-10-13",
+        "sha256": "sha256:b6bedebc86e96c4989722dd7ebb49eb604f8b832de04f7a570430c5ebee097e6",
+        "fetched": "2026-11-09",
         "counts": {
           "total": 87,
           "in_2_2": 86,
@@ -79,7 +79,7 @@
       },
       "upstream": {
         "sha256": "sha256:922e99eaf10291080bde94f7cf477666a800907ca9d0c06bc2e6686b525f1b48",
-        "fetched": "2026-11-05"
+        "fetched": "2026-11-09"
       }
     }
   ]

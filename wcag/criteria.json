@@ -4,7 +4,7 @@
   "source_data": "https://github.com/w3c/wcag — the published WCAG JSON (principles/guidelines/successcriteria)",
   "license": "W3C Document License 2023 — https://www.w3.org/copyright/document-license-2023/",
   "note": "Slim index: criterion number, name, level and placement only. Derived mechanically; the normative text lives at source_url. 4.1.1 Parsing is retained with in_2_2=false because it was removed in WCAG 2.2.",
-  "extracted": "2026-10-08",
+  "extracted": "2026-11-09",
   "counts": {
     "total": 87,
     "in_2_2": 86,
