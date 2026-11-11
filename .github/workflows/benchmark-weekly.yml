@@ -20,6 +20,9 @@ jobs:
     if: github.repository == 'cogniumhq/a11y-benchmark'
     runs-on: [self-hosted, grace]
     timeout-minutes: 360
+    permissions:
+      contents: read
+      issues: write
     steps:
       - uses: actions/checkout@v7
         with:
@@ -45,13 +48,56 @@ jobs:
 
       - name: Install browsers
         run: |
+          set -euo pipefail
           npx --prefix comparison playwright install chromium
-          npx --prefix comparison puppeteer browsers install chrome
+          # Puppeteer's Chrome download from Google has timed out once on this
+          # runner. Retry before giving up; a failed download must not hide
+          # the lane comparison below.
+          for attempt in 1 2 3; do
+            npx --prefix comparison puppeteer browsers install chrome && break
+            if [ "$attempt" = 3 ]; then exit 1; fi
+            sleep 20
+          done
 
       - name: Run the published comparison
         run: node comparison/run.mjs --fixture-root "$RUNNER_TEMP/corpus" --out "$RUNNER_TEMP/benchmark"
 
+      # Against the published six-tool bundle. A lost declared criterion or a
+      # new false positive fails the job and is filed. A miss that the
+      # published bundle already had is written into GAPS.md and does not,
+      # by itself, fail the week. Conformis is not in this job.
+      - name: Compare with the published lane
+        id: gaps
+        run: |
+          set -euo pipefail
+          base="$RUNNER_TEMP/benchmark/published-comparison.json"
+          curl -fsSL -o "$base" \
+            https://raw.githubusercontent.com/cogniumhq/a11y-benchmark-results/main/results/2026-11-02-rerun-v0.1.0-latest-browser-served/comparison.json
+          set +e
+          node comparison/gaps.mjs "$base" "$RUNNER_TEMP/benchmark/comparison.json" \
+            --md "$RUNNER_TEMP/benchmark/GAPS.md" --json "$RUNNER_TEMP/benchmark/gaps.json"
+          code=$?
+          set -e
+          node -e "const r=require(process.argv[1]); process.stdout.write('fail='+(r.fail?'true':'false')+'\n')" \
+            "$RUNNER_TEMP/benchmark/gaps.json" >> "$GITHUB_OUTPUT"
+          exit "$code"
+
+      - name: File the regression
+        if: failure() && steps.gaps.outputs.fail == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          title="Weekly benchmark: regression against the published lane"
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "in:title $title" --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/benchmark/GAPS.md"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body-file "$RUNNER_TEMP/benchmark/GAPS.md"
+          fi
+
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: weekly-benchmark
           path: ${{ runner.temp }}/benchmark

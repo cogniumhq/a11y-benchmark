@@ -73,11 +73,18 @@ a subset is never the lane result.
 
 ```sh
 node comparison/diff.mjs <published comparison.json> out/direct/comparison.json
+node comparison/gaps.mjs <published comparison.json> out/direct/comparison.json
 ```
 
-It refuses two snapshots measured against different corpus revisions, prints
-both sets of lane metrics, and lists every case whose cell or matched criteria
-differ, with the native rules that mapped.
+`diff.mjs` refuses two snapshots measured against different corpus revisions,
+prints both sets of lane metrics, and lists every case whose cell or matched
+criteria differ, with the native rules that mapped.
+
+`gaps.mjs` is what the weekly job runs. It exits 1 when a known defect loses a
+declared criterion it matched in the baseline, when a corrected control gains
+one, or when a case errors. Declared criteria the baseline already missed are
+listed as standing misses and do not fail the run. `--cognium-export` scores a
+sanitized Conformis export against the baseline case list.
 
 ## Lane variants
 
