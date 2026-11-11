@@ -25,10 +25,14 @@ jobs:
         with:
           fetch-depth: 0
 
+      # The harness lives on the default branch. The corpus pin is an older
+      # commit that has no comparison/ tree, so it is checked out beside this
+      # checkout. Detaching this checkout would delete the harness before
+      # setup-node looks up comparison/package-lock.json.
       - name: Check out the pinned corpus
         run: |
           rev=$(node -e "process.stdout.write(require('./comparison/pins.json').corpus.revision)")
-          git checkout --detach "$rev"
+          git worktree add --detach "$RUNNER_TEMP/corpus" "$rev"
 
       - uses: actions/setup-node@v7
         with:
@@ -39,11 +43,13 @@ jobs:
       - name: Install the pinned tools
         run: npm ci --prefix comparison
 
-      - name: Install Chromium
-        run: npx --prefix comparison playwright install chromium
+      - name: Install browsers
+        run: |
+          npx --prefix comparison playwright install chromium
+          npx --prefix comparison puppeteer browsers install chrome
 
       - name: Run the published comparison
-        run: node comparison/run.mjs --fixture-root . --out "$RUNNER_TEMP/benchmark"
+        run: node comparison/run.mjs --fixture-root "$RUNNER_TEMP/corpus" --out "$RUNNER_TEMP/benchmark"
 
       - uses: actions/upload-artifact@v4
         with:
