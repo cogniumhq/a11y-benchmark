@@ -67,6 +67,7 @@ import { chromium } from 'playwright';
 import puppeteer from 'puppeteer';
 
 import { DEFAULT_LANE, laneByName, snapshotFile } from './lanes.mjs';
+import { NAVIGATION_TIMEOUT_MS, navigateWithRetry } from './navigate.mjs';
 import {
   buildSnapshot, cogniumRows, expectedCriteria, rowFor, summarize, toolEntry,
 } from './snapshot.mjs';
@@ -268,7 +269,7 @@ async function loadPage(page, url, testCase) {
 }
 
 async function loadPuppeteerPage(page, url, testCase) {
-  const response = await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
+  const response = await navigateWithRetry(() => page.goto(url, { waitUntil: 'networkidle0', timeout: NAVIGATION_TIMEOUT_MS }));
   if (!response || response.status() !== 200) throw new Error(`HTTP ${response?.status() ?? 'none'}`);
   await new Promise((resolve) => setTimeout(resolve,
     testCase.id === 'delivery-client_js_delayed' ? 1000 : 150));
