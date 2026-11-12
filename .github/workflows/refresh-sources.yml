@@ -22,6 +22,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      issues: write
     steps:
       - uses: actions/checkout@v7
         with:
@@ -65,15 +66,26 @@ jobs:
         if: steps.refresh.outputs.status == '1'
         run: node --test check/*.test.mjs
 
+      # The branch push is allowed. Opening the pull request is not: the
+      # organization refuses it to GitHub Actions (run 42629777910). refresh-open.mjs
+      # tries the pull request, and on that refusal files the report as an issue
+      # with a compare link. The refspec is the only destination of the push.
       - name: Open a reviewable pull request
         if: steps.refresh.outputs.status == '1'
-        uses: peter-evans/create-pull-request@v8
-        with:
-          branch: refresh/standards-sources
-          base: ${{ github.event.repository.default_branch }}
-          commit-message: "Refresh standards-derived sources"
-          title: "Refresh standards-derived sources"
-          body-path: ${{ runner.temp }}/refresh.md
-          labels: dependencies
-          delete-branch: true
-          draft: false
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git checkout -B refresh/standards-sources
+          git add -A
+          if git diff --cached --quiet; then
+            echo "upstream moved and the generated tree matches HEAD; nothing to review"
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit -m "Refresh standards-derived sources"
+          git push --force origin HEAD:refresh/standards-sources
+          node refresh-open.mjs --repo "$GITHUB_REPOSITORY" \
+            --base "${{ github.event.repository.default_branch }}" \
+            --head refresh/standards-sources \
+            --report "$RUNNER_TEMP/refresh.md"
