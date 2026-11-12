@@ -13,7 +13,8 @@
 // 2. It fails closed. An upstream that has been removed, or whose licence
 //    string has changed, stops the run. It does not get quietly re-vendored
 //    under terms nobody checked.
-// 3. It never pushes. The workflow opens a pull request; a person merges it.
+// 3. It never pushes. The workflow pushes a review branch and asks for a
+//    pull request; a person merges it.
 //
 // Releases keep referencing the immutable snapshot committed here, not live
 // upstream content.

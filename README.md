@@ -219,9 +219,9 @@ node refresh-sources.mjs --apply     # re-derive the snapshots
 
 It fails closed. An upstream that returns 404 or 410, or whose declared licence
 has changed, stops the run rather than re-vendoring under terms nobody checked.
-The scheduled workflow opens a pull request for review and never pushes to the
-default branch. Releases keep referencing the committed snapshot, not live
-upstream content.
+The scheduled workflow pushes only its review branch, asks for a pull request,
+and never pushes to the default branch. Releases keep referencing the committed
+snapshot, not live upstream content.
 
 Project decisions and compatibility follow [GOVERNANCE.md](GOVERNANCE.md).
 Contributions follow [CONTRIBUTING.md](CONTRIBUTING.md), and sensitive reports
