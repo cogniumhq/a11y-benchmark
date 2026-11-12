@@ -24,6 +24,13 @@ test('the only push is the refresh branch, and the corpus check still has full h
   assert.match(WORKFLOW, /fetch-depth: 0/);
 });
 
+test('corpus validation clears a sparse checkout before it checks the files out', () => {
+  const validate = fs.readFileSync(path.join(ROOT, '.github/workflows/validate.yml'), 'utf8');
+  const clear = validate.indexOf('Clear a sparse checkout left on this runner');
+  const checkout = validate.indexOf('uses: actions/checkout@v7');
+  assert.ok(clear >= 0 && checkout > clear, 'sparse checkout must be cleared before checkout, or tracked files stay missing');
+});
+
 test('a clean tree is not committed, and a source that failed closed still stops the job', () => {
   assert.match(WORKFLOW, /git diff --cached --quiet/);
   assert.match(WORKFLOW, /status == '1'/);

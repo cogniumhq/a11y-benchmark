@@ -26,6 +26,12 @@ jobs:
            github.event.pull_request.head.repo.full_name != github.repository)
           && 'ubuntu-latest' || fromJSON('["self-hosted","grace"]') }}
     steps:
+      # A previous job on this runner can leave core.sparseCheckout set. Checkout
+      # then omits tracked files, and the corpus contract dies on the first one
+      # it opens (run 43271107815: native/docx/safe_structured.docx was missing).
+      - name: Clear a sparse checkout left on this runner
+        run: if [ -f .git/config ]; then git config --file .git/config --unset-all core.sparseCheckout || true; fi
+
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0

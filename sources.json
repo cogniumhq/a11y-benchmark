@@ -4,7 +4,7 @@
   "format_version": "1.0.0",
   "generated": "2026-11-05",
   "policy": {
-    "refresh": "node refresh-sources.mjs --check reports drift; --apply re-derives the vendored snapshots. The scheduled workflow opens a pull request and never pushes to the default branch.",
+    "refresh": "node refresh-sources.mjs --check reports drift; --apply re-derives the vendored snapshots. The scheduled workflow pushes only the refresh branch, asks for a pull request, and never pushes to the default branch.",
     "fail_closed": "An upstream that returns 404 or 410, or whose declared licence string has changed, stops the refresh. The stale snapshot is kept and a maintainer resolves it by hand.",
     "identity": "Releases reference the immutable snapshot committed here, never live upstream content. A refresh that moves ground truth changes benchmark identity and must be reviewed as such.",
     "notices": "Required W3C attribution and modification statements live in THIRD_PARTY_NOTICES.md and are not rewritten by a refresh."

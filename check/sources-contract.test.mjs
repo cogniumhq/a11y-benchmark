@@ -288,12 +288,15 @@ test('the report states when nothing moved', () => {
 
 // --- workflow guarantees ----------------------------------------------------
 
-test('the refresh workflow opens a pull request and never pushes to the default branch', () => {
+test('the refresh workflow asks for a pull request and never pushes to the default branch', () => {
   const workflow = fs.readFileSync(path.join(ROOT, '.github/workflows/refresh-sources.yml'), 'utf8');
 
   assert.match(workflow, /schedule:/, 'the refresh must be scheduled');
-  assert.match(workflow, /create-pull-request|gh pr create/, 'the refresh must open a pull request');
-  assert.ok(!/git push origin (master|main)\b/.test(workflow), 'the refresh must never push to the default branch');
+  // The organization does not let GitHub Actions open the pull request, so the
+  // workflow pushes its own branch and refresh-open.mjs asks for the review.
+  assert.match(workflow, /node refresh-open\.mjs/, 'the refresh must ask for a pull request');
+  assert.match(workflow, /HEAD:refresh\/standards-sources/, 'the only branch it pushes is its own');
+  assert.ok(!/git push[^\n]*\b(master|main)\b/.test(workflow), 'the refresh must never push to the default branch');
   assert.ok(!/--auto-merge|gh pr merge/.test(workflow), 'the refresh must never merge itself');
   assert.match(workflow, /refresh-sources\.mjs --apply/);
   // Regenerate and test, so a refresh that breaks the corpus cannot land green.
