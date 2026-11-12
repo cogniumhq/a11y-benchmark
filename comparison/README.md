@@ -86,6 +86,15 @@ one, or when a case errors. Declared criteria the baseline already missed are
 listed as standing misses and do not fail the run. `--cognium-export` scores a
 sanitized Conformis export against the baseline case list.
 
+When `gaps.mjs` fails the weekly job, `file-issue.mjs` opens an issue with
+`GAPS.md`, or comments on the open one with the same title. It needs only Node
+and the job's `GITHUB_TOKEN`, because the self-hosted runner has no `gh`.
+`check/weekly-workflow.test.mjs` fails if the workflow calls `gh` again.
+
+A navigation that times out is tried once more (`navigate.mjs`), because a page
+that did not load is recorded as an error, and an error where the published
+bundle had a score reads as a lost detection. A second timeout is still an error.
+
 ## Lane variants
 
 Two **variants** of this lane change one thing on the Cognium Conformis side

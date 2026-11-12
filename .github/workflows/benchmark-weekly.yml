@@ -84,17 +84,13 @@ jobs:
 
       - name: File the regression
         if: failure() && steps.gaps.outputs.fail == 'true'
+        # No `gh` on this runner (run 43088141458 stopped here, exit 127): Node and the job token only.
         env:
-          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
-          set -euo pipefail
-          title="Weekly benchmark: regression against the published lane"
-          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "in:title $title" --json number --jq '.[0].number')
-          if [ -n "$existing" ]; then
-            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/benchmark/GAPS.md"
-          else
-            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body-file "$RUNNER_TEMP/benchmark/GAPS.md"
-          fi
+          node comparison/file-issue.mjs --repo "$GITHUB_REPOSITORY" \
+            --title "Weekly benchmark: regression against the published lane" \
+            --body-file "$RUNNER_TEMP/benchmark/GAPS.md"
 
       - uses: actions/upload-artifact@v4
         if: always()
