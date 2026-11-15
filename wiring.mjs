@@ -134,7 +134,7 @@ for (const wiring of WIRINGS) {
     const body = wiring.shell ? `<div id="shell">\n${withExtras}\n</div>` : withExtras;
 
     const file = kind === 'broken' ? `${wiring.id}.html` : `safe_${wiring.id}.html`;
-    const header = `<!--\n  ${wiring.id} — ${kind}\n  constant defect: a div acting as a button, not keyboard operable\n`
+    const header = `<!--\n  ${wiring.id} — ${kind}\n  WCAG: 2.1.1\n  constant defect: a div acting as a button, not keyboard operable\n`
       + `  varied: ${wiring.title}\n  ${wiring.note}\n-->\n`;
 
     fs.writeFileSync(
