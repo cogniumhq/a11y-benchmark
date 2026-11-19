@@ -10,6 +10,8 @@ import { createReadStream, existsSync, realpathSync, statSync } from 'node:fs';
 import { extname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { accessGate } from './access-gate.mjs';
+
 const ROOT = resolve(fileURLToPath(new URL('.', import.meta.url)));
 const arg = (n, d) => { const i = process.argv.indexOf(n); return i > -1 ? process.argv[i + 1] : d; };
 const PORT = Number(arg('--port', process.env.PORT || 8080));
@@ -31,7 +33,7 @@ const TYPES = {
 // manifest: an allow-list that falls behind a new family makes those fixtures
 // unreachable, which is how the whole pipeline family went unservable.
 const PUBLIC_DIRECTORIES = new Set([
-  'aaa', 'act', 'capture', 'color-independent', 'delivery', 'evidence', 'flash',
+  'aaa', 'access', 'act', 'capture', 'color-independent', 'delivery', 'evidence', 'flash',
   'guided', 'journeys', 'keyboard', 'media', 'native', 'patterns', 'pipeline',
   'protocols', 'scenarios', 'schemas', 'static', 'surfaces', 'taxonomy',
   'ui-states', 'wcag', 'wiring',
@@ -44,6 +46,7 @@ const PUBLIC_ROOT_FILES = new Set([
   'journeys.json', 'scenarios.json', 'surfaces.json', 'guided.json', 'flash.json',
   'corpus-manifest.json', 'pipeline.json', 'aaa.json', 'native.json',
   'surface-contracts.json', 'sources.json', 'adjudication.json', 'wiring.json',
+  'access.json',
 ]);
 
 const text = (res, status, body) => {
@@ -58,6 +61,9 @@ export function createCorpusHandler(root = ROOT) {
   const publicRoot = realpathSync(root);
 
   return (req, res) => {
+    // access/auth/ is gated, and its sign-in endpoint is the one POST the
+    // corpus accepts. Everything else stays read-only.
+    if (accessGate(req, res, publicRoot)) return;
     if (req.method !== 'GET' && req.method !== 'HEAD') {
       res.setHeader('allow', 'GET, HEAD');
       text(res, 405, 'method not allowed');

@@ -20,6 +20,7 @@ const FAMILIES = [
   ['aaa', 'aaa.json'],
   ['native', 'native.json'],
   ['wiring', 'wiring.json'],
+  ['access', 'access.json'],
 ];
 
 function canonicalContentDigest(document) {

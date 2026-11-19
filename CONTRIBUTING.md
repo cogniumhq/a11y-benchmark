@@ -60,7 +60,7 @@ Run the local checks before opening a pull request:
 ```sh
 npm ci --prefix check --ignore-scripts
 node --test check/*.test.mjs
-for generator in build.mjs delivery.mjs patterns.mjs taxonomy.mjs journeys.mjs scenarios.mjs media.mjs flash.mjs color-independent.mjs ui-states.mjs surfaces.mjs guided.mjs needs-index.mjs coverage.mjs space-coverage.mjs manifest.mjs; do
+for generator in build.mjs delivery.mjs access.mjs patterns.mjs taxonomy.mjs journeys.mjs scenarios.mjs media.mjs flash.mjs color-independent.mjs ui-states.mjs surfaces.mjs guided.mjs needs-index.mjs coverage.mjs space-coverage.mjs manifest.mjs; do
   node "$generator"
 done
 git diff --exit-code -I '"generated":'

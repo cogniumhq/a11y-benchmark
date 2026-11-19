@@ -1,0 +1,679 @@
+{
+  "format": "cognium-a11y-access-cases",
+  "format_version": "1.0.0",
+  "description": "Content a scanner has to reach before it can judge it. The authenticated axis is gated by serve.mjs; the dynamic axis adds fetched fragments, client-side routes and a page that never settles. Defect-carrying pages carry the same constant pair as the delivery family.",
+  "constant_defect": {
+    "2.1.1": "div styled as a button, not focusable",
+    "1.1.1": "img with no accessible name"
+  },
+  "credentials_note": "Public synthetic credentials. They pass the gates in access-gate.mjs and grant nothing outside this corpus. Real credentials never belong in this repository.",
+  "credentials": {
+    "access-basic": {
+      "kind": "http-basic",
+      "username": "benchmark",
+      "password": "public-synthetic-only"
+    },
+    "access-session-cookie": {
+      "kind": "cookie",
+      "name": "a11y_bench_session",
+      "value": "public-synthetic-session"
+    },
+    "access-form-login": {
+      "kind": "form-login",
+      "username": "benchmark",
+      "password": "public-synthetic-only",
+      "sign_in_page": "access/auth/form/login.html",
+      "action": "access/auth/form/login",
+      "method": "POST",
+      "fields": {
+        "username": "username",
+        "password": "password"
+      },
+      "session_cookie": "a11y_bench_form"
+    }
+  },
+  "generated": "2026-11-19",
+  "cases": [
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-basic_auth",
+      "pair": "basic_auth",
+      "mode": "tp",
+      "axis": "authenticated",
+      "journey": "session",
+      "scope": "single-page",
+      "method": [
+        "crawl",
+        "runtime-dom"
+      ],
+      "path": "access/auth/basic/broken.html",
+      "access": {
+        "gate": "http-basic",
+        "credential": "access-basic"
+      },
+      "min_criteria": {
+        "2.1.1": 1,
+        "1.1.1": 1
+      },
+      "must_not_report": [],
+      "notes": "Behind HTTP basic auth. Unauthenticated, the server answers 401. Given the declared credential, a scanner must reach the page and report both constant defects."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-safe_basic_auth",
+      "pair": "basic_auth",
+      "mode": "safe",
+      "axis": "authenticated",
+      "journey": "session",
+      "scope": "single-page",
+      "method": [
+        "crawl",
+        "runtime-dom"
+      ],
+      "path": "access/auth/basic/safe.html",
+      "access": {
+        "gate": "http-basic",
+        "credential": "access-basic"
+      },
+      "min_criteria": {},
+      "must_not_report": [
+        "1.1.1",
+        "2.1.1"
+      ],
+      "notes": "Corrected control behind the same basic-auth gate. Reporting 2.1.1 or 1.1.1 here is a false positive."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-session_cookie",
+      "pair": "session_cookie",
+      "mode": "tp",
+      "axis": "authenticated",
+      "journey": "session",
+      "scope": "single-page",
+      "method": [
+        "crawl",
+        "runtime-dom"
+      ],
+      "path": "access/auth/cookie/broken.html",
+      "access": {
+        "gate": "session-cookie",
+        "credential": "access-session-cookie"
+      },
+      "min_criteria": {
+        "2.1.1": 1,
+        "1.1.1": 1
+      },
+      "must_not_report": [],
+      "notes": "Behind a session cookie the site owner hands over. Without it the server answers 401."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-safe_session_cookie",
+      "pair": "session_cookie",
+      "mode": "safe",
+      "axis": "authenticated",
+      "journey": "session",
+      "scope": "single-page",
+      "method": [
+        "crawl",
+        "runtime-dom"
+      ],
+      "path": "access/auth/cookie/safe.html",
+      "access": {
+        "gate": "session-cookie",
+        "credential": "access-session-cookie"
+      },
+      "min_criteria": {},
+      "must_not_report": [
+        "1.1.1",
+        "2.1.1"
+      ],
+      "notes": "Corrected control behind the same session cookie."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-form_login",
+      "pair": "form_login",
+      "mode": "tp",
+      "axis": "authenticated",
+      "journey": "auth-signup",
+      "scope": "single-page",
+      "method": [
+        "crawl",
+        "runtime-dom"
+      ],
+      "path": "access/auth/form/broken.html",
+      "access": {
+        "gate": "form-login",
+        "credential": "access-form-login",
+        "sign_in_page": "access/auth/form/login.html"
+      },
+      "min_criteria": {
+        "2.1.1": 1,
+        "1.1.1": 1
+      },
+      "must_not_report": [],
+      "notes": "Behind a form sign-in. Unauthenticated requests redirect to the sign-in page. A scanner must sign in with the declared account, keep the session, and report both defects here."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-safe_form_login",
+      "pair": "form_login",
+      "mode": "safe",
+      "axis": "authenticated",
+      "journey": "auth-signup",
+      "scope": "single-page",
+      "method": [
+        "crawl",
+        "runtime-dom"
+      ],
+      "path": "access/auth/form/safe.html",
+      "access": {
+        "gate": "form-login",
+        "credential": "access-form-login",
+        "sign_in_page": "access/auth/form/login.html"
+      },
+      "min_criteria": {},
+      "must_not_report": [
+        "1.1.1",
+        "2.1.1"
+      ],
+      "notes": "Corrected control behind the same form sign-in."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-login_wall",
+      "pair": "login_wall",
+      "mode": "tp",
+      "axis": "authenticated",
+      "journey": "session",
+      "scope": "single-page",
+      "method": [
+        "crawl",
+        "runtime-dom"
+      ],
+      "path": "access/auth/wall/broken.html",
+      "access": {
+        "gate": "soft-wall",
+        "credential": "access-form-login",
+        "sign_in_page": "access/auth/form/login.html"
+      },
+      "min_criteria": {
+        "2.1.1": 1,
+        "1.1.1": 1
+      },
+      "must_not_report": [],
+      "notes": "Behind a soft sign-in wall: unauthenticated, the server answers 200 with a sign-in page in place of this one. Signed in, the page carries both defects."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-safe_login_wall",
+      "pair": "login_wall",
+      "mode": "safe",
+      "axis": "authenticated",
+      "journey": "session",
+      "scope": "single-page",
+      "method": [
+        "crawl",
+        "runtime-dom"
+      ],
+      "path": "access/auth/wall/safe.html",
+      "access": {
+        "gate": "soft-wall",
+        "credential": "access-form-login",
+        "sign_in_page": "access/auth/form/login.html"
+      },
+      "min_criteria": {},
+      "must_not_report": [
+        "1.1.1",
+        "2.1.1"
+      ],
+      "notes": "Corrected control behind the same soft wall. A scanner that never got past the wall and reports a clean result for this page has passed the sign-in page, not this one."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-login_wall_unreached",
+      "pair": "login_wall_unreached",
+      "mode": "tp",
+      "axis": "authenticated",
+      "scope": "single-page",
+      "journey": "session",
+      "method": [
+        "crawl",
+        "regression"
+      ],
+      "min_criteria": {},
+      "must_not_report": [],
+      "path": "access/auth/wall/broken.html",
+      "access": {
+        "gate": "soft-wall",
+        "credential": "access-form-login"
+      },
+      "assertion": {
+        "kind": "authenticated-target-reached",
+        "inputs": {
+          "requested": "access/auth/wall/broken.html",
+          "credential_supplied": false,
+          "response_status": 200,
+          "evaluated_title": "Sign in to continue"
+        },
+        "expected_execution": {
+          "status": "blocked",
+          "declared_state": "authenticated",
+          "state_reached": false,
+          "target_observability": "not-observed",
+          "examined_count": {
+            "operator": "unavailable"
+          },
+          "error": {
+            "required": true,
+            "code": "sign-in-required"
+          },
+          "forbidden_verdicts": [
+            "pass"
+          ]
+        }
+      },
+      "notes": "The run had no credential, asked for the account page, got 200 and evaluated the sign-in page in its place. Any verdict about the account page is unfounded: the run must report it blocked, never passed."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-login_wall_unreached-control",
+      "pair": "login_wall_unreached",
+      "mode": "safe",
+      "axis": "authenticated",
+      "scope": "single-page",
+      "journey": "session",
+      "method": [
+        "crawl",
+        "regression"
+      ],
+      "min_criteria": {},
+      "must_not_report": [],
+      "path": "access/auth/wall/safe.html",
+      "access": {
+        "gate": "soft-wall",
+        "credential": "access-form-login"
+      },
+      "assertion": {
+        "kind": "authenticated-target-reached",
+        "inputs": {
+          "requested": "access/auth/wall/safe.html",
+          "credential_supplied": true,
+          "response_status": 200,
+          "evaluated_title": "Your trips (behind a sign-in wall, corrected)"
+        },
+        "expected_execution": {
+          "status": "completed",
+          "declared_state": "authenticated",
+          "state_reached": true,
+          "target_observability": "observed",
+          "examined_count": {
+            "operator": "at-least",
+            "value": 1
+          },
+          "error": {
+            "required": false,
+            "code": null
+          },
+          "forbidden_verdicts": []
+        }
+      },
+      "notes": "The matched control signed in and evaluated the page it asked for."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-session_lost",
+      "pair": "session_lost",
+      "mode": "tp",
+      "axis": "authenticated",
+      "scope": "single-page",
+      "journey": "session",
+      "method": [
+        "crawl",
+        "regression"
+      ],
+      "min_criteria": {},
+      "must_not_report": [],
+      "path": "access/auth/form/index.html",
+      "access": {
+        "gate": "form-login",
+        "credential": "access-form-login"
+      },
+      "assertion": {
+        "kind": "session-preserved",
+        "inputs": {
+          "sampled_pages": [
+            "access/auth/form/index.html",
+            "access/auth/form/orders.html"
+          ],
+          "followed": [
+            "access/auth/form/index.html",
+            "access/auth/form/logout",
+            "access/auth/form/orders.html"
+          ],
+          "evaluated_as_sign_in": [
+            "access/auth/form/orders.html"
+          ]
+        },
+        "expected_execution": {
+          "status": "error",
+          "declared_state": "authenticated",
+          "state_reached": false,
+          "target_observability": "not-observed",
+          "examined_count": {
+            "operator": "unavailable"
+          },
+          "error": {
+            "required": true,
+            "code": "session-lost"
+          },
+          "forbidden_verdicts": [
+            "pass"
+          ]
+        }
+      },
+      "notes": "The crawler followed Sign out, the first link on the account home, and every page after it was the sign-in page. Pages evaluated after the session ended must not be credited."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-session_lost-control",
+      "pair": "session_lost",
+      "mode": "safe",
+      "axis": "authenticated",
+      "scope": "single-page",
+      "journey": "session",
+      "method": [
+        "crawl",
+        "regression"
+      ],
+      "min_criteria": {},
+      "must_not_report": [],
+      "path": "access/auth/form/index.html",
+      "access": {
+        "gate": "form-login",
+        "credential": "access-form-login"
+      },
+      "assertion": {
+        "kind": "session-preserved",
+        "inputs": {
+          "sampled_pages": [
+            "access/auth/form/index.html",
+            "access/auth/form/orders.html"
+          ],
+          "followed": [
+            "access/auth/form/index.html",
+            "access/auth/form/orders.html"
+          ],
+          "evaluated_as_sign_in": []
+        },
+        "expected_execution": {
+          "status": "completed",
+          "declared_state": "authenticated",
+          "state_reached": true,
+          "target_observability": "observed",
+          "examined_count": {
+            "operator": "at-least",
+            "value": 2
+          },
+          "error": {
+            "required": false,
+            "code": null
+          },
+          "forbidden_verdicts": []
+        }
+      },
+      "notes": "The matched control left Sign out alone and kept the session for every sampled page."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-authenticated_fetch",
+      "pair": "authenticated_fetch",
+      "mode": "tp",
+      "axis": "authenticated",
+      "journey": "async",
+      "scope": "single-page",
+      "method": [
+        "crawl",
+        "runtime-dom"
+      ],
+      "path": "access/auth/form/dynamic.html",
+      "access": {
+        "gate": "form-login",
+        "credential": "access-form-login",
+        "sign_in_page": "access/auth/form/login.html"
+      },
+      "min_criteria": {
+        "2.1.1": 1,
+        "1.1.1": 1
+      },
+      "must_not_report": [],
+      "notes": "Both questions at once: behind the form sign-in, and the defect arrives in a fragment fetched after load. The fragment is gated too, so the session must ride on the fetch."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-safe_authenticated_fetch",
+      "pair": "authenticated_fetch",
+      "mode": "safe",
+      "axis": "authenticated",
+      "journey": "async",
+      "scope": "single-page",
+      "method": [
+        "crawl",
+        "runtime-dom"
+      ],
+      "path": "access/auth/form/safe_dynamic.html",
+      "access": {
+        "gate": "form-login",
+        "credential": "access-form-login",
+        "sign_in_page": "access/auth/form/login.html"
+      },
+      "min_criteria": {},
+      "must_not_report": [
+        "1.1.1",
+        "2.1.1"
+      ],
+      "notes": "Corrected control: same sign-in, same fetch, corrected fragment."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-fetched_fragment",
+      "pair": "fetched_fragment",
+      "mode": "tp",
+      "axis": "dynamic",
+      "journey": "async",
+      "scope": "single-page",
+      "method": [
+        "runtime-dom"
+      ],
+      "path": "access/dynamic/fetched.html",
+      "min_criteria": {
+        "2.1.1": 1,
+        "1.1.1": 1
+      },
+      "must_not_report": [],
+      "notes": "The served page is a shell; the defect arrives in an HTML fragment fetched after the load event. Not in the served bytes, and not present until a network round trip completes."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-safe_fetched_fragment",
+      "pair": "fetched_fragment",
+      "mode": "safe",
+      "axis": "dynamic",
+      "journey": "async",
+      "scope": "single-page",
+      "method": [
+        "runtime-dom"
+      ],
+      "path": "access/dynamic/safe_fetched.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.1.1",
+        "2.1.1"
+      ],
+      "notes": "Corrected control: same fetch, corrected fragment."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-spa_route",
+      "pair": "spa_route",
+      "mode": "tp",
+      "axis": "dynamic",
+      "journey": "navigate",
+      "scope": "single-page",
+      "method": [
+        "runtime-dom",
+        "interaction",
+        "state-exploration"
+      ],
+      "path": "access/dynamic/spa_route.html",
+      "state_dependency": "script",
+      "min_criteria": {
+        "2.1.1": 1,
+        "1.1.1": 1
+      },
+      "must_not_report": [],
+      "notes": "The defect is on a client-side route. The router renders Settings on a click and pushes a URL that, loaded directly, serves Trips again. Only a run that drives the router reaches it."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-safe_spa_route",
+      "pair": "spa_route",
+      "mode": "safe",
+      "axis": "dynamic",
+      "journey": "navigate",
+      "scope": "single-page",
+      "method": [
+        "runtime-dom",
+        "interaction",
+        "state-exploration"
+      ],
+      "path": "access/dynamic/safe_spa_route.html",
+      "state_dependency": "script",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.1.1",
+        "2.1.1"
+      ],
+      "notes": "Corrected control with the same router and the corrected Settings view."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-never_idle",
+      "pair": "never_idle",
+      "mode": "tp",
+      "axis": "dynamic",
+      "journey": "realtime",
+      "scope": "single-page",
+      "method": [
+        "runtime-dom"
+      ],
+      "path": "access/dynamic/never_idle.html",
+      "min_criteria": {
+        "2.1.1": 1,
+        "1.1.1": 1
+      },
+      "must_not_report": [],
+      "notes": "A clock rewrites part of the page every 200 ms, forever. The defect is present at load. A run that waits for the DOM to settle never finishes; it must bound its wait and still report."
+    },
+    {
+      "surface": "web",
+      "ui_state": "default",
+      "input_at": [
+        "keyboard"
+      ],
+      "id": "access-safe_never_idle",
+      "pair": "never_idle",
+      "mode": "safe",
+      "axis": "dynamic",
+      "journey": "realtime",
+      "scope": "single-page",
+      "method": [
+        "runtime-dom"
+      ],
+      "path": "access/dynamic/safe_never_idle.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.1.1",
+        "2.1.1"
+      ],
+      "notes": "Corrected control that also never goes quiet."
+    }
+  ]
+}

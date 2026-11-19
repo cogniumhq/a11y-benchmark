@@ -5,6 +5,7 @@ import { once } from 'node:events';
 import { test, after } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
+import { credentialHeaders } from '../access-gate.mjs';
 import { loadFixtureCases } from '../fixture-families.mjs';
 import { startCorpusServer } from '../serve.mjs';
 
@@ -28,7 +29,10 @@ test('every fixture in the corpus manifest is actually servable', async () => {
 
   const unreachable = [];
   for (const fixture of cases) {
-    const response = await fetch(`${base}/${fixture.path}`, { method: 'HEAD' });
+    // A gated fixture is servable to a visitor holding the credential it
+    // declares. Its refusal without one is the access contract's to check.
+    const headers = credentialHeaders(fixture.access?.credential);
+    const response = await fetch(`${base}/${fixture.path}`, { method: 'HEAD', headers, redirect: 'manual' });
     if (response.status !== 200) {
       unreachable.push(`${fixture.id} (${fixture.path}) -> HTTP ${response.status}`);
     }

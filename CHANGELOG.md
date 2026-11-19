@@ -5,6 +5,22 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ## Unreleased
 
+### Added
+
+- An **access** family (`access.json`, 20 cases in 10 pairs) for content a
+  scanner has to reach before it can judge it. The authenticated axis puts the
+  delivery family's constant defect behind HTTP basic auth, a session cookie, a
+  form sign-in and a soft sign-in wall that answers 200, all enforced by
+  `serve.mjs` through `access-gate.mjs`, plus a fetch behind the sign-in and two
+  accounting pairs: a run that evaluated the sign-in page in place of its target
+  must report `blocked`, and pages evaluated after following Sign out must not
+  be credited. The dynamic axis adds a fragment fetched after load, a client-side
+  route reachable only by driving the router, and a page that never stops
+  changing. The sign-in endpoint is the only POST the server accepts; it caps
+  the body at 4 KiB and redirects only back inside the gated area.
+  `check/access-contract.test.mjs` proves each gate refuses without its
+  credential and admits with it.
+
 ### Fixed
 
 - `comparison/import-cognium.mjs` now reads the AAA candidates a Conformis site

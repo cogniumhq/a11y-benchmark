@@ -126,6 +126,7 @@ keyboard/            matched defective/corrected controls for keyboard and focus
 capture/             pages that stress capture and hydration rather than rule logic
 static/              single-page defects readable from served HTML
 delivery/            ONE constant defect, delivered eleven different ways
+access/              the same defect behind a sign-in, or arriving after load
 wiring/              ONE constant defect, with its handler attached four different ways
 patterns/            APG component patterns as matched broken/correct pairs
 taxonomy/            the enumerated test space
@@ -136,6 +137,7 @@ evidence/            the execution and verification evidence ledger
 starter/             copy-and-fill kit for publishing a result bundle
 comparison/          pinned multi-tool runner for the browser-served lane (see its README)
 delivery.mjs         regenerates the delivery matrix
+access.mjs           regenerates the access family (access-gate.mjs holds its sign-in gates)
 wiring.mjs           regenerates the event-wiring matrix
 patterns.mjs         regenerates the pattern pairs
 taxonomy.mjs         regenerates the taxonomy
@@ -319,6 +321,35 @@ delivery coverage gap, and the matrix names which one.
 null there, so script cannot see in — but the content is still in the
 accessibility tree and still reaches users, and real design systems ship closed
 roots. It is the hardest row and a fair one.
+
+### Content a scanner has to reach first
+
+`access/` asks two questions buyers ask about any checker, with the same
+constant defect and a corrected control for every row.
+
+**Can it test a site that needs a sign-in?** `serve.mjs` gates `access/auth/`
+four ways: HTTP basic auth (401 without the header), a session cookie the owner
+hands over (401 without it), a form sign-in (302 to the sign-in page, a real
+POST, a session cookie, a sign-out link), and a soft wall that answers **200**
+with a sign-in page in place of the content. The soft wall is the dangerous one:
+a scanner that never got in still gets a page, and a clean result for it is a
+pass of the sign-in form. Two accounting pairs make that explicit, in the shape
+of the pipeline family: a run that evaluated the sign-in page in place of its
+target must report `blocked`, and pages evaluated after a crawler followed Sign
+out must not be credited. A fragment fetched after load behind the same sign-in
+is gated too, so the session has to ride on the page's own requests.
+
+The credentials are public, synthetic and published in `access.json`. They grant
+nothing outside this corpus. Read from disk, a gated fixture is an ordinary
+page; it only measures access when served.
+
+**Does it see content that arrives after load?** `delivery/` already covers
+script injection, iframes and shadow roots. `access/dynamic/` adds what those
+do not: an HTML fragment fetched over the network after `load`, a client-side
+route whose URL does not serve it (only driving the router reaches it, with a
+declared driver in `state-drivers.json`), and a page whose clock rewrites the
+DOM every 200 ms forever, so a run that waits for the page to settle has to
+bound the wait and still report.
 
 ## Display conditions are a test axis
 
