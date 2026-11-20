@@ -113,6 +113,17 @@ const WIRING = [
 // post-condition checked false-before / true-after, so none of these is a
 // plausible-looking selector nobody ran.
 const INTERACTION = {
+  // Client-side route. #view-settings is created by the router on the click
+  // and does not exist at load; its URL, loaded directly, serves Trips.
+  'access-spa_route': {
+    steps: [click('#nav-settings')],
+    post_condition: { kind: 'present', selector: '#view-settings' },
+  },
+  'access-safe_spa_route': {
+    steps: [click('#nav-settings')],
+    post_condition: { kind: 'present', selector: '#view-settings' },
+  },
+
   // 2.4.3 Focus Order. The popover ships `hidden` and the trigger removes it,
   // so `:not([hidden])` is false at load and true once opened. The condition
   // deliberately does not assert that focus moved into the popover: on the

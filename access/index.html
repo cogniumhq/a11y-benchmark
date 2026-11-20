@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Access fixtures</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>Access fixtures</h1>
+<p>Content a scanner has to get to before it can judge it: pages behind a sign-in, and content that
+arrives after load. Gated pages are only gated when served by <code>serve.mjs</code>.</p>
+<ul><li><a href="../access/auth/basic/broken.html">basic_auth</a> — <em>authenticated</em>, carries the defect</li>
+<li><a href="../access/auth/basic/safe.html">safe_basic_auth</a> — <em>authenticated</em>, control</li>
+<li><a href="../access/auth/cookie/broken.html">session_cookie</a> — <em>authenticated</em>, carries the defect</li>
+<li><a href="../access/auth/cookie/safe.html">safe_session_cookie</a> — <em>authenticated</em>, control</li>
+<li><a href="../access/auth/form/broken.html">form_login</a> — <em>authenticated</em>, carries the defect</li>
+<li><a href="../access/auth/form/safe.html">safe_form_login</a> — <em>authenticated</em>, control</li>
+<li><a href="../access/auth/wall/broken.html">login_wall</a> — <em>authenticated</em>, carries the defect</li>
+<li><a href="../access/auth/wall/safe.html">safe_login_wall</a> — <em>authenticated</em>, control</li>
+<li><a href="../access/auth/wall/broken.html">login_wall_unreached</a> — <em>authenticated</em>, carries the defect</li>
+<li><a href="../access/auth/wall/safe.html">login_wall_unreached-control</a> — <em>authenticated</em>, control</li>
+<li><a href="../access/auth/form/index.html">session_lost</a> — <em>authenticated</em>, carries the defect</li>
+<li><a href="../access/auth/form/index.html">session_lost-control</a> — <em>authenticated</em>, control</li>
+<li><a href="../access/auth/form/dynamic.html">authenticated_fetch</a> — <em>authenticated</em>, carries the defect</li>
+<li><a href="../access/auth/form/safe_dynamic.html">safe_authenticated_fetch</a> — <em>authenticated</em>, control</li>
+<li><a href="../access/dynamic/fetched.html">fetched_fragment</a> — <em>dynamic</em>, carries the defect</li>
+<li><a href="../access/dynamic/safe_fetched.html">safe_fetched_fragment</a> — <em>dynamic</em>, control</li>
+<li><a href="../access/dynamic/spa_route.html">spa_route</a> — <em>dynamic</em>, carries the defect</li>
+<li><a href="../access/dynamic/safe_spa_route.html">safe_spa_route</a> — <em>dynamic</em>, control</li>
+<li><a href="../access/dynamic/never_idle.html">never_idle</a> — <em>dynamic</em>, carries the defect</li>
+<li><a href="../access/dynamic/safe_never_idle.html">safe_never_idle</a> — <em>dynamic</em>, control</li></ul>
+</main>
+</body>
+</html>

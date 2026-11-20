@@ -736,6 +736,9 @@ const EXTRA_GROUPS = [
   { dir: 'pipeline', blurb: 'public synthetic capture, sampling, observation and execution-accounting checks with matched controls' },
   { dir: 'delivery', blurb: 'the same defect delivered many different ways — server HTML, '
       + 'client-rendered, iframes, shadow DOM, web components' },
+  { dir: 'access', blurb: 'content a scanner has to reach first — pages behind basic auth, a session '
+      + 'cookie, a form sign-in and a soft sign-in wall, plus fetched fragments, client-side routes and '
+      + 'a page that never settles' },
   { dir: 'patterns', blurb: 'ARIA Authoring Practices component patterns as matched '
       + 'broken/correct pairs — dialogs, combobox, tabs, menus, tables and more' },
   { dir: 'color-independent', blurb: 'colour used as the only carrier of information, with a '

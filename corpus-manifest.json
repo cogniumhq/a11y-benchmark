@@ -6,10 +6,10 @@
     "id": "cogniumhq/a11y-benchmark",
     "default_branch": "master"
   },
-  "generated": "2026-11-06",
+  "generated": "2026-11-19",
   "counts": {
-    "families": 15,
-    "cases": 397
+    "families": 16,
+    "cases": 417
   },
   "digest_policy": "SHA-256 of parsed family JSON with the top-level generated field removed, serialized with JSON.stringify.",
   "families": [
@@ -102,14 +102,20 @@
       "file": "wiring.json",
       "case_count": 8,
       "content_sha256": "sha256:3790a07dbb0e07c59375c7898f54eb4efc992a2744074ceea9ce53683a04e756"
+    },
+    {
+      "id": "access",
+      "file": "access.json",
+      "case_count": 20,
+      "content_sha256": "sha256:5b6b9af3c64a8e58a40f5d592b6f28c2e9f5d7d7341861f243cec525ad5b8464"
     }
   ],
   "contracts": [
     {
       "id": "state-drivers",
       "file": "state-drivers.json",
-      "entry_count": 94,
-      "content_sha256": "sha256:ab050c06e6b3062968d81536edff3b3fc5048e19f1fc68073834fb23495d84a2"
+      "entry_count": 96,
+      "content_sha256": "sha256:39c84a0f10d07af755ee83b34e289eb14901323d350269280128ee281c48b038"
     }
   ]
 }

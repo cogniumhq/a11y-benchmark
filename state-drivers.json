@@ -2,7 +2,7 @@
   "$schema": "./schemas/state-drivers.schema.json",
   "format": "cognium-a11y-state-drivers",
   "format_version": "1.0.0",
-  "generated": "2026-10-19",
+  "generated": "2026-11-19",
   "policy": {
     "scope": "Every case declaring a non-default ui_state or an interaction / state-exploration method answers here. A case in the default state with no interaction method needs no declaration, and its absence is not a gap.",
     "evidence": "An `interaction` driver carries a post-condition that is false before its steps run and true after. A runner reports state_reached from that observable rather than assuming, so \"state never reached\" and \"state reached, defect missed\" stay distinct.",
@@ -237,6 +237,38 @@
         "kind": "text-matches",
         "selector": "#state",
         "pattern": "Session expired"
+      }
+    },
+    {
+      "case_id": "access-safe_spa_route",
+      "path": "access/dynamic/safe_spa_route.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#nav-settings"
+        }
+      ],
+      "post_condition": {
+        "kind": "present",
+        "selector": "#view-settings"
+      }
+    },
+    {
+      "case_id": "access-spa_route",
+      "path": "access/dynamic/spa_route.html",
+      "declared_state": "default",
+      "reached": "interaction",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "#nav-settings"
+        }
+      ],
+      "post_condition": {
+        "kind": "present",
+        "selector": "#view-settings"
       }
     },
     {

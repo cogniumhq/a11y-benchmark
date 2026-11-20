@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Account (client-side routes)</title>
+<link rel="stylesheet" href="../../fixture.css">
+<script>
+const views = {
+  '/trips': '<h2>Your trips</h2><p>No upcoming trips.</p>',
+  '/settings': "<h2 id=\"view-settings\">Settings</h2><div class=\"btn\" onclick=\"void 0\">Search flights</div>\n<img src=\"../../pixel.png\">",
+};
+addEventListener('DOMContentLoaded', () => {
+  for (const link of document.querySelectorAll('nav a')) {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const route = link.getAttribute('href').slice(1);
+      history.pushState({ route }, '', '?route=' + route);
+      document.getElementById('view').innerHTML = views[route] ?? views['/trips'];
+    });
+  }
+});
+</script>
+</head>
+<body>
+<main>
+<h1>Account (client-side routes)</h1>
+<nav aria-label="Account"><a href="#/trips" id="nav-trips">Trips</a> <a href="#/settings" id="nav-settings">Settings</a></nav>
+<div id="view"><h2>Your trips</h2><p>No upcoming trips.</p></div>
+</main>
+</body>
+</html>

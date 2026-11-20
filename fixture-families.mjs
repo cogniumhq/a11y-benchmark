@@ -20,6 +20,7 @@ export const FIXTURE_FAMILY_FILES = Object.freeze([
   'native.json',
   'wiring.json',
   'flash.json',
+  'access.json',
 ]);
 
 export function loadFixtureFamilies(root) {
