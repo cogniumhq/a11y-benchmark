@@ -202,10 +202,10 @@
     "act_failed": 4,
     "act_passed": 15,
     "act_inapplicable": 2,
-    "local_tp": "",
-    "local_safe": "",
+    "local_tp": "static/sensory_instruction_shape.html",
+    "local_safe": "static/safe_sensory_instruction_shape.html",
     "guided": "guided/sensory_characteristics.html",
-    "ground_truth": "ACT"
+    "ground_truth": "ACT + local"
   },
   {
     "sc": "1.3.4",

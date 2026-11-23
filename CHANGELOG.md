@@ -7,6 +7,13 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Added
 
+- A **static** pair for WCAG **1.3.3** (Sensory Characteristics):
+  `static/sensory_instruction_shape.html` tells visitors to use the circular
+  control on the right while the confirm control is named only "Confirm berth";
+  `static/safe_sensory_instruction_shape.html` names the Confirm berth hold
+  button in plain text. Ground truth follows W3C ACT rule `9bd38c`; coverage.csv
+  had ACT failures and no local true-positive pair.
+
 - A **static** pair for WCAG 2.1.4 (Character Key Shortcuts):
   `static/single_key_shortcut.html` registers a lone letter key that opens a
   harbour guide while voyage notes can be typed, with no disable or remap path;

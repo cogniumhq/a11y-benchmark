@@ -13,9 +13,9 @@
     }
   },
   "counts": {
-    "total": 163,
-    "tp": 71,
-    "safe": 92
+    "total": 165,
+    "tp": 72,
+    "safe": 93
   },
   "cases": [
     {
@@ -788,6 +788,28 @@
       ],
       "derived_from_manual_rows": [],
       "notes": "Negative control for single_key_shortcut.html. The same guide opens only with Ctrl+Alt+H, so the printable key alone is not a shortcut."
+    },
+    {
+      "id": "static-sensory_instruction_shape",
+      "mode": "tp",
+      "path": "static/sensory_instruction_shape.html",
+      "min_criteria": {
+        "1.3.3": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "The task text tells the visitor to use the circular control on the right, but the confirm control is exposed only as \"Confirm berth\" with no round or right wording. Aligns with W3C ACT rule 9bd38c (visual reference without a non-visual alternative). Expected instances: 1."
+    },
+    {
+      "id": "static-safe_sensory_instruction_shape",
+      "mode": "safe",
+      "path": "static/safe_sensory_instruction_shape.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.3.3"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for sensory_instruction_shape.html. The same round control is identified by the Confirm berth hold button label."
     },
     {
       "id": "static-text_contrast_just_below_aa",
