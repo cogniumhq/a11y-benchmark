@@ -1,7 +1,7 @@
 {
   "description": "Ground truth for the a11y-benchmark fixture corpus. Each case names the WCAG success criteria a correct scanner should report (min_criteria) or, for a negative control, the criteria it must NOT report (expected-clean). Browser reference facts live in check/reference.json, never here.",
   "version": 1,
-  "generated": "2026-11-06",
+  "generated": "2026-11-23",
   "scoring": {
     "recall": "sum(criteria reported on tp cases) / sum(min_criteria) across mode=tp",
     "fp_rate": "a finding for a criterion listed in must_not_report on a mode=safe case is a false positive; other criteria require their own ground truth",
@@ -13,9 +13,9 @@
     }
   },
   "counts": {
-    "total": 159,
-    "tp": 69,
-    "safe": 90
+    "total": 161,
+    "tp": 70,
+    "safe": 91
   },
   "cases": [
     {
@@ -744,6 +744,28 @@
       ],
       "derived_from_manual_rows": [],
       "notes": "Negative control for choice_loads_page.html. Changing the select does not load a page."
+    },
+    {
+      "id": "static-single_key_shortcut",
+      "mode": "tp",
+      "path": "static/single_key_shortcut.html",
+      "min_criteria": {
+        "2.1.4": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "2.1.4. A lone printable key toggles a harbour guide with no way to turn shortcuts off or remap them."
+    },
+    {
+      "id": "static-safe_single_key_shortcut",
+      "mode": "safe",
+      "path": "static/safe_single_key_shortcut.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.1.4"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for single_key_shortcut.html. The same guide opens only with Ctrl+Alt+H, so the printable key alone is not a shortcut."
     },
     {
       "id": "static-text_contrast_just_below_aa",
