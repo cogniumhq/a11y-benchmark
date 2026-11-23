@@ -25,6 +25,15 @@
 // AAA candidates the subject did not adopt sit in the report's separate `beyondClaim`
 // block. They are exported under `beyond_claim` and printed on an AAA line of their own;
 // they never change an A/AA row, count or criterion.
+//
+// Each row also carries the GROUND TRUTH OF THE CORPUS IT RAN AGAINST — `mode` and
+// `declared_criteria`, read from the family manifest at `--fixture-root`. The export is
+// scored against a published baseline's case list (gaps.mjs), and that baseline was built
+// at whatever corpus revision it ran at. When the two revisions differ, the baseline's
+// classification is stale: a case the corpus has since moved from `tp` to `safe` keeps
+// counting as a known defect, so a finding on it reads as a DETECTION rather than the
+// false positive it now is. Carrying the run's own classification lets the scorer notice.
+// It is recorded, never applied here: this file does not score.
 
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -80,7 +89,7 @@ export async function importCognium({ source, fixtureRoot, suite, output, confor
   const normalizedCases = cases.map((testCase) => {
     const nodes = nodesByPage.get(testCase.path) || [];
     assert.ok(nodes.length, `Cognium proofgraph has no WCAG nodes for declared page ${testCase.path}`);
-    return normalizeCase(testCase, nodes, graph.witnesses);
+    return normalizeCase(testCase, nodes, graph.witnesses, { classify: true });
   });
   const beyondClaim = importBeyondClaim(graph.beyondClaim, cases);
 
@@ -155,7 +164,10 @@ function wcagNodesByPage(graphNodes) {
   return nodesByPage;
 }
 
-function normalizeCase(testCase, nodes, witnesses) {
+// `classify` adds the corpus's ground truth for the case. Only the A/AA rows take it: the
+// AAA block is beyond the claim and is never scored against a baseline, so a classification
+// there would be a field nothing reads.
+function normalizeCase(testCase, nodes, witnesses, { classify = false } = {}) {
   const grouped = new Map();
   const reviewRecords = new Set();
   for (const node of nodes) {
@@ -184,11 +196,23 @@ function normalizeCase(testCase, nodes, witnesses) {
   return {
     id: testCase.id,
     path: testCase.path,
+    ...(classify ? { mode: testCase.mode, declared_criteria: declaredCriteria(testCase) } : {}),
     automated_findings: findings.reduce((sum, finding) => sum + finding.count, 0),
     manual_review_items: reviewRecords.size,
     found_criteria: [...new Set(findings.flatMap((finding) => finding.criteria))].sort(),
     findings,
   };
+}
+
+// What the corpus declares for a case, in the corpus's own terms: the criteria a known
+// defect must report, or the criteria a negative control must not. One shape, because the
+// scorer asks the same question of both — did any declared criterion come back? — and the
+// mode decides whether the answer is a detection or a false positive.
+export function declaredCriteria(testCase) {
+  const criteria = testCase.mode === 'tp'
+    ? Object.keys(testCase.min_criteria || {})
+    : (testCase.must_not_report || []);
+  return [...criteria].sort();
 }
 
 // AAA candidates from the report's `beyondClaim` block, per declared page, in the same row

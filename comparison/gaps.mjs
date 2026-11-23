@@ -52,24 +52,77 @@ export function classifyTool(result) {
   return { regressions, falsePositives };
 }
 
-/** Candidate rows for one tool, joined to the baseline case list. */
+/** Candidate rows for one tool, joined to the baseline case list.
+ *
+ * The baseline supplies WHICH cases are in the suite — that is deliberate, and it is what
+ * keeps the denominator stable across runs. It does not supply what each case DECLARES.
+ * An export that carries its own classification (`mode`, `declared_criteria`, read from
+ * the corpus the run actually used) is scored on that, because the baseline's copy was
+ * written at the baseline's corpus revision and the corpus may have moved since. An older
+ * export without those fields falls back to the baseline, which is the previous behaviour.
+ */
 export function rowsFromCogniumExport(exported, baselineCases) {
   const byId = new Map(exported.cases.map((row) => [row.id, row]));
   return baselineCases.map((base) => {
     const found = byId.get(base.id);
     const foundCriteria = new Set(found?.found_criteria || []);
-    const matched = (base.expected_criteria || []).filter((criterion) => foundCriteria.has(criterion));
+    const mode = found?.mode ?? base.mode;
+    const declared = found?.declared_criteria ?? base.expected_criteria ?? [];
+    const matched = declared.filter((criterion) => foundCriteria.has(criterion));
     return {
       id: base.id,
-      mode: base.mode,
+      mode,
       path: base.path,
-      expected_criteria: base.expected_criteria || [],
+      expected_criteria: declared,
       status: found ? 'ok' : 'error',
       automated_findings: found?.automated_findings || 0,
       matched_expected_criteria: matched,
       findings: found?.findings || [],
     };
   });
+}
+
+/** Cases the corpus has reclassified since the baseline was published.
+ *
+ * `reportFromSnapshots` refuses a candidate snapshot taken at a different corpus revision
+ * outright. The `--cognium-export` path cannot: its whole purpose is to score a private
+ * run against a published baseline, and those are routinely at different revisions. So the
+ * disagreement is reported case by case instead of refused wholesale.
+ *
+ * It has to fail the run. A case that moved `tp` -> `safe` is one the corpus now says must
+ * NOT be reported: scored on the stale classification a finding there counts as a
+ * detection, which is the opposite of the truth. A case that moved `safe` -> `tp` hides a
+ * miss the same way. Either is a silent, wrong number, and a wrong number that nobody is
+ * told about is worse than a red run.
+ */
+export function reclassifiedCases(exported, baselineCases) {
+  const byId = new Map(exported.cases.map((row) => [row.id, row]));
+  const changes = [];
+  for (const base of baselineCases) {
+    const found = byId.get(base.id);
+    if (!found || found.mode === undefined) continue;
+    const baseCriteria = [...(base.expected_criteria || [])].sort();
+    const runCriteria = [...(found.declared_criteria || [])].sort();
+    const modeChanged = found.mode !== base.mode;
+    const criteriaChanged = baseCriteria.join(',') !== runCriteria.join(',');
+    if (!modeChanged && !criteriaChanged) continue;
+    // A control the run reports on. `classifyTool` cannot see this one: it reads the mode
+    // off the baseline, where the case is still a known defect, so the finding looks like a
+    // detection and never reaches the false-positive branch. The metrics do count it — the
+    // corrected-controls line drops — so without naming it here the report would show a
+    // control short of clean and an empty false-positive list, and the reader has nothing
+    // to go on.
+    const reported = runCriteria.filter((criterion) => (found.found_criteria || []).includes(criterion));
+    changes.push({
+      id: base.id,
+      baseline_mode: base.mode,
+      run_mode: found.mode,
+      baseline_criteria: baseCriteria,
+      run_criteria: runCriteria,
+      false_positive: found.mode === 'safe' && reported.length > 0 ? reported : null,
+    });
+  }
+  return changes;
 }
 
 export function standingMisses(rows) {
@@ -124,6 +177,25 @@ export function renderReport(report) {
     if (!tool.falsePositives.length) lines.push('None.');
     for (const difference of tool.falsePositives) lines.push(`- ${fmt(difference)}`);
     lines.push('');
+    lines.push(`### Reclassified by the corpus since the baseline (${tool.reclassified.length})`);
+    lines.push('');
+    if (!tool.reclassified.length) {
+      lines.push('None. The baseline and this run classify every scored case the same way.');
+    } else {
+      lines.push('These cases are scored as the corpus of THIS RUN declares them, not as the published baseline did.');
+      lines.push('The baseline column is what the old figures counted; it is why a count can move without the product changing.');
+      lines.push('');
+      for (const change of tool.reclassified) {
+        const mode = change.baseline_mode === change.run_mode
+          ? change.run_mode
+          : `**${change.baseline_mode} -> ${change.run_mode}**`;
+        const fp = change.false_positive
+          ? ` — **false positive**: now a corrected control, and this run reports ${change.false_positive.join(',')} on it`
+          : '';
+        lines.push(`- ${change.id} [${mode}] declares ${change.baseline_criteria.join(',') || '-'} -> ${change.run_criteria.join(',') || '-'}${fp}`);
+      }
+    }
+    lines.push('');
     lines.push(`### Standing misses (${tool.standing.completeMisses} known-defect cases still match nothing)`);
     lines.push('');
     if (!tool.standing.criteria.length) lines.push('None.');
@@ -132,9 +204,18 @@ export function renderReport(report) {
     }
     lines.push('');
   }
-  lines.push(report.fail
-    ? 'Result: regression. A declared criterion was lost, a corrected control was newly flagged, or a case errored.'
-    : 'Result: no regression against the baseline.');
+  const reclassified = report.tools.some((tool) => tool.reclassified.length > 0);
+  const regressed = report.tools.some((tool) => tool.regressions.length > 0 || tool.falsePositives.length > 0);
+  if (regressed) {
+    lines.push('Result: regression. A declared criterion was lost, a corrected control was newly flagged, or a case errored.');
+  } else if (reclassified) {
+    lines.push('Result: the corpus reclassified a scored case since the baseline was published. No regression — '
+      + 'but the baseline figures are not comparable to this run case for case, so publishing them side by side '
+      + 'would overstate or understate the change. Re-publish the baseline at this corpus revision, or score '
+      + 'against a baseline taken at it.');
+  } else {
+    lines.push('Result: no regression against the baseline.');
+  }
   lines.push('');
   return lines.join('\n');
 }
@@ -163,10 +244,15 @@ export function reportFromSnapshots(baseline, candidate, { tools = null, cognium
       baseline: diff.baseline,
       candidate: laneMetrics(candRows),
       ...classified,
+      reclassified: cogniumExport && id === 'cognium'
+        ? reclassifiedCases(cogniumExport, baseRows)
+        : [],
       standing: standingMisses(candRows),
     };
   });
-  const fail = toolReports.some((tool) => tool.regressions.length > 0 || tool.falsePositives.length > 0);
+  const fail = toolReports.some((tool) => tool.regressions.length > 0
+    || tool.falsePositives.length > 0
+    || tool.reclassified.length > 0);
   return { fail, tools: toolReports };
 }
 

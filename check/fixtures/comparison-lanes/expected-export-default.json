@@ -55,6 +55,11 @@
     {
       "id": "keyboard-div_button",
       "path": "keyboard/div_button.html",
+      "mode": "tp",
+      "declared_criteria": [
+        "2.1.1",
+        "4.1.2"
+      ],
       "automated_findings": 2,
       "manual_review_items": 1,
       "found_criteria": [
@@ -75,6 +80,11 @@
     {
       "id": "keyboard-safe_native_button",
       "path": "keyboard/safe_native_button.html",
+      "mode": "safe",
+      "declared_criteria": [
+        "2.1.1",
+        "4.1.2"
+      ],
       "automated_findings": 0,
       "manual_review_items": 0,
       "found_criteria": [],
@@ -83,6 +93,13 @@
     {
       "id": "journey-booking-broken",
       "path": "journeys/booking/broken/index.html",
+      "mode": "tp",
+      "declared_criteria": [
+        "2.4.3",
+        "3.2.3",
+        "3.3.4",
+        "3.3.7"
+      ],
       "automated_findings": 3,
       "manual_review_items": 0,
       "found_criteria": [
@@ -101,6 +118,13 @@
     {
       "id": "journey-booking-correct",
       "path": "journeys/booking/correct/index.html",
+      "mode": "safe",
+      "declared_criteria": [
+        "2.4.3",
+        "3.2.3",
+        "3.3.4",
+        "3.3.7"
+      ],
       "automated_findings": 0,
       "manual_review_items": 0,
       "found_criteria": [],
