@@ -522,10 +522,10 @@
     "act_failed": 2,
     "act_passed": 6,
     "act_inapplicable": 2,
-    "local_tp": "",
-    "local_safe": "",
+    "local_tp": "static/single_key_shortcut.html",
+    "local_safe": "static/safe_single_key_shortcut.html",
     "guided": "",
-    "ground_truth": "ACT"
+    "ground_truth": "ACT + local"
   },
   {
     "sc": "2.2.1",

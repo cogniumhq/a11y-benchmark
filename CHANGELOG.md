@@ -7,6 +7,13 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Added
 
+- A **static** pair for WCAG 2.1.4 (Character Key Shortcuts):
+  `static/single_key_shortcut.html` registers a lone letter key that opens a
+  harbour guide while voyage notes can be typed, with no disable or remap path;
+  `static/safe_single_key_shortcut.html` requires Ctrl+Alt+H for the same panel.
+  Ground truth follows W3C ACT rule `ffbc54` and the WCAG 2.2 character-key
+  shortcuts requirement; coverage.csv had ACT failures and no local pair.
+
 - An **access** family (`access.json`, 20 cases in 10 pairs) for content a
   scanner has to reach before it can judge it. The authenticated axis puts the
   delivery family's constant defect behind HTTP basic auth, a session cookie, a

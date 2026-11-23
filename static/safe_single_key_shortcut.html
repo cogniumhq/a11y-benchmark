@@ -1,0 +1,32 @@
+<!--
+  The harbour guide shortcut needs modifier keys
+  WCAG: 2.1.4
+  Expectation: NO control should report this (negative control)
+  Negative control for single_key_shortcut.html. The same guide opens only with Ctrl+Alt+H, so the printable key alone is not a shortcut.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The harbour guide shortcut needs modifier keys</title>
+<link rel="stylesheet" href="../fixture.css">
+</head>
+<body>
+<main>
+<h1>The harbour guide shortcut needs modifier keys</h1>
+<label for="notes-safe">Voyage notes for crew.example</label>
+<textarea id="notes-safe" name="notes" rows="4" placeholder="Record berth assignments and tide windows"></textarea>
+<p id="harbor-guide-safe" hidden role="status">Harbour berth legend is visible.</p>
+<script>
+document.addEventListener('keydown', function (ev) {
+  if (ev.key === 'h' && ev.ctrlKey && ev.altKey) {
+    ev.preventDefault();
+    document.getElementById('harbor-guide-safe').hidden = false;
+  }
+});
+</script>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>

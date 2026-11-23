@@ -593,6 +593,40 @@ for (var d = 1; d <= 7; d++) {
 <button type="submit">Show fares</button>
 </form>`,
   },
+  {
+    dir: 'static', file: 'single_key_shortcut.html', expect: 'flag',
+    sc: ['2.1.4'], manual: [],
+    title: 'A letter key opens a panel while notes can be typed',
+    note: '2.1.4. A lone printable key toggles a harbour guide with no way to turn shortcuts off or remap them.',
+    body: `<label for="notes">Voyage notes for crew.example</label>
+<textarea id="notes" name="notes" rows="4" placeholder="Record berth assignments and tide windows"></textarea>
+<p id="harbor-guide" hidden role="status">Harbour berth legend is visible.</p>
+<script>
+document.addEventListener('keydown', function (ev) {
+  if (ev.key === 'h' && !ev.ctrlKey && !ev.altKey && !ev.metaKey && !ev.shiftKey) {
+    ev.preventDefault();
+    document.getElementById('harbor-guide').hidden = false;
+  }
+});
+</script>`,
+  },
+  {
+    dir: 'static', file: 'safe_single_key_shortcut.html', expect: 'clean',
+    sc: ['2.1.4'], manual: [],
+    title: 'The harbour guide shortcut needs modifier keys',
+    note: 'Negative control for single_key_shortcut.html. The same guide opens only with Ctrl+Alt+H, so the printable key alone is not a shortcut.',
+    body: `<label for="notes-safe">Voyage notes for crew.example</label>
+<textarea id="notes-safe" name="notes" rows="4" placeholder="Record berth assignments and tide windows"></textarea>
+<p id="harbor-guide-safe" hidden role="status">Harbour berth legend is visible.</p>
+<script>
+document.addEventListener('keydown', function (ev) {
+  if (ev.key === 'h' && ev.ctrlKey && ev.altKey) {
+    ev.preventDefault();
+    document.getElementById('harbor-guide-safe').hidden = false;
+  }
+});
+</script>`,
+  },
 
   // Boundary pairs for shapes external reviews keep raising (boundary-shapes.mjs).
   ...BOUNDARY_SHAPES,
