@@ -14,6 +14,11 @@ machine-readable manifest and schema versions are recorded with every release.
   Ground truth follows W3C ACT rule `ffbc54` and the WCAG 2.2 character-key
   shortcuts requirement; coverage.csv had ACT failures and no local pair.
 
+- Matched **static** pair for WCAG **2.4.1 Bypass Blocks**: repeated site
+  navigation before bulletin content without a bypass mechanism, and a negative
+  control whose first focusable link skips to the bulletin (`bypass_blocks_missing`
+  / `safe_bypass_blocks_skip_link`).
+
 - An **access** family (`access.json`, 20 cases in 10 pairs) for content a
   scanner has to reach before it can judge it. The authenticated axis puts the
   delivery family's constant defect behind HTTP basic auth, a session cookie, a

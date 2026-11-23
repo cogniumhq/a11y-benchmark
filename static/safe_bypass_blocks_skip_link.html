@@ -1,0 +1,38 @@
+<!--
+  Skip link bypasses repeated navigation
+  WCAG: 2.4.1
+  Expectation: NO control should report this (negative control)
+  Negative control for bypass_blocks_missing.html. The first focusable control is a skip link that targets the main bulletin region.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skip link bypasses repeated navigation</title>
+<link rel="stylesheet" href="../fixture.css"><style>.skip-link { position: absolute; left: 0; top: 0; }</style>
+</head>
+<body>
+<a class="skip-link" href="#bulletin-start">Skip to bulletin</a>
+<nav aria-label="Example travel site">
+<ul>
+<li><a href="#routes">Routes</a></li>
+<li><a href="#fleet">Fleet status</a></li>
+<li><a href="#stations">Stations</a></li>
+<li><a href="#fares">Fares</a></li>
+<li><a href="#timetables">Timetables</a></li>
+<li><a href="#delays">Service notices</a></li>
+<li><a href="#access">Station access</a></li>
+<li><a href="#help">Help centre</a></li>
+</ul>
+</nav>
+<main>
+<h1>Skip link bypasses repeated navigation</h1>
+<section id="bulletin">
+<h2 id="bulletin-start">Riverside line evening bulletin</h2>
+<p>Trains depart Example City Central every twelve minutes until 23:00.</p>
+</section>
+</main>
+<p><a href="../index.html">Back to the index</a></p>
+</body>
+</html>
