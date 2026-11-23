@@ -12,6 +12,7 @@ const page = (title, body, {
   lang = 'en',
   viewport = 'width=device-width,initial-scale=1',
   documentTitle = title,
+  beforeMain = '',
 } = {}) =>
   `<!doctype html>
 <html lang="${lang}">
@@ -22,7 +23,7 @@ ${documentTitle === null ? '' : `<title>${documentTitle}</title>`}
 <link rel="stylesheet" href="../fixture.css">${head}
 </head>
 <body>
-<main>
+${beforeMain ? `${beforeMain}\n` : ''}<main>
 <h1>${title}</h1>
 ${body}
 </main>
@@ -330,6 +331,52 @@ ${Array.from({ length: 12 }, (_, i) => `<p><button${i === 11 ? ' class="focus-ta
     note: 'Negative control for lang_missing.html. The document language is declared on the html element.',
     body: `<p>This page declares its language.</p>`,
     lang: 'en',
+  },
+  {
+    dir: 'static', file: 'bypass_blocks_missing.html', expect: 'flag',
+    sc: ['2.4.1'], manual: [],
+    title: 'Repeated navigation without a bypass',
+    note: 'Site-wide navigation with many links precedes the bulletin content, and no skip link or other bypass mechanism is provided.',
+    beforeMain: `<nav aria-label="Example travel site">
+<ul>
+<li><a href="#routes">Routes</a></li>
+<li><a href="#fleet">Fleet status</a></li>
+<li><a href="#stations">Stations</a></li>
+<li><a href="#fares">Fares</a></li>
+<li><a href="#timetables">Timetables</a></li>
+<li><a href="#delays">Service notices</a></li>
+<li><a href="#access">Station access</a></li>
+<li><a href="#help">Help centre</a></li>
+</ul>
+</nav>`,
+    body: `<section id="bulletin">
+<h2 id="bulletin-start">Riverside line evening bulletin</h2>
+<p>Trains depart Example City Central every twelve minutes until 23:00.</p>
+</section>`,
+  },
+  {
+    dir: 'static', file: 'safe_bypass_blocks_skip_link.html', expect: 'clean',
+    sc: ['2.4.1'], manual: [],
+    title: 'Skip link bypasses repeated navigation',
+    note: 'Negative control for bypass_blocks_missing.html. The first focusable control is a skip link that targets the main bulletin region.',
+    head: `<style>.skip-link { position: absolute; left: 0; top: 0; }</style>`,
+    beforeMain: `<a class="skip-link" href="#bulletin-start">Skip to bulletin</a>
+<nav aria-label="Example travel site">
+<ul>
+<li><a href="#routes">Routes</a></li>
+<li><a href="#fleet">Fleet status</a></li>
+<li><a href="#stations">Stations</a></li>
+<li><a href="#fares">Fares</a></li>
+<li><a href="#timetables">Timetables</a></li>
+<li><a href="#delays">Service notices</a></li>
+<li><a href="#access">Station access</a></li>
+<li><a href="#help">Help centre</a></li>
+</ul>
+</nav>`,
+    body: `<section id="bulletin">
+<h2 id="bulletin-start">Riverside line evening bulletin</h2>
+<p>Trains depart Example City Central every twelve minutes until 23:00.</p>
+</section>`,
   },
   {
     dir: 'static', file: 'page_title_missing.html', expect: 'flag',
@@ -646,6 +693,7 @@ for (const f of FIXTURES) {
   if (f.lang !== undefined) opts.lang = f.lang;
   if (f.viewport) opts.viewport = f.viewport;
   if (f.documentTitle !== undefined) opts.documentTitle = f.documentTitle;
+  if (f.beforeMain) opts.beforeMain = f.beforeMain;
   fs.writeFileSync(path.join(dir, f.file), comment + page(f.title, f.body, opts));
 }
 

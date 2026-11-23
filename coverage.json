@@ -682,10 +682,10 @@
     "act_failed": 1,
     "act_passed": 12,
     "act_inapplicable": 1,
-    "local_tp": "",
-    "local_safe": "",
+    "local_tp": "static/bypass_blocks_missing.html",
+    "local_safe": "static/safe_bypass_blocks_skip_link.html",
     "guided": "",
-    "ground_truth": "ACT"
+    "ground_truth": "ACT + local"
   },
   {
     "sc": "2.4.2",

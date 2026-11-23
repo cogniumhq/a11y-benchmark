@@ -13,9 +13,9 @@
     }
   },
   "counts": {
-    "total": 161,
-    "tp": 70,
-    "safe": 91
+    "total": 163,
+    "tp": 71,
+    "safe": 92
   },
   "cases": [
     {
@@ -412,6 +412,28 @@
       ],
       "derived_from_manual_rows": [],
       "notes": "Negative control for lang_missing.html. The document language is declared on the html element."
+    },
+    {
+      "id": "static-bypass_blocks_missing",
+      "mode": "tp",
+      "path": "static/bypass_blocks_missing.html",
+      "min_criteria": {
+        "2.4.1": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "Site-wide navigation with many links precedes the bulletin content, and no skip link or other bypass mechanism is provided."
+    },
+    {
+      "id": "static-safe_bypass_blocks_skip_link",
+      "mode": "safe",
+      "path": "static/safe_bypass_blocks_skip_link.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "2.4.1"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for bypass_blocks_missing.html. The first focusable control is a skip link that targets the main bulletin region."
     },
     {
       "id": "static-page_title_missing",
