@@ -7,6 +7,13 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Added
 
+- A **static** pair for WCAG **2.4.9** (Link Purpose (Link Only)):
+  `static/link_purpose_link_only.html` lists three trail guides whose links are
+  each named only Download; `static/safe_link_purpose_link_only.html` gives each
+  link text that identifies the document on its own. Ground truth follows
+  [WCAG 2.2 Understanding link purpose (link only)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-link-only.html)
+  and W3C ACT failures for criterion 2.4.9 in `coverage.csv`.
+
 - A **static** pair for WCAG **1.3.3** (Sensory Characteristics):
   `static/sensory_instruction_shape.html` tells visitors to use the circular
   control on the right while the confirm control is named only "Confirm berth";

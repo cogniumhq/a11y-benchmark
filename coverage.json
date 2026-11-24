@@ -810,10 +810,10 @@
     "act_failed": 36,
     "act_passed": 45,
     "act_inapplicable": 22,
-    "local_tp": "",
-    "local_safe": "",
+    "local_tp": "static/link_purpose_link_only.html",
+    "local_safe": "static/safe_link_purpose_link_only.html",
     "guided": "",
-    "ground_truth": "ACT"
+    "ground_truth": "ACT + local"
   },
   {
     "sc": "2.4.10",
