@@ -674,6 +674,29 @@ document.addEventListener('keydown', function (ev) {
 });
 </script>`,
   },
+  {
+    dir: 'static', file: 'sensory_instruction_shape.html', expect: 'flag',
+    sc: ['1.3.3'], manual: [],
+    title: 'Instructions name a control only by shape and position',
+    note: 'The task text tells the visitor to use the circular control on the right, but the confirm control is exposed only as "Confirm berth" with no round or right wording. Aligns with W3C ACT rule 9bd38c (visual reference without a non-visual alternative). Expected instances: 1.',
+    body: `<p>To release the berth hold, press the circular control on the right.</p>
+<div class="row-gap" style="display:flex;gap:1rem;justify-content:space-between;align-items:center;max-width:24rem">
+  <button type="button">Cancel hold</button>
+  <button type="button" aria-label="Confirm berth" style="width:3rem;height:3rem;border-radius:50%"></button>
+</div>
+<p><a href="./safe_sensory_instruction_shape.html">The corrected version</a></p>`,
+  },
+  {
+    dir: 'static', file: 'safe_sensory_instruction_shape.html', expect: 'clean',
+    sc: ['1.3.3'], manual: [],
+    title: 'Instructions name the control without shape or position alone',
+    note: 'Negative control for sensory_instruction_shape.html. The same round control is identified by the Confirm berth hold button label.',
+    body: `<p>To release the berth hold, select the Confirm berth hold button.</p>
+<div class="row-gap" style="display:flex;gap:1rem;justify-content:flex-start;align-items:center;max-width:24rem">
+  <button type="button">Cancel hold</button>
+  <button type="button" style="width:3rem;height:3rem;border-radius:50%">Confirm berth hold</button>
+</div>`,
+  },
 
   // Boundary pairs for shapes external reviews keep raising (boundary-shapes.mjs).
   ...BOUNDARY_SHAPES,
