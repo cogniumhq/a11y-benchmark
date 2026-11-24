@@ -7,6 +7,12 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Added
 
+- A **static** pair for WCAG **1.4.5** (Images of Text):
+  `static/heading_image_of_text.html` presents a schedule headline as an image
+  containing text; `static/safe_heading_image_of_text.html` uses the same wording
+  as styled HTML text. Ground truth follows W3C ACT rule `0va7u6` and WCAG 2.2
+  SC 1.4.5; coverage.csv had ACT failures and no local true-positive pair.
+
 - A **static** pair for WCAG **1.3.3** (Sensory Characteristics):
   `static/sensory_instruction_shape.html` tells visitors to use the circular
   control on the right while the confirm control is named only "Confirm berth";

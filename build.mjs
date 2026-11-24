@@ -697,6 +697,23 @@ document.addEventListener('keydown', function (ev) {
   <button type="button" style="width:3rem;height:3rem;border-radius:50%">Confirm berth hold</button>
 </div>`,
   },
+  {
+    dir: 'static', file: 'heading_image_of_text.html', expect: 'flag',
+    sc: ['1.4.5'], manual: [],
+    title: 'Schedule headline rendered as an image',
+    note: 'The departure headline is a rasterized image of text; the same wording could be presented as styled HTML text. Aligns with WCAG 2.2 SC 1.4.5 (Images of Text) and W3C ACT rule 0va7u6 (HTML images contain no text). Expected instances: 1.',
+    body: `<img src="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%2244%22%3E%3Ctext%20x%3D%226%22%20y%3D%2230%22%20font-family%3D%22system-ui%2Csans-serif%22%20font-size%3D%2224%22%20font-weight%3D%22700%22%20fill%3D%22%230b4f8a%22%3EFerry%20departures%20at%2014%3A00%3C%2Ftext%3E%3C%2Fsvg%3E" width="300" height="44" alt="">
+<p>Boarding begins thirty minutes before departure.</p>
+<p><a href="./safe_heading_image_of_text.html">The correct version</a></p>`,
+  },
+  {
+    dir: 'static', file: 'safe_heading_image_of_text.html', expect: 'clean',
+    sc: ['1.4.5'], manual: [],
+    title: 'Schedule headline as styled text',
+    note: 'Negative control for heading_image_of_text.html. The same headline is real text with CSS instead of an image.',
+    body: `<p style="font-size:1.5rem;font-weight:700;color:#0b4f8a;margin:0 0 0.75rem">Ferry departures at 14:00</p>
+<p>Boarding begins thirty minutes before departure.</p>`,
+  },
 
   // Boundary pairs for shapes external reviews keep raising (boundary-shapes.mjs).
   ...BOUNDARY_SHAPES,

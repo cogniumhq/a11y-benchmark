@@ -1,7 +1,7 @@
 {
   "description": "Ground truth for the a11y-benchmark fixture corpus. Each case names the WCAG success criteria a correct scanner should report (min_criteria) or, for a negative control, the criteria it must NOT report (expected-clean). Browser reference facts live in check/reference.json, never here.",
   "version": 1,
-  "generated": "2026-11-23",
+  "generated": "2026-11-24",
   "scoring": {
     "recall": "sum(criteria reported on tp cases) / sum(min_criteria) across mode=tp",
     "fp_rate": "a finding for a criterion listed in must_not_report on a mode=safe case is a false positive; other criteria require their own ground truth",
@@ -13,9 +13,9 @@
     }
   },
   "counts": {
-    "total": 165,
-    "tp": 72,
-    "safe": 93
+    "total": 167,
+    "tp": 73,
+    "safe": 94
   },
   "cases": [
     {
@@ -810,6 +810,28 @@
       ],
       "derived_from_manual_rows": [],
       "notes": "Negative control for sensory_instruction_shape.html. The same round control is identified by the Confirm berth hold button label."
+    },
+    {
+      "id": "static-heading_image_of_text",
+      "mode": "tp",
+      "path": "static/heading_image_of_text.html",
+      "min_criteria": {
+        "1.4.5": 1
+      },
+      "must_not_report": [],
+      "derived_from_manual_rows": [],
+      "notes": "The departure headline is a rasterized image of text; the same wording could be presented as styled HTML text. Aligns with WCAG 2.2 SC 1.4.5 (Images of Text) and W3C ACT rule 0va7u6 (HTML images contain no text). Expected instances: 1."
+    },
+    {
+      "id": "static-safe_heading_image_of_text",
+      "mode": "safe",
+      "path": "static/safe_heading_image_of_text.html",
+      "min_criteria": {},
+      "must_not_report": [
+        "1.4.5"
+      ],
+      "derived_from_manual_rows": [],
+      "notes": "Negative control for heading_image_of_text.html. The same headline is real text with CSS instead of an image."
     },
     {
       "id": "static-text_contrast_just_below_aa",

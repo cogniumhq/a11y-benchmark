@@ -6,18 +6,18 @@
     "id": "cogniumhq/a11y-benchmark",
     "default_branch": "master"
   },
-  "generated": "2026-11-23",
+  "generated": "2026-11-24",
   "counts": {
     "families": 16,
-    "cases": 423
+    "cases": 425
   },
   "digest_policy": "SHA-256 of parsed family JSON with the top-level generated field removed, serialized with JSON.stringify.",
   "families": [
     {
       "id": "core",
       "file": "catalog.json",
-      "case_count": 165,
-      "content_sha256": "sha256:c8556b98e665a63b57903d689e022df1183274b0b9c331088d9057a3a52d2ced"
+      "case_count": 167,
+      "content_sha256": "sha256:6c70c98850c24d74322e22c7725459a6df7d1cd3b69155ab0ce339159ca663c0"
     },
     {
       "id": "pipeline",
