@@ -7,6 +7,13 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Added
 
+- A **static** pair for WCAG **2.4.9** (Link Purpose (Link Only)):
+  `static/link_purpose_link_only.html` lists three trail guides whose links are
+  each named only Download; `static/safe_link_purpose_link_only.html` gives each
+  link text that identifies the document on its own. Ground truth follows
+  [WCAG 2.2 Understanding link purpose (link only)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-link-only.html)
+  and W3C ACT failures for criterion 2.4.9 in `coverage.csv`.
+
 - A **static** pair for WCAG **1.4.5** (Images of Text):
   `static/heading_image_of_text.html` presents a schedule headline as an image
   containing text; `static/safe_heading_image_of_text.html` uses the same wording
