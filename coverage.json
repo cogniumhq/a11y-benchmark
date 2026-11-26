@@ -330,10 +330,10 @@
     "act_failed": 5,
     "act_passed": 8,
     "act_inapplicable": 2,
-    "local_tp": "",
-    "local_safe": "",
+    "local_tp": "static/heading_image_of_text.html",
+    "local_safe": "static/safe_heading_image_of_text.html",
     "guided": "",
-    "ground_truth": "ACT"
+    "ground_truth": "ACT + local"
   },
   {
     "sc": "1.4.6",
