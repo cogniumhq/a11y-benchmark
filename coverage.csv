@@ -49,7 +49,7 @@ sc,name,level,since,principle,guideline,act_rules,act_failed,act_passed,act_inap
 2.4.6,Headings and Labels,AA,2.0,Operable,2.4 Navigable,2,10,13,5,static/vague_heading_and_label.html,static/safe_descriptive_heading_and_label.html,,ACT + local
 2.4.7,Focus Visible,AA,2.0,Operable,2.4 Navigable,1,1,5,3,keyboard/focus_not_visible.html static/focus_indicator_nearly_invisible.html static/focus_image_link_outline_removed.html static/focus_input_outline_removed.html,keyboard/safe_focus_visible.html static/safe_focus_box_shadow_ring.html static/safe_focus_transparent_outline_with_ring.html,,ACT + local
 2.4.8,Location,AAA,2.0,Operable,2.4 Navigable,0,0,0,0,aaa/location.html,aaa/safe_location.html,,local only
-2.4.9,Link Purpose (Link Only),AAA,2.0,Operable,2.4 Navigable,5,36,45,22,,,,ACT
+2.4.9,Link Purpose (Link Only),AAA,2.0,Operable,2.4 Navigable,5,36,45,22,static/link_purpose_link_only.html,static/safe_link_purpose_link_only.html,,ACT + local
 2.4.10,Section Headings,AAA,2.0,Operable,2.4 Navigable,0,0,0,0,aaa/section_headings.html,aaa/safe_section_headings.html,,local only
 2.4.11,Focus Not Obscured (Minimum),AA,2.2,Operable,2.4 Navigable,0,0,0,0,keyboard/focus_obscured.html,keyboard/safe_focus_not_obscured.html,,local only
 2.4.12,Focus Not Obscured (Enhanced),AAA,2.2,Operable,2.4 Navigable,0,0,0,0,aaa/focus_not_obscured_enhanced.html,aaa/safe_focus_not_obscured_enhanced.html,,local only

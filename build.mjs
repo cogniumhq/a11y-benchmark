@@ -457,6 +457,28 @@ ${Array.from({ length: 12 }, (_, i) => `<p><button${i === 11 ? ' class="focus-ta
 <p><a href="#standard">Learn more about the standard fare</a></p>`,
   },
   {
+    dir: 'static', file: 'link_purpose_link_only.html', expect: 'flag',
+    sc: ['2.4.9'], manual: [],
+    title: 'Download links with identical text',
+    note: 'Each file link is named only Download, so the purpose of each link cannot be determined from its text alone.',
+    body: `<ul>
+  <li><a href="hartshill-park-guide.pdf">Download</a></li>
+  <li><a href="jubilee-common-route.pdf">Download</a></li>
+  <li><a href="canal-bridge-loop.pdf">Download</a></li>
+</ul>`,
+  },
+  {
+    dir: 'static', file: 'safe_link_purpose_link_only.html', expect: 'clean',
+    sc: ['2.4.9'], manual: [],
+    title: 'Download links that name each document',
+    note: 'Negative control for link_purpose_link_only.html. Each link text alone identifies which guide it opens.',
+    body: `<ul>
+  <li><a href="hartshill-park-guide.pdf">Download Hartshill park guide (PDF)</a></li>
+  <li><a href="jubilee-common-route.pdf">Download Jubilee common route map (PDF)</a></li>
+  <li><a href="canal-bridge-loop.pdf">Download Canal bridge loop sheet (PDF)</a></li>
+</ul>`,
+  },
+  {
     dir: 'static', file: 'vague_heading_and_label.html', expect: 'flag',
     sc: ['2.4.6'], manual: [],
     title: 'Vague heading and control label',
