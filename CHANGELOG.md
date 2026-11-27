@@ -7,6 +7,14 @@ machine-readable manifest and schema versions are recorded with every release.
 
 ### Added
 
+- A **static** pair for WCAG **3.2.5** (Change on Request):
+  `static/timed_module_redirect.html` sends readers to the next training module
+  through a twelve-second meta refresh; `static/safe_explicit_module_continue.html`
+  reaches the next module only through an explicit continue control. Ground truth
+  follows
+  [WCAG 2.2 Understanding change on request](https://www.w3.org/WAI/WCAG22/Understanding/change-on-request.html)
+  and W3C ACT rule `bisz58`; `coverage.csv` had ACT failures and no local pair.
+
 - A **static** pair for WCAG **2.4.9** (Link Purpose (Link Only)):
   `static/link_purpose_link_only.html` lists three trail guides whose links are
   each named only Download; `static/safe_link_purpose_link_only.html` gives each

@@ -663,6 +663,23 @@ for (var d = 1; d <= 7; d++) {
 </form>`,
   },
   {
+    dir: 'static', file: 'timed_module_redirect.html', expect: 'flag',
+    sc: ['3.2.5'], manual: [],
+    title: 'A training module that redirects on a timer',
+    note: '3.2.5. A short meta refresh sends readers to the next module without an explicit request to change context.',
+    head: '<meta http-equiv="refresh" content="12;url=https://example.com/training/orbit-module-two">',
+    body: `<p>Module one covers baggage allowances for the fictional Orbit Skies airline.</p>
+<p>If you are not redirected, continue to <a href="https://example.com/training/orbit-module-two">module two</a>.</p>`,
+  },
+  {
+    dir: 'static', file: 'safe_explicit_module_continue.html', expect: 'clean',
+    sc: ['3.2.5'], manual: [],
+    title: 'A training module that continues only on request',
+    note: 'Negative control for timed_module_redirect.html. The next module is reached only through an explicit control; there is no timed redirect.',
+    body: `<p>Module one covers baggage allowances for the fictional Orbit Skies airline.</p>
+<p><a href="https://example.com/training/orbit-module-two">Continue to module two</a></p>`,
+  },
+  {
     dir: 'static', file: 'single_key_shortcut.html', expect: 'flag',
     sc: ['2.1.4'], manual: [],
     title: 'A letter key opens a panel while notes can be typed',

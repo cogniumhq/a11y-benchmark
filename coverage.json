@@ -1178,10 +1178,10 @@
     "act_failed": 7,
     "act_passed": 5,
     "act_inapplicable": 16,
-    "local_tp": "",
-    "local_safe": "",
+    "local_tp": "static/timed_module_redirect.html",
+    "local_safe": "static/safe_explicit_module_continue.html",
     "guided": "",
-    "ground_truth": "ACT"
+    "ground_truth": "ACT + local"
   },
   {
     "sc": "3.2.6",
